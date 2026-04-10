@@ -1,0 +1,13 @@
+{
+  "name": "pokemon-tcg-companion",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "server": "cd backend && go run .",
+    "client": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
