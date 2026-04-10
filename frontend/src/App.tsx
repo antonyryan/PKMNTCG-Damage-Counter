@@ -13,12 +13,12 @@ function SideBoard({ side, rotated }: { side: Side; rotated?: boolean }) {
       className={`relative grid h-1/2 grid-rows-[auto_1fr] gap-2 p-2 sm:p-3 ${rotated ? "rotate-180" : ""}`}
     >
       <div className="grid grid-cols-5 gap-2 rounded-2xl bg-white/30 p-2">
-        <div className="col-start-3">
+        <div className="col-start-2 col-end-5 md:col-start-3 md:col-end-4">
           <PokemonSlot side={side} zone="active" slot={player.active} />
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-2 rounded-2xl bg-white/30 p-2">
+      <div className="grid grid-cols-5 gap-1 rounded-2xl bg-white/30 p-2 md:gap-2">
         {player.bench.map((slot, index) => (
           <PokemonSlot
             key={`${side}-bench-${index}`}
