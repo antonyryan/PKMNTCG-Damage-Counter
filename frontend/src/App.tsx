@@ -18,7 +18,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
-import type { PokemonSearchResult, Side } from "./types";
+import { getEvolutionCandidates } from "./data/pokemonEvolution";
+import type { Side } from "./types";
 
 // SideBoard renders one half of the table and optionally rotates it for the opposing player.
 function SideBoard({ side, rotated }: { side: Side; rotated?: boolean }) {
@@ -58,8 +59,6 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
   const [evolveMobileOpen, setEvolveMobileOpen] = useState(false);
   const [evolveDesktopOpen, setEvolveDesktopOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState<PokemonSearchResult[]>([]);
 
   const canEvolveActive = Boolean(player.active.pokemon);
   const isEvolveOpen = evolveMobileOpen || evolveDesktopOpen;
@@ -69,34 +68,10 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
   useEffect(() => {
     if (!isEvolveOpen) {
       setQuery("");
-      setResults([]);
-      return;
-    }
-
-    const control = new AbortController();
-    const timer = window.setTimeout(async () => {
-      setLoading(true);
-      try {
-        const url = `/api/pokemon/search?q=${encodeURIComponent(query)}`;
-        const response = await fetch(url, { signal: control.signal });
-        if (!response.ok) {
-          setResults([]);
-          return;
-        }
-        const data = (await response.json()) as PokemonSearchResult[];
-        setResults(data);
-      } catch {
-        setResults([]);
-      } finally {
-        setLoading(false);
-      }
-    }, 180);
-
-    return () => {
-      control.abort();
-      window.clearTimeout(timer);
     };
-  }, [query, isEvolveOpen]);
+  }, [isEvolveOpen]);
+
+  const evolveResults = getEvolutionCandidates(player.active.pokemon?.id ?? -1, query);
 
   const evolveSearchPanel = (
     <div className="space-y-2">
@@ -108,12 +83,10 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
         autoFocus
       />
       <div className="max-h-52 overflow-y-auto rounded-xl border border-teal-900/15 bg-white">
-        {loading && <p className="p-2 text-xs text-slate-500">Searching...</p>}
-        {!loading && results.length === 0 && (
+        {evolveResults.length === 0 && (
           <p className="p-2 text-xs text-slate-500">No results</p>
         )}
-        {!loading &&
-          results.map((pokemon) => (
+        {evolveResults.map((pokemon) => (
             <button
               key={`${side}-active-evolve-${pokemon.id}`}
               type="button"

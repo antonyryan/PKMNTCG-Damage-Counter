@@ -1,0 +1,7788 @@
+[
+  {
+    "id": "1",
+    "name": "Bulbasaur",
+    "evolvesTo": [
+      "2"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "2",
+    "name": "Ivysaur",
+    "evolvesTo": [
+      "3"
+    ],
+    "evolvesFrom": "1",
+    "processed": true
+  },
+  {
+    "id": "3",
+    "name": "Venusaur",
+    "evolvesTo": [],
+    "evolvesFrom": "2",
+    "processed": true
+  },
+  {
+    "id": "4",
+    "name": "Charmander",
+    "evolvesTo": [
+      "5"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "5",
+    "name": "Charmeleon",
+    "evolvesTo": [
+      "6"
+    ],
+    "evolvesFrom": "4",
+    "processed": true
+  },
+  {
+    "id": "6",
+    "name": "Charizard",
+    "evolvesTo": [],
+    "evolvesFrom": "5",
+    "processed": true
+  },
+  {
+    "id": "7",
+    "name": "Squirtle",
+    "evolvesTo": [
+      "8"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "8",
+    "name": "Wartortle",
+    "evolvesTo": [
+      "9"
+    ],
+    "evolvesFrom": "7",
+    "processed": true
+  },
+  {
+    "id": "9",
+    "name": "Blastoise",
+    "evolvesTo": [],
+    "evolvesFrom": "8",
+    "processed": true
+  },
+  {
+    "id": "10",
+    "name": "Caterpie",
+    "evolvesTo": [
+      "11"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "11",
+    "name": "Metapod",
+    "evolvesTo": [
+      "12"
+    ],
+    "evolvesFrom": "10",
+    "processed": true
+  },
+  {
+    "id": "12",
+    "name": "Butterfree",
+    "evolvesTo": [],
+    "evolvesFrom": "11",
+    "processed": true
+  },
+  {
+    "id": "13",
+    "name": "Weedle",
+    "evolvesTo": [
+      "14"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "14",
+    "name": "Kakuna",
+    "evolvesTo": [
+      "15"
+    ],
+    "evolvesFrom": "13",
+    "processed": true
+  },
+  {
+    "id": "15",
+    "name": "Beedrill",
+    "evolvesTo": [],
+    "evolvesFrom": "14",
+    "processed": true
+  },
+  {
+    "id": "16",
+    "name": "Pidgey",
+    "evolvesTo": [
+      "17"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "17",
+    "name": "Pidgeotto",
+    "evolvesTo": [
+      "18"
+    ],
+    "evolvesFrom": "16",
+    "processed": true
+  },
+  {
+    "id": "18",
+    "name": "Pidgeot",
+    "evolvesTo": [],
+    "evolvesFrom": "17",
+    "processed": true
+  },
+  {
+    "id": "19",
+    "name": "Rattata",
+    "evolvesTo": [
+      "20"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "20",
+    "name": "Raticate",
+    "evolvesTo": [],
+    "evolvesFrom": "19",
+    "processed": true
+  },
+  {
+    "id": "21",
+    "name": "Spearow",
+    "evolvesTo": [
+      "22"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "22",
+    "name": "Fearow",
+    "evolvesTo": [],
+    "evolvesFrom": "21",
+    "processed": true
+  },
+  {
+    "id": "23",
+    "name": "Ekans",
+    "evolvesTo": [
+      "24"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "24",
+    "name": "Arbok",
+    "evolvesTo": [],
+    "evolvesFrom": "23",
+    "processed": true
+  },
+  {
+    "id": "25",
+    "name": "Pikachu",
+    "evolvesTo": [
+      "26"
+    ],
+    "evolvesFrom": "172",
+    "processed": true
+  },
+  {
+    "id": "26",
+    "name": "Raichu",
+    "evolvesTo": [],
+    "evolvesFrom": "25",
+    "processed": true
+  },
+  {
+    "id": "27",
+    "name": "Sandshrew",
+    "evolvesTo": [
+      "28"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "28",
+    "name": "Sandslash",
+    "evolvesTo": [],
+    "evolvesFrom": "27",
+    "processed": true
+  },
+  {
+    "id": "30",
+    "name": "Nidorina",
+    "evolvesTo": [
+      "31"
+    ],
+    "evolvesFrom": "29",
+    "processed": true
+  },
+  {
+    "id": "31",
+    "name": "Nidoqueen",
+    "evolvesTo": [],
+    "evolvesFrom": "30",
+    "processed": true
+  },
+  {
+    "id": "33",
+    "name": "Nidorino",
+    "evolvesTo": [
+      "34"
+    ],
+    "evolvesFrom": "32",
+    "processed": true
+  },
+  {
+    "id": "34",
+    "name": "Nidoking",
+    "evolvesTo": [],
+    "evolvesFrom": "33",
+    "processed": true
+  },
+  {
+    "id": "35",
+    "name": "Clefairy",
+    "evolvesTo": [
+      "36"
+    ],
+    "evolvesFrom": "173",
+    "processed": true
+  },
+  {
+    "id": "36",
+    "name": "Clefable",
+    "evolvesTo": [],
+    "evolvesFrom": "35",
+    "processed": true
+  },
+  {
+    "id": "37",
+    "name": "Vulpix",
+    "evolvesTo": [
+      "38"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "38",
+    "name": "Ninetales",
+    "evolvesTo": [],
+    "evolvesFrom": "37",
+    "processed": true
+  },
+  {
+    "id": "39",
+    "name": "Jigglypuff",
+    "evolvesTo": [
+      "40"
+    ],
+    "evolvesFrom": "174",
+    "processed": true
+  },
+  {
+    "id": "40",
+    "name": "Wigglytuff",
+    "evolvesTo": [],
+    "evolvesFrom": "39",
+    "processed": true
+  },
+  {
+    "id": "41",
+    "name": "Zubat",
+    "evolvesTo": [
+      "42"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "42",
+    "name": "Golbat",
+    "evolvesTo": [
+      "169"
+    ],
+    "evolvesFrom": "41",
+    "processed": true
+  },
+  {
+    "id": "43",
+    "name": "Oddish",
+    "evolvesTo": [
+      "44"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "44",
+    "name": "Gloom",
+    "evolvesTo": [
+      "45",
+      "182"
+    ],
+    "evolvesFrom": "43",
+    "processed": true
+  },
+  {
+    "id": "45",
+    "name": "Vileplume",
+    "evolvesTo": [],
+    "evolvesFrom": "44",
+    "processed": true
+  },
+  {
+    "id": "46",
+    "name": "Paras",
+    "evolvesTo": [
+      "47"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "47",
+    "name": "Parasect",
+    "evolvesTo": [],
+    "evolvesFrom": "46",
+    "processed": true
+  },
+  {
+    "id": "48",
+    "name": "Venonat",
+    "evolvesTo": [
+      "49"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "49",
+    "name": "Venomoth",
+    "evolvesTo": [],
+    "evolvesFrom": "48",
+    "processed": true
+  },
+  {
+    "id": "50",
+    "name": "Diglett",
+    "evolvesTo": [
+      "51"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "51",
+    "name": "Dugtrio",
+    "evolvesTo": [],
+    "evolvesFrom": "50",
+    "processed": true
+  },
+  {
+    "id": "52",
+    "name": "Meowth",
+    "evolvesTo": [
+      "53",
+      "863"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "53",
+    "name": "Persian",
+    "evolvesTo": [],
+    "evolvesFrom": "52",
+    "processed": true
+  },
+  {
+    "id": "54",
+    "name": "Psyduck",
+    "evolvesTo": [
+      "55"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "55",
+    "name": "Golduck",
+    "evolvesTo": [],
+    "evolvesFrom": "54",
+    "processed": true
+  },
+  {
+    "id": "56",
+    "name": "Mankey",
+    "evolvesTo": [
+      "57"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "57",
+    "name": "Primeape",
+    "evolvesTo": [
+      "979"
+    ],
+    "evolvesFrom": "56",
+    "processed": true
+  },
+  {
+    "id": "58",
+    "name": "Growlithe",
+    "evolvesTo": [
+      "59"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "59",
+    "name": "Arcanine",
+    "evolvesTo": [],
+    "evolvesFrom": "58",
+    "processed": true
+  },
+  {
+    "id": "60",
+    "name": "Poliwag",
+    "evolvesTo": [
+      "61"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "61",
+    "name": "Poliwhirl",
+    "evolvesTo": [
+      "62",
+      "186"
+    ],
+    "evolvesFrom": "60",
+    "processed": true
+  },
+  {
+    "id": "62",
+    "name": "Poliwrath",
+    "evolvesTo": [],
+    "evolvesFrom": "61",
+    "processed": true
+  },
+  {
+    "id": "63",
+    "name": "Abra",
+    "evolvesTo": [
+      "64"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "64",
+    "name": "Kadabra",
+    "evolvesTo": [
+      "65"
+    ],
+    "evolvesFrom": "63",
+    "processed": true
+  },
+  {
+    "id": "65",
+    "name": "Alakazam",
+    "evolvesTo": [],
+    "evolvesFrom": "64",
+    "processed": true
+  },
+  {
+    "id": "66",
+    "name": "Machop",
+    "evolvesTo": [
+      "67"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "67",
+    "name": "Machoke",
+    "evolvesTo": [
+      "68"
+    ],
+    "evolvesFrom": "66",
+    "processed": true
+  },
+  {
+    "id": "68",
+    "name": "Machamp",
+    "evolvesTo": [],
+    "evolvesFrom": "67",
+    "processed": true
+  },
+  {
+    "id": "69",
+    "name": "Bellsprout",
+    "evolvesTo": [
+      "70"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "70",
+    "name": "Weepinbell",
+    "evolvesTo": [
+      "71"
+    ],
+    "evolvesFrom": "69",
+    "processed": true
+  },
+  {
+    "id": "71",
+    "name": "Victreebel",
+    "evolvesTo": [],
+    "evolvesFrom": "70",
+    "processed": true
+  },
+  {
+    "id": "72",
+    "name": "Tentacool",
+    "evolvesTo": [
+      "73"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "73",
+    "name": "Tentacruel",
+    "evolvesTo": [],
+    "evolvesFrom": "72",
+    "processed": true
+  },
+  {
+    "id": "74",
+    "name": "Geodude",
+    "evolvesTo": [
+      "75"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "75",
+    "name": "Graveler",
+    "evolvesTo": [
+      "76"
+    ],
+    "evolvesFrom": "74",
+    "processed": true
+  },
+  {
+    "id": "76",
+    "name": "Golem",
+    "evolvesTo": [],
+    "evolvesFrom": "75",
+    "processed": true
+  },
+  {
+    "id": "77",
+    "name": "Ponyta",
+    "evolvesTo": [
+      "78"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "78",
+    "name": "Rapidash",
+    "evolvesTo": [],
+    "evolvesFrom": "77",
+    "processed": true
+  },
+  {
+    "id": "79",
+    "name": "Slowpoke",
+    "evolvesTo": [
+      "80",
+      "199"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "80",
+    "name": "Slowbro",
+    "evolvesTo": [],
+    "evolvesFrom": "79",
+    "processed": true
+  },
+  {
+    "id": "81",
+    "name": "Magnemite",
+    "evolvesTo": [
+      "82"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "82",
+    "name": "Magneton",
+    "evolvesTo": [
+      "462"
+    ],
+    "evolvesFrom": "81",
+    "processed": true
+  },
+  {
+    "id": "83",
+    "name": "Farfetchd",
+    "evolvesTo": [
+      "865"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "84",
+    "name": "Doduo",
+    "evolvesTo": [
+      "85"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "85",
+    "name": "Dodrio",
+    "evolvesTo": [],
+    "evolvesFrom": "84",
+    "processed": true
+  },
+  {
+    "id": "86",
+    "name": "Seel",
+    "evolvesTo": [
+      "87"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "87",
+    "name": "Dewgong",
+    "evolvesTo": [],
+    "evolvesFrom": "86",
+    "processed": true
+  },
+  {
+    "id": "88",
+    "name": "Grimer",
+    "evolvesTo": [
+      "89"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "89",
+    "name": "Muk",
+    "evolvesTo": [],
+    "evolvesFrom": "88",
+    "processed": true
+  },
+  {
+    "id": "90",
+    "name": "Shellder",
+    "evolvesTo": [
+      "91"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "91",
+    "name": "Cloyster",
+    "evolvesTo": [],
+    "evolvesFrom": "90",
+    "processed": true
+  },
+  {
+    "id": "92",
+    "name": "Gastly",
+    "evolvesTo": [
+      "93"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "93",
+    "name": "Haunter",
+    "evolvesTo": [
+      "94"
+    ],
+    "evolvesFrom": "92",
+    "processed": true
+  },
+  {
+    "id": "94",
+    "name": "Gengar",
+    "evolvesTo": [],
+    "evolvesFrom": "93",
+    "processed": true
+  },
+  {
+    "id": "95",
+    "name": "Onix",
+    "evolvesTo": [
+      "208"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "96",
+    "name": "Drowzee",
+    "evolvesTo": [
+      "97"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "97",
+    "name": "Hypno",
+    "evolvesTo": [],
+    "evolvesFrom": "96",
+    "processed": true
+  },
+  {
+    "id": "98",
+    "name": "Krabby",
+    "evolvesTo": [
+      "99"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "99",
+    "name": "Kingler",
+    "evolvesTo": [],
+    "evolvesFrom": "98",
+    "processed": true
+  },
+  {
+    "id": "100",
+    "name": "Voltorb",
+    "evolvesTo": [
+      "101"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "101",
+    "name": "Electrode",
+    "evolvesTo": [],
+    "evolvesFrom": "100",
+    "processed": true
+  },
+  {
+    "id": "102",
+    "name": "Exeggcute",
+    "evolvesTo": [
+      "103"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "103",
+    "name": "Exeggutor",
+    "evolvesTo": [],
+    "evolvesFrom": "102",
+    "processed": true
+  },
+  {
+    "id": "104",
+    "name": "Cubone",
+    "evolvesTo": [
+      "105"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "105",
+    "name": "Marowak",
+    "evolvesTo": [],
+    "evolvesFrom": "104",
+    "processed": true
+  },
+  {
+    "id": "106",
+    "name": "Hitmonlee",
+    "evolvesTo": [],
+    "evolvesFrom": "236",
+    "processed": true
+  },
+  {
+    "id": "107",
+    "name": "Hitmonchan",
+    "evolvesTo": [],
+    "evolvesFrom": "236",
+    "processed": true
+  },
+  {
+    "id": "108",
+    "name": "Lickitung",
+    "evolvesTo": [
+      "463"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "109",
+    "name": "Koffing",
+    "evolvesTo": [
+      "110"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "110",
+    "name": "Weezing",
+    "evolvesTo": [],
+    "evolvesFrom": "109",
+    "processed": true
+  },
+  {
+    "id": "111",
+    "name": "Rhyhorn",
+    "evolvesTo": [
+      "112"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "112",
+    "name": "Rhydon",
+    "evolvesTo": [
+      "464"
+    ],
+    "evolvesFrom": "111",
+    "processed": true
+  },
+  {
+    "id": "113",
+    "name": "Chansey",
+    "evolvesTo": [
+      "242"
+    ],
+    "evolvesFrom": "440",
+    "processed": true
+  },
+  {
+    "id": "114",
+    "name": "Tangela",
+    "evolvesTo": [
+      "465"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "115",
+    "name": "Kangaskhan",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "116",
+    "name": "Horsea",
+    "evolvesTo": [
+      "117"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "117",
+    "name": "Seadra",
+    "evolvesTo": [
+      "230"
+    ],
+    "evolvesFrom": "116",
+    "processed": true
+  },
+  {
+    "id": "118",
+    "name": "Goldeen",
+    "evolvesTo": [
+      "119"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "119",
+    "name": "Seaking",
+    "evolvesTo": [],
+    "evolvesFrom": "118",
+    "processed": true
+  },
+  {
+    "id": "120",
+    "name": "Staryu",
+    "evolvesTo": [
+      "121"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "121",
+    "name": "Starmie",
+    "evolvesTo": [],
+    "evolvesFrom": "120",
+    "processed": true
+  },
+  {
+    "id": "123",
+    "name": "Scyther",
+    "evolvesTo": [
+      "212",
+      "900"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "124",
+    "name": "Jynx",
+    "evolvesTo": [],
+    "evolvesFrom": "238",
+    "processed": true
+  },
+  {
+    "id": "125",
+    "name": "Electabuzz",
+    "evolvesTo": [
+      "466"
+    ],
+    "evolvesFrom": "239",
+    "processed": true
+  },
+  {
+    "id": "126",
+    "name": "Magmar",
+    "evolvesTo": [
+      "467"
+    ],
+    "evolvesFrom": "240",
+    "processed": true
+  },
+  {
+    "id": "127",
+    "name": "Pinsir",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "128",
+    "name": "Tauros",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "129",
+    "name": "Magikarp",
+    "evolvesTo": [
+      "130"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "130",
+    "name": "Gyarados",
+    "evolvesTo": [],
+    "evolvesFrom": "129",
+    "processed": true
+  },
+  {
+    "id": "131",
+    "name": "Lapras",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "132",
+    "name": "Ditto",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "133",
+    "name": "Eevee",
+    "evolvesTo": [
+      "134",
+      "135",
+      "136",
+      "196",
+      "197",
+      "470",
+      "471",
+      "700"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "134",
+    "name": "Vaporeon",
+    "evolvesTo": [],
+    "evolvesFrom": "133",
+    "processed": true
+  },
+  {
+    "id": "135",
+    "name": "Jolteon",
+    "evolvesTo": [],
+    "evolvesFrom": "133",
+    "processed": true
+  },
+  {
+    "id": "136",
+    "name": "Flareon",
+    "evolvesTo": [],
+    "evolvesFrom": "133",
+    "processed": true
+  },
+  {
+    "id": "137",
+    "name": "Porygon",
+    "evolvesTo": [
+      "233"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "138",
+    "name": "Omanyte",
+    "evolvesTo": [
+      "139"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "139",
+    "name": "Omastar",
+    "evolvesTo": [],
+    "evolvesFrom": "138",
+    "processed": true
+  },
+  {
+    "id": "140",
+    "name": "Kabuto",
+    "evolvesTo": [
+      "141"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "141",
+    "name": "Kabutops",
+    "evolvesTo": [],
+    "evolvesFrom": "140",
+    "processed": true
+  },
+  {
+    "id": "142",
+    "name": "Aerodactyl",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "143",
+    "name": "Snorlax",
+    "evolvesTo": [],
+    "evolvesFrom": "446",
+    "processed": true
+  },
+  {
+    "id": "144",
+    "name": "Articuno",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "145",
+    "name": "Zapdos",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "146",
+    "name": "Moltres",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "147",
+    "name": "Dratini",
+    "evolvesTo": [
+      "148"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "148",
+    "name": "Dragonair",
+    "evolvesTo": [
+      "149"
+    ],
+    "evolvesFrom": "147",
+    "processed": true
+  },
+  {
+    "id": "149",
+    "name": "Dragonite",
+    "evolvesTo": [],
+    "evolvesFrom": "148",
+    "processed": true
+  },
+  {
+    "id": "150",
+    "name": "Mewtwo",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "151",
+    "name": "Mew",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "152",
+    "name": "Chikorita",
+    "evolvesTo": [
+      "153"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "153",
+    "name": "Bayleef",
+    "evolvesTo": [
+      "154"
+    ],
+    "evolvesFrom": "152",
+    "processed": true
+  },
+  {
+    "id": "154",
+    "name": "Meganium",
+    "evolvesTo": [],
+    "evolvesFrom": "153",
+    "processed": true
+  },
+  {
+    "id": "155",
+    "name": "Cyndaquil",
+    "evolvesTo": [
+      "156"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "156",
+    "name": "Quilava",
+    "evolvesTo": [
+      "157"
+    ],
+    "evolvesFrom": "155",
+    "processed": true
+  },
+  {
+    "id": "157",
+    "name": "Typhlosion",
+    "evolvesTo": [],
+    "evolvesFrom": "156",
+    "processed": true
+  },
+  {
+    "id": "158",
+    "name": "Totodile",
+    "evolvesTo": [
+      "159"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "159",
+    "name": "Croconaw",
+    "evolvesTo": [
+      "160"
+    ],
+    "evolvesFrom": "158",
+    "processed": true
+  },
+  {
+    "id": "160",
+    "name": "Feraligatr",
+    "evolvesTo": [],
+    "evolvesFrom": "159",
+    "processed": true
+  },
+  {
+    "id": "161",
+    "name": "Sentret",
+    "evolvesTo": [
+      "162"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "162",
+    "name": "Furret",
+    "evolvesTo": [],
+    "evolvesFrom": "161",
+    "processed": true
+  },
+  {
+    "id": "163",
+    "name": "Hoothoot",
+    "evolvesTo": [
+      "164"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "164",
+    "name": "Noctowl",
+    "evolvesTo": [],
+    "evolvesFrom": "163",
+    "processed": true
+  },
+  {
+    "id": "165",
+    "name": "Ledyba",
+    "evolvesTo": [
+      "166"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "166",
+    "name": "Ledian",
+    "evolvesTo": [],
+    "evolvesFrom": "165",
+    "processed": true
+  },
+  {
+    "id": "167",
+    "name": "Spinarak",
+    "evolvesTo": [
+      "168"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "168",
+    "name": "Ariados",
+    "evolvesTo": [],
+    "evolvesFrom": "167",
+    "processed": true
+  },
+  {
+    "id": "169",
+    "name": "Crobat",
+    "evolvesTo": [],
+    "evolvesFrom": "42",
+    "processed": true
+  },
+  {
+    "id": "170",
+    "name": "Chinchou",
+    "evolvesTo": [
+      "171"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "171",
+    "name": "Lanturn",
+    "evolvesTo": [],
+    "evolvesFrom": "170",
+    "processed": true
+  },
+  {
+    "id": "172",
+    "name": "Pichu",
+    "evolvesTo": [
+      "25"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "173",
+    "name": "Cleffa",
+    "evolvesTo": [
+      "35"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "174",
+    "name": "Igglybuff",
+    "evolvesTo": [
+      "39"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "175",
+    "name": "Togepi",
+    "evolvesTo": [
+      "176"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "176",
+    "name": "Togetic",
+    "evolvesTo": [
+      "468"
+    ],
+    "evolvesFrom": "175",
+    "processed": true
+  },
+  {
+    "id": "177",
+    "name": "Natu",
+    "evolvesTo": [
+      "178"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "178",
+    "name": "Xatu",
+    "evolvesTo": [],
+    "evolvesFrom": "177",
+    "processed": true
+  },
+  {
+    "id": "179",
+    "name": "Mareep",
+    "evolvesTo": [
+      "180"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "180",
+    "name": "Flaaffy",
+    "evolvesTo": [
+      "181"
+    ],
+    "evolvesFrom": "179",
+    "processed": true
+  },
+  {
+    "id": "181",
+    "name": "Ampharos",
+    "evolvesTo": [],
+    "evolvesFrom": "180",
+    "processed": true
+  },
+  {
+    "id": "182",
+    "name": "Bellossom",
+    "evolvesTo": [],
+    "evolvesFrom": "44",
+    "processed": true
+  },
+  {
+    "id": "183",
+    "name": "Marill",
+    "evolvesTo": [
+      "184"
+    ],
+    "evolvesFrom": "298",
+    "processed": true
+  },
+  {
+    "id": "184",
+    "name": "Azumarill",
+    "evolvesTo": [],
+    "evolvesFrom": "183",
+    "processed": true
+  },
+  {
+    "id": "185",
+    "name": "Sudowoodo",
+    "evolvesTo": [],
+    "evolvesFrom": "438",
+    "processed": true
+  },
+  {
+    "id": "186",
+    "name": "Politoed",
+    "evolvesTo": [],
+    "evolvesFrom": "61",
+    "processed": true
+  },
+  {
+    "id": "187",
+    "name": "Hoppip",
+    "evolvesTo": [
+      "188"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "188",
+    "name": "Skiploom",
+    "evolvesTo": [
+      "189"
+    ],
+    "evolvesFrom": "187",
+    "processed": true
+  },
+  {
+    "id": "189",
+    "name": "Jumpluff",
+    "evolvesTo": [],
+    "evolvesFrom": "188",
+    "processed": true
+  },
+  {
+    "id": "190",
+    "name": "Aipom",
+    "evolvesTo": [
+      "424"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "191",
+    "name": "Sunkern",
+    "evolvesTo": [
+      "192"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "192",
+    "name": "Sunflora",
+    "evolvesTo": [],
+    "evolvesFrom": "191",
+    "processed": true
+  },
+  {
+    "id": "193",
+    "name": "Yanma",
+    "evolvesTo": [
+      "469"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "194",
+    "name": "Wooper",
+    "evolvesTo": [
+      "195",
+      "980"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "195",
+    "name": "Quagsire",
+    "evolvesTo": [],
+    "evolvesFrom": "194",
+    "processed": true
+  },
+  {
+    "id": "196",
+    "name": "Espeon",
+    "evolvesTo": [],
+    "evolvesFrom": "133",
+    "processed": true
+  },
+  {
+    "id": "197",
+    "name": "Umbreon",
+    "evolvesTo": [],
+    "evolvesFrom": "133",
+    "processed": true
+  },
+  {
+    "id": "198",
+    "name": "Murkrow",
+    "evolvesTo": [
+      "430"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "199",
+    "name": "Slowking",
+    "evolvesTo": [],
+    "evolvesFrom": "79",
+    "processed": true
+  },
+  {
+    "id": "200",
+    "name": "Misdreavus",
+    "evolvesTo": [
+      "429"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "201",
+    "name": "Unown",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "202",
+    "name": "Wobbuffet",
+    "evolvesTo": [],
+    "evolvesFrom": "360",
+    "processed": true
+  },
+  {
+    "id": "203",
+    "name": "Girafarig",
+    "evolvesTo": [
+      "981"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "204",
+    "name": "Pineco",
+    "evolvesTo": [
+      "205"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "205",
+    "name": "Forretress",
+    "evolvesTo": [],
+    "evolvesFrom": "204",
+    "processed": true
+  },
+  {
+    "id": "206",
+    "name": "Dunsparce",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "207",
+    "name": "Gligar",
+    "evolvesTo": [
+      "472"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "208",
+    "name": "Steelix",
+    "evolvesTo": [],
+    "evolvesFrom": "95",
+    "processed": true
+  },
+  {
+    "id": "209",
+    "name": "Snubbull",
+    "evolvesTo": [
+      "210"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "210",
+    "name": "Granbull",
+    "evolvesTo": [],
+    "evolvesFrom": "209",
+    "processed": true
+  },
+  {
+    "id": "211",
+    "name": "Qwilfish",
+    "evolvesTo": [
+      "904"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "212",
+    "name": "Scizor",
+    "evolvesTo": [],
+    "evolvesFrom": "123",
+    "processed": true
+  },
+  {
+    "id": "213",
+    "name": "Shuckle",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "214",
+    "name": "Heracross",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "215",
+    "name": "Sneasel",
+    "evolvesTo": [
+      "461",
+      "903"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "216",
+    "name": "Teddiursa",
+    "evolvesTo": [
+      "217"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "217",
+    "name": "Ursaring",
+    "evolvesTo": [
+      "901"
+    ],
+    "evolvesFrom": "216",
+    "processed": true
+  },
+  {
+    "id": "218",
+    "name": "Slugma",
+    "evolvesTo": [
+      "219"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "219",
+    "name": "Magcargo",
+    "evolvesTo": [],
+    "evolvesFrom": "218",
+    "processed": true
+  },
+  {
+    "id": "220",
+    "name": "Swinub",
+    "evolvesTo": [
+      "221"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "221",
+    "name": "Piloswine",
+    "evolvesTo": [
+      "473"
+    ],
+    "evolvesFrom": "220",
+    "processed": true
+  },
+  {
+    "id": "222",
+    "name": "Corsola",
+    "evolvesTo": [
+      "864"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "223",
+    "name": "Remoraid",
+    "evolvesTo": [
+      "224"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "224",
+    "name": "Octillery",
+    "evolvesTo": [],
+    "evolvesFrom": "223",
+    "processed": true
+  },
+  {
+    "id": "225",
+    "name": "Delibird",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "226",
+    "name": "Mantine",
+    "evolvesTo": [],
+    "evolvesFrom": "458",
+    "processed": true
+  },
+  {
+    "id": "227",
+    "name": "Skarmory",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "228",
+    "name": "Houndour",
+    "evolvesTo": [
+      "229"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "229",
+    "name": "Houndoom",
+    "evolvesTo": [],
+    "evolvesFrom": "228",
+    "processed": true
+  },
+  {
+    "id": "230",
+    "name": "Kingdra",
+    "evolvesTo": [],
+    "evolvesFrom": "117",
+    "processed": true
+  },
+  {
+    "id": "231",
+    "name": "Phanpy",
+    "evolvesTo": [
+      "232"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "232",
+    "name": "Donphan",
+    "evolvesTo": [],
+    "evolvesFrom": "231",
+    "processed": true
+  },
+  {
+    "id": "233",
+    "name": "Porygon2",
+    "evolvesTo": [
+      "474"
+    ],
+    "evolvesFrom": "137",
+    "processed": true
+  },
+  {
+    "id": "234",
+    "name": "Stantler",
+    "evolvesTo": [
+      "899"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "235",
+    "name": "Smeargle",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "236",
+    "name": "Tyrogue",
+    "evolvesTo": [
+      "106",
+      "107",
+      "237"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "237",
+    "name": "Hitmontop",
+    "evolvesTo": [],
+    "evolvesFrom": "236",
+    "processed": true
+  },
+  {
+    "id": "238",
+    "name": "Smoochum",
+    "evolvesTo": [
+      "124"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "239",
+    "name": "Elekid",
+    "evolvesTo": [
+      "125"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "240",
+    "name": "Magby",
+    "evolvesTo": [
+      "126"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "241",
+    "name": "Miltank",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "242",
+    "name": "Blissey",
+    "evolvesTo": [],
+    "evolvesFrom": "113",
+    "processed": true
+  },
+  {
+    "id": "243",
+    "name": "Raikou",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "244",
+    "name": "Entei",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "245",
+    "name": "Suicune",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "246",
+    "name": "Larvitar",
+    "evolvesTo": [
+      "247"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "247",
+    "name": "Pupitar",
+    "evolvesTo": [
+      "248"
+    ],
+    "evolvesFrom": "246",
+    "processed": true
+  },
+  {
+    "id": "248",
+    "name": "Tyranitar",
+    "evolvesTo": [],
+    "evolvesFrom": "247",
+    "processed": true
+  },
+  {
+    "id": "249",
+    "name": "Lugia",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "251",
+    "name": "Celebi",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "252",
+    "name": "Treecko",
+    "evolvesTo": [
+      "253"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "253",
+    "name": "Grovyle",
+    "evolvesTo": [
+      "254"
+    ],
+    "evolvesFrom": "252",
+    "processed": true
+  },
+  {
+    "id": "254",
+    "name": "Sceptile",
+    "evolvesTo": [],
+    "evolvesFrom": "253",
+    "processed": true
+  },
+  {
+    "id": "255",
+    "name": "Torchic",
+    "evolvesTo": [
+      "256"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "256",
+    "name": "Combusken",
+    "evolvesTo": [
+      "257"
+    ],
+    "evolvesFrom": "255",
+    "processed": true
+  },
+  {
+    "id": "257",
+    "name": "Blaziken",
+    "evolvesTo": [],
+    "evolvesFrom": "256",
+    "processed": true
+  },
+  {
+    "id": "258",
+    "name": "Mudkip",
+    "evolvesTo": [
+      "259"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "259",
+    "name": "Marshtomp",
+    "evolvesTo": [
+      "260"
+    ],
+    "evolvesFrom": "258",
+    "processed": true
+  },
+  {
+    "id": "260",
+    "name": "Swampert",
+    "evolvesTo": [],
+    "evolvesFrom": "259",
+    "processed": true
+  },
+  {
+    "id": "261",
+    "name": "Poochyena",
+    "evolvesTo": [
+      "262"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "262",
+    "name": "Mightyena",
+    "evolvesTo": [],
+    "evolvesFrom": "261",
+    "processed": true
+  },
+  {
+    "id": "263",
+    "name": "Zigzagoon",
+    "evolvesTo": [
+      "264"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "264",
+    "name": "Linoone",
+    "evolvesTo": [
+      "862"
+    ],
+    "evolvesFrom": "263",
+    "processed": true
+  },
+  {
+    "id": "265",
+    "name": "Wurmple",
+    "evolvesTo": [
+      "266",
+      "268"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "266",
+    "name": "Silcoon",
+    "evolvesTo": [
+      "267"
+    ],
+    "evolvesFrom": "265",
+    "processed": true
+  },
+  {
+    "id": "267",
+    "name": "Beautifly",
+    "evolvesTo": [],
+    "evolvesFrom": "266",
+    "processed": true
+  },
+  {
+    "id": "268",
+    "name": "Cascoon",
+    "evolvesTo": [
+      "269"
+    ],
+    "evolvesFrom": "265",
+    "processed": true
+  },
+  {
+    "id": "269",
+    "name": "Dustox",
+    "evolvesTo": [],
+    "evolvesFrom": "268",
+    "processed": true
+  },
+  {
+    "id": "270",
+    "name": "Lotad",
+    "evolvesTo": [
+      "271"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "271",
+    "name": "Lombre",
+    "evolvesTo": [
+      "272"
+    ],
+    "evolvesFrom": "270",
+    "processed": true
+  },
+  {
+    "id": "272",
+    "name": "Ludicolo",
+    "evolvesTo": [],
+    "evolvesFrom": "271",
+    "processed": true
+  },
+  {
+    "id": "273",
+    "name": "Seedot",
+    "evolvesTo": [
+      "274"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "274",
+    "name": "Nuzleaf",
+    "evolvesTo": [
+      "275"
+    ],
+    "evolvesFrom": "273",
+    "processed": true
+  },
+  {
+    "id": "275",
+    "name": "Shiftry",
+    "evolvesTo": [],
+    "evolvesFrom": "274",
+    "processed": true
+  },
+  {
+    "id": "276",
+    "name": "Taillow",
+    "evolvesTo": [
+      "277"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "277",
+    "name": "Swellow",
+    "evolvesTo": [],
+    "evolvesFrom": "276",
+    "processed": true
+  },
+  {
+    "id": "278",
+    "name": "Wingull",
+    "evolvesTo": [
+      "279"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "279",
+    "name": "Pelipper",
+    "evolvesTo": [],
+    "evolvesFrom": "278",
+    "processed": true
+  },
+  {
+    "id": "280",
+    "name": "Ralts",
+    "evolvesTo": [
+      "281"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "281",
+    "name": "Kirlia",
+    "evolvesTo": [
+      "282",
+      "475"
+    ],
+    "evolvesFrom": "280",
+    "processed": true
+  },
+  {
+    "id": "282",
+    "name": "Gardevoir",
+    "evolvesTo": [],
+    "evolvesFrom": "281",
+    "processed": true
+  },
+  {
+    "id": "283",
+    "name": "Surskit",
+    "evolvesTo": [
+      "284"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "284",
+    "name": "Masquerain",
+    "evolvesTo": [],
+    "evolvesFrom": "283",
+    "processed": true
+  },
+  {
+    "id": "285",
+    "name": "Shroomish",
+    "evolvesTo": [
+      "286"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "286",
+    "name": "Breloom",
+    "evolvesTo": [],
+    "evolvesFrom": "285",
+    "processed": true
+  },
+  {
+    "id": "287",
+    "name": "Slakoth",
+    "evolvesTo": [
+      "288"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "288",
+    "name": "Vigoroth",
+    "evolvesTo": [
+      "289"
+    ],
+    "evolvesFrom": "287",
+    "processed": true
+  },
+  {
+    "id": "289",
+    "name": "Slaking",
+    "evolvesTo": [],
+    "evolvesFrom": "288",
+    "processed": true
+  },
+  {
+    "id": "290",
+    "name": "Nincada",
+    "evolvesTo": [
+      "291",
+      "292"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "291",
+    "name": "Ninjask",
+    "evolvesTo": [],
+    "evolvesFrom": "290",
+    "processed": true
+  },
+  {
+    "id": "292",
+    "name": "Shedinja",
+    "evolvesTo": [],
+    "evolvesFrom": "290",
+    "processed": true
+  },
+  {
+    "id": "293",
+    "name": "Whismur",
+    "evolvesTo": [
+      "294"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "294",
+    "name": "Loudred",
+    "evolvesTo": [
+      "295"
+    ],
+    "evolvesFrom": "293",
+    "processed": true
+  },
+  {
+    "id": "295",
+    "name": "Exploud",
+    "evolvesTo": [],
+    "evolvesFrom": "294",
+    "processed": true
+  },
+  {
+    "id": "296",
+    "name": "Makuhita",
+    "evolvesTo": [
+      "297"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "297",
+    "name": "Hariyama",
+    "evolvesTo": [],
+    "evolvesFrom": "296",
+    "processed": true
+  },
+  {
+    "id": "298",
+    "name": "Azurill",
+    "evolvesTo": [
+      "183"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "299",
+    "name": "Nosepass",
+    "evolvesTo": [
+      "476"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "300",
+    "name": "Skitty",
+    "evolvesTo": [
+      "301"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "301",
+    "name": "Delcatty",
+    "evolvesTo": [],
+    "evolvesFrom": "300",
+    "processed": true
+  },
+  {
+    "id": "302",
+    "name": "Sableye",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "303",
+    "name": "Mawile",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "304",
+    "name": "Aron",
+    "evolvesTo": [
+      "305"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "305",
+    "name": "Lairon",
+    "evolvesTo": [
+      "306"
+    ],
+    "evolvesFrom": "304",
+    "processed": true
+  },
+  {
+    "id": "306",
+    "name": "Aggron",
+    "evolvesTo": [],
+    "evolvesFrom": "305",
+    "processed": true
+  },
+  {
+    "id": "307",
+    "name": "Meditite",
+    "evolvesTo": [
+      "308"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "308",
+    "name": "Medicham",
+    "evolvesTo": [],
+    "evolvesFrom": "307",
+    "processed": true
+  },
+  {
+    "id": "309",
+    "name": "Electrike",
+    "evolvesTo": [
+      "310"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "310",
+    "name": "Manectric",
+    "evolvesTo": [],
+    "evolvesFrom": "309",
+    "processed": true
+  },
+  {
+    "id": "311",
+    "name": "Plusle",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "312",
+    "name": "Minun",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "313",
+    "name": "Volbeat",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "314",
+    "name": "Illumise",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "315",
+    "name": "Roselia",
+    "evolvesTo": [
+      "407"
+    ],
+    "evolvesFrom": "406",
+    "processed": true
+  },
+  {
+    "id": "316",
+    "name": "Gulpin",
+    "evolvesTo": [
+      "317"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "317",
+    "name": "Swalot",
+    "evolvesTo": [],
+    "evolvesFrom": "316",
+    "processed": true
+  },
+  {
+    "id": "318",
+    "name": "Carvanha",
+    "evolvesTo": [
+      "319"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "319",
+    "name": "Sharpedo",
+    "evolvesTo": [],
+    "evolvesFrom": "318",
+    "processed": true
+  },
+  {
+    "id": "320",
+    "name": "Wailmer",
+    "evolvesTo": [
+      "321"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "321",
+    "name": "Wailord",
+    "evolvesTo": [],
+    "evolvesFrom": "320",
+    "processed": true
+  },
+  {
+    "id": "322",
+    "name": "Numel",
+    "evolvesTo": [
+      "323"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "323",
+    "name": "Camerupt",
+    "evolvesTo": [],
+    "evolvesFrom": "322",
+    "processed": true
+  },
+  {
+    "id": "324",
+    "name": "Torkoal",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "325",
+    "name": "Spoink",
+    "evolvesTo": [
+      "326"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "326",
+    "name": "Grumpig",
+    "evolvesTo": [],
+    "evolvesFrom": "325",
+    "processed": true
+  },
+  {
+    "id": "327",
+    "name": "Spinda",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "328",
+    "name": "Trapinch",
+    "evolvesTo": [
+      "329"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "329",
+    "name": "Vibrava",
+    "evolvesTo": [
+      "330"
+    ],
+    "evolvesFrom": "328",
+    "processed": true
+  },
+  {
+    "id": "330",
+    "name": "Flygon",
+    "evolvesTo": [],
+    "evolvesFrom": "329",
+    "processed": true
+  },
+  {
+    "id": "331",
+    "name": "Cacnea",
+    "evolvesTo": [
+      "332"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "332",
+    "name": "Cacturne",
+    "evolvesTo": [],
+    "evolvesFrom": "331",
+    "processed": true
+  },
+  {
+    "id": "333",
+    "name": "Swablu",
+    "evolvesTo": [
+      "334"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "334",
+    "name": "Altaria",
+    "evolvesTo": [],
+    "evolvesFrom": "333",
+    "processed": true
+  },
+  {
+    "id": "335",
+    "name": "Zangoose",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "336",
+    "name": "Seviper",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "337",
+    "name": "Lunatone",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "338",
+    "name": "Solrock",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "339",
+    "name": "Barboach",
+    "evolvesTo": [
+      "340"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "340",
+    "name": "Whiscash",
+    "evolvesTo": [],
+    "evolvesFrom": "339",
+    "processed": true
+  },
+  {
+    "id": "341",
+    "name": "Corphish",
+    "evolvesTo": [
+      "342"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "342",
+    "name": "Crawdaunt",
+    "evolvesTo": [],
+    "evolvesFrom": "341",
+    "processed": true
+  },
+  {
+    "id": "343",
+    "name": "Baltoy",
+    "evolvesTo": [
+      "344"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "344",
+    "name": "Claydol",
+    "evolvesTo": [],
+    "evolvesFrom": "343",
+    "processed": true
+  },
+  {
+    "id": "345",
+    "name": "Lileep",
+    "evolvesTo": [
+      "346"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "346",
+    "name": "Cradily",
+    "evolvesTo": [],
+    "evolvesFrom": "345",
+    "processed": true
+  },
+  {
+    "id": "347",
+    "name": "Anorith",
+    "evolvesTo": [
+      "348"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "348",
+    "name": "Armaldo",
+    "evolvesTo": [],
+    "evolvesFrom": "347",
+    "processed": true
+  },
+  {
+    "id": "349",
+    "name": "Feebas",
+    "evolvesTo": [
+      "350"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "350",
+    "name": "Milotic",
+    "evolvesTo": [],
+    "evolvesFrom": "349",
+    "processed": true
+  },
+  {
+    "id": "351",
+    "name": "Castform",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "352",
+    "name": "Kecleon",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "353",
+    "name": "Shuppet",
+    "evolvesTo": [
+      "354"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "354",
+    "name": "Banette",
+    "evolvesTo": [],
+    "evolvesFrom": "353",
+    "processed": true
+  },
+  {
+    "id": "355",
+    "name": "Duskull",
+    "evolvesTo": [
+      "356"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "356",
+    "name": "Dusclops",
+    "evolvesTo": [
+      "477"
+    ],
+    "evolvesFrom": "355",
+    "processed": true
+  },
+  {
+    "id": "357",
+    "name": "Tropius",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "358",
+    "name": "Chimecho",
+    "evolvesTo": [],
+    "evolvesFrom": "433",
+    "processed": true
+  },
+  {
+    "id": "359",
+    "name": "Absol",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "360",
+    "name": "Wynaut",
+    "evolvesTo": [
+      "202"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "361",
+    "name": "Snorunt",
+    "evolvesTo": [
+      "362",
+      "478"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "362",
+    "name": "Glalie",
+    "evolvesTo": [],
+    "evolvesFrom": "361",
+    "processed": true
+  },
+  {
+    "id": "363",
+    "name": "Spheal",
+    "evolvesTo": [
+      "364"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "364",
+    "name": "Sealeo",
+    "evolvesTo": [
+      "365"
+    ],
+    "evolvesFrom": "363",
+    "processed": true
+  },
+  {
+    "id": "365",
+    "name": "Walrein",
+    "evolvesTo": [],
+    "evolvesFrom": "364",
+    "processed": true
+  },
+  {
+    "id": "366",
+    "name": "Clamperl",
+    "evolvesTo": [
+      "367",
+      "368"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "367",
+    "name": "Huntail",
+    "evolvesTo": [],
+    "evolvesFrom": "366",
+    "processed": true
+  },
+  {
+    "id": "368",
+    "name": "Gorebyss",
+    "evolvesTo": [],
+    "evolvesFrom": "366",
+    "processed": true
+  },
+  {
+    "id": "369",
+    "name": "Relicanth",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "370",
+    "name": "Luvdisc",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "371",
+    "name": "Bagon",
+    "evolvesTo": [
+      "372"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "372",
+    "name": "Shelgon",
+    "evolvesTo": [
+      "373"
+    ],
+    "evolvesFrom": "371",
+    "processed": true
+  },
+  {
+    "id": "373",
+    "name": "Salamence",
+    "evolvesTo": [],
+    "evolvesFrom": "372",
+    "processed": true
+  },
+  {
+    "id": "374",
+    "name": "Beldum",
+    "evolvesTo": [
+      "375"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "375",
+    "name": "Metang",
+    "evolvesTo": [
+      "376"
+    ],
+    "evolvesFrom": "374",
+    "processed": true
+  },
+  {
+    "id": "376",
+    "name": "Metagross",
+    "evolvesTo": [],
+    "evolvesFrom": "375",
+    "processed": true
+  },
+  {
+    "id": "377",
+    "name": "Regirock",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "378",
+    "name": "Regice",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "379",
+    "name": "Registeel",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "380",
+    "name": "Latias",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "381",
+    "name": "Latios",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "382",
+    "name": "Kyogre",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "383",
+    "name": "Groudon",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "384",
+    "name": "Rayquaza",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "385",
+    "name": "Jirachi",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "387",
+    "name": "Turtwig",
+    "evolvesTo": [
+      "388"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "388",
+    "name": "Grotle",
+    "evolvesTo": [
+      "389"
+    ],
+    "evolvesFrom": "387",
+    "processed": true
+  },
+  {
+    "id": "389",
+    "name": "Torterra",
+    "evolvesTo": [],
+    "evolvesFrom": "388",
+    "processed": true
+  },
+  {
+    "id": "390",
+    "name": "Chimchar",
+    "evolvesTo": [
+      "391"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "391",
+    "name": "Monferno",
+    "evolvesTo": [
+      "392"
+    ],
+    "evolvesFrom": "390",
+    "processed": true
+  },
+  {
+    "id": "392",
+    "name": "Infernape",
+    "evolvesTo": [],
+    "evolvesFrom": "391",
+    "processed": true
+  },
+  {
+    "id": "393",
+    "name": "Piplup",
+    "evolvesTo": [
+      "394"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "394",
+    "name": "Prinplup",
+    "evolvesTo": [
+      "395"
+    ],
+    "evolvesFrom": "393",
+    "processed": true
+  },
+  {
+    "id": "395",
+    "name": "Empoleon",
+    "evolvesTo": [],
+    "evolvesFrom": "394",
+    "processed": true
+  },
+  {
+    "id": "396",
+    "name": "Starly",
+    "evolvesTo": [
+      "397"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "397",
+    "name": "Staravia",
+    "evolvesTo": [
+      "398"
+    ],
+    "evolvesFrom": "396",
+    "processed": true
+  },
+  {
+    "id": "398",
+    "name": "Staraptor",
+    "evolvesTo": [],
+    "evolvesFrom": "397",
+    "processed": true
+  },
+  {
+    "id": "399",
+    "name": "Bidoof",
+    "evolvesTo": [
+      "400"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "400",
+    "name": "Bibarel",
+    "evolvesTo": [],
+    "evolvesFrom": "399",
+    "processed": true
+  },
+  {
+    "id": "401",
+    "name": "Kricketot",
+    "evolvesTo": [
+      "402"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "402",
+    "name": "Kricketune",
+    "evolvesTo": [],
+    "evolvesFrom": "401",
+    "processed": true
+  },
+  {
+    "id": "403",
+    "name": "Shinx",
+    "evolvesTo": [
+      "404"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "404",
+    "name": "Luxio",
+    "evolvesTo": [
+      "405"
+    ],
+    "evolvesFrom": "403",
+    "processed": true
+  },
+  {
+    "id": "405",
+    "name": "Luxray",
+    "evolvesTo": [],
+    "evolvesFrom": "404",
+    "processed": true
+  },
+  {
+    "id": "406",
+    "name": "Budew",
+    "evolvesTo": [
+      "315"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "407",
+    "name": "Roserade",
+    "evolvesTo": [],
+    "evolvesFrom": "315",
+    "processed": true
+  },
+  {
+    "id": "408",
+    "name": "Cranidos",
+    "evolvesTo": [
+      "409"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "409",
+    "name": "Rampardos",
+    "evolvesTo": [],
+    "evolvesFrom": "408",
+    "processed": true
+  },
+  {
+    "id": "410",
+    "name": "Shieldon",
+    "evolvesTo": [
+      "411"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "411",
+    "name": "Bastiodon",
+    "evolvesTo": [],
+    "evolvesFrom": "410",
+    "processed": true
+  },
+  {
+    "id": "412",
+    "name": "Burmy",
+    "evolvesTo": [
+      "414"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "414",
+    "name": "Mothim",
+    "evolvesTo": [],
+    "evolvesFrom": "412",
+    "processed": true
+  },
+  {
+    "id": "415",
+    "name": "Combee",
+    "evolvesTo": [
+      "416"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "416",
+    "name": "Vespiquen",
+    "evolvesTo": [],
+    "evolvesFrom": "415",
+    "processed": true
+  },
+  {
+    "id": "417",
+    "name": "Pachirisu",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "418",
+    "name": "Buizel",
+    "evolvesTo": [
+      "419"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "419",
+    "name": "Floatzel",
+    "evolvesTo": [],
+    "evolvesFrom": "418",
+    "processed": true
+  },
+  {
+    "id": "420",
+    "name": "Cherubi",
+    "evolvesTo": [
+      "421"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "421",
+    "name": "Cherrim",
+    "evolvesTo": [],
+    "evolvesFrom": "420",
+    "processed": true
+  },
+  {
+    "id": "422",
+    "name": "Shellos",
+    "evolvesTo": [
+      "423"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "423",
+    "name": "Gastrodon",
+    "evolvesTo": [],
+    "evolvesFrom": "422",
+    "processed": true
+  },
+  {
+    "id": "424",
+    "name": "Ambipom",
+    "evolvesTo": [],
+    "evolvesFrom": "190",
+    "processed": true
+  },
+  {
+    "id": "425",
+    "name": "Drifloon",
+    "evolvesTo": [
+      "426"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "426",
+    "name": "Drifblim",
+    "evolvesTo": [],
+    "evolvesFrom": "425",
+    "processed": true
+  },
+  {
+    "id": "427",
+    "name": "Buneary",
+    "evolvesTo": [
+      "428"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "428",
+    "name": "Lopunny",
+    "evolvesTo": [],
+    "evolvesFrom": "427",
+    "processed": true
+  },
+  {
+    "id": "429",
+    "name": "Mismagius",
+    "evolvesTo": [],
+    "evolvesFrom": "200",
+    "processed": true
+  },
+  {
+    "id": "430",
+    "name": "Honchkrow",
+    "evolvesTo": [],
+    "evolvesFrom": "198",
+    "processed": true
+  },
+  {
+    "id": "431",
+    "name": "Glameow",
+    "evolvesTo": [
+      "432"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "432",
+    "name": "Purugly",
+    "evolvesTo": [],
+    "evolvesFrom": "431",
+    "processed": true
+  },
+  {
+    "id": "433",
+    "name": "Chingling",
+    "evolvesTo": [
+      "358"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "434",
+    "name": "Stunky",
+    "evolvesTo": [
+      "435"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "435",
+    "name": "Skuntank",
+    "evolvesTo": [],
+    "evolvesFrom": "434",
+    "processed": true
+  },
+  {
+    "id": "436",
+    "name": "Bronzor",
+    "evolvesTo": [
+      "437"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "437",
+    "name": "Bronzong",
+    "evolvesTo": [],
+    "evolvesFrom": "436",
+    "processed": true
+  },
+  {
+    "id": "438",
+    "name": "Bonsly",
+    "evolvesTo": [
+      "185"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "440",
+    "name": "Happiny",
+    "evolvesTo": [
+      "113"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "441",
+    "name": "Chatot",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "442",
+    "name": "Spiritomb",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "443",
+    "name": "Gible",
+    "evolvesTo": [
+      "444"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "444",
+    "name": "Gabite",
+    "evolvesTo": [
+      "445"
+    ],
+    "evolvesFrom": "443",
+    "processed": true
+  },
+  {
+    "id": "445",
+    "name": "Garchomp",
+    "evolvesTo": [],
+    "evolvesFrom": "444",
+    "processed": true
+  },
+  {
+    "id": "446",
+    "name": "Munchlax",
+    "evolvesTo": [
+      "143"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "447",
+    "name": "Riolu",
+    "evolvesTo": [
+      "448"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "448",
+    "name": "Lucario",
+    "evolvesTo": [],
+    "evolvesFrom": "447",
+    "processed": true
+  },
+  {
+    "id": "449",
+    "name": "Hippopotas",
+    "evolvesTo": [
+      "450"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "450",
+    "name": "Hippowdon",
+    "evolvesTo": [],
+    "evolvesFrom": "449",
+    "processed": true
+  },
+  {
+    "id": "451",
+    "name": "Skorupi",
+    "evolvesTo": [
+      "452"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "452",
+    "name": "Drapion",
+    "evolvesTo": [],
+    "evolvesFrom": "451",
+    "processed": true
+  },
+  {
+    "id": "453",
+    "name": "Croagunk",
+    "evolvesTo": [
+      "454"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "454",
+    "name": "Toxicroak",
+    "evolvesTo": [],
+    "evolvesFrom": "453",
+    "processed": true
+  },
+  {
+    "id": "455",
+    "name": "Carnivine",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "456",
+    "name": "Finneon",
+    "evolvesTo": [
+      "457"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "457",
+    "name": "Lumineon",
+    "evolvesTo": [],
+    "evolvesFrom": "456",
+    "processed": true
+  },
+  {
+    "id": "458",
+    "name": "Mantyke",
+    "evolvesTo": [
+      "226"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "459",
+    "name": "Snover",
+    "evolvesTo": [
+      "460"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "460",
+    "name": "Abomasnow",
+    "evolvesTo": [],
+    "evolvesFrom": "459",
+    "processed": true
+  },
+  {
+    "id": "461",
+    "name": "Weavile",
+    "evolvesTo": [],
+    "evolvesFrom": "215",
+    "processed": true
+  },
+  {
+    "id": "462",
+    "name": "Magnezone",
+    "evolvesTo": [],
+    "evolvesFrom": "82",
+    "processed": true
+  },
+  {
+    "id": "463",
+    "name": "Lickilicky",
+    "evolvesTo": [],
+    "evolvesFrom": "108",
+    "processed": true
+  },
+  {
+    "id": "464",
+    "name": "Rhyperior",
+    "evolvesTo": [],
+    "evolvesFrom": "112",
+    "processed": true
+  },
+  {
+    "id": "465",
+    "name": "Tangrowth",
+    "evolvesTo": [],
+    "evolvesFrom": "114",
+    "processed": true
+  },
+  {
+    "id": "466",
+    "name": "Electivire",
+    "evolvesTo": [],
+    "evolvesFrom": "125",
+    "processed": true
+  },
+  {
+    "id": "467",
+    "name": "Magmortar",
+    "evolvesTo": [],
+    "evolvesFrom": "126",
+    "processed": true
+  },
+  {
+    "id": "468",
+    "name": "Togekiss",
+    "evolvesTo": [],
+    "evolvesFrom": "176",
+    "processed": true
+  },
+  {
+    "id": "469",
+    "name": "Yanmega",
+    "evolvesTo": [],
+    "evolvesFrom": "193",
+    "processed": true
+  },
+  {
+    "id": "470",
+    "name": "Leafeon",
+    "evolvesTo": [],
+    "evolvesFrom": "133",
+    "processed": true
+  },
+  {
+    "id": "471",
+    "name": "Glaceon",
+    "evolvesTo": [],
+    "evolvesFrom": "133",
+    "processed": true
+  },
+  {
+    "id": "472",
+    "name": "Gliscor",
+    "evolvesTo": [],
+    "evolvesFrom": "207",
+    "processed": true
+  },
+  {
+    "id": "473",
+    "name": "Mamoswine",
+    "evolvesTo": [],
+    "evolvesFrom": "221",
+    "processed": true
+  },
+  {
+    "id": "475",
+    "name": "Gallade",
+    "evolvesTo": [],
+    "evolvesFrom": "281",
+    "processed": true
+  },
+  {
+    "id": "476",
+    "name": "Probopass",
+    "evolvesTo": [],
+    "evolvesFrom": "299",
+    "processed": true
+  },
+  {
+    "id": "477",
+    "name": "Dusknoir",
+    "evolvesTo": [],
+    "evolvesFrom": "356",
+    "processed": true
+  },
+  {
+    "id": "478",
+    "name": "Froslass",
+    "evolvesTo": [],
+    "evolvesFrom": "361",
+    "processed": true
+  },
+  {
+    "id": "479",
+    "name": "Rotom",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "480",
+    "name": "Uxie",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "481",
+    "name": "Mesprit",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "482",
+    "name": "Azelf",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "483",
+    "name": "Dialga",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "484",
+    "name": "Palkia",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "485",
+    "name": "Heatran",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "486",
+    "name": "Regigigas",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "488",
+    "name": "Cresselia",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "489",
+    "name": "Phione",
+    "evolvesTo": [
+      "490"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "490",
+    "name": "Manaphy",
+    "evolvesTo": [],
+    "evolvesFrom": "489",
+    "processed": true
+  },
+  {
+    "id": "491",
+    "name": "Darkrai",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "493",
+    "name": "Arceus",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "494",
+    "name": "Victini",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "495",
+    "name": "Snivy",
+    "evolvesTo": [
+      "496"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "496",
+    "name": "Servine",
+    "evolvesTo": [
+      "497"
+    ],
+    "evolvesFrom": "495",
+    "processed": true
+  },
+  {
+    "id": "497",
+    "name": "Serperior",
+    "evolvesTo": [],
+    "evolvesFrom": "496",
+    "processed": true
+  },
+  {
+    "id": "498",
+    "name": "Tepig",
+    "evolvesTo": [
+      "499"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "499",
+    "name": "Pignite",
+    "evolvesTo": [
+      "500"
+    ],
+    "evolvesFrom": "498",
+    "processed": true
+  },
+  {
+    "id": "500",
+    "name": "Emboar",
+    "evolvesTo": [],
+    "evolvesFrom": "499",
+    "processed": true
+  },
+  {
+    "id": "501",
+    "name": "Oshawott",
+    "evolvesTo": [
+      "502"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "502",
+    "name": "Dewott",
+    "evolvesTo": [
+      "503"
+    ],
+    "evolvesFrom": "501",
+    "processed": true
+  },
+  {
+    "id": "503",
+    "name": "Samurott",
+    "evolvesTo": [],
+    "evolvesFrom": "502",
+    "processed": true
+  },
+  {
+    "id": "504",
+    "name": "Patrat",
+    "evolvesTo": [
+      "505"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "505",
+    "name": "Watchog",
+    "evolvesTo": [],
+    "evolvesFrom": "504",
+    "processed": true
+  },
+  {
+    "id": "506",
+    "name": "Lillipup",
+    "evolvesTo": [
+      "507"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "507",
+    "name": "Herdier",
+    "evolvesTo": [
+      "508"
+    ],
+    "evolvesFrom": "506",
+    "processed": true
+  },
+  {
+    "id": "508",
+    "name": "Stoutland",
+    "evolvesTo": [],
+    "evolvesFrom": "507",
+    "processed": true
+  },
+  {
+    "id": "509",
+    "name": "Purrloin",
+    "evolvesTo": [
+      "510"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "510",
+    "name": "Liepard",
+    "evolvesTo": [],
+    "evolvesFrom": "509",
+    "processed": true
+  },
+  {
+    "id": "511",
+    "name": "Pansage",
+    "evolvesTo": [
+      "512"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "512",
+    "name": "Simisage",
+    "evolvesTo": [],
+    "evolvesFrom": "511",
+    "processed": true
+  },
+  {
+    "id": "513",
+    "name": "Pansear",
+    "evolvesTo": [
+      "514"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "514",
+    "name": "Simisear",
+    "evolvesTo": [],
+    "evolvesFrom": "513",
+    "processed": true
+  },
+  {
+    "id": "515",
+    "name": "Panpour",
+    "evolvesTo": [
+      "516"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "516",
+    "name": "Simipour",
+    "evolvesTo": [],
+    "evolvesFrom": "515",
+    "processed": true
+  },
+  {
+    "id": "517",
+    "name": "Munna",
+    "evolvesTo": [
+      "518"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "518",
+    "name": "Musharna",
+    "evolvesTo": [],
+    "evolvesFrom": "517",
+    "processed": true
+  },
+  {
+    "id": "519",
+    "name": "Pidove",
+    "evolvesTo": [
+      "520"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "520",
+    "name": "Tranquill",
+    "evolvesTo": [
+      "521"
+    ],
+    "evolvesFrom": "519",
+    "processed": true
+  },
+  {
+    "id": "521",
+    "name": "Unfezant",
+    "evolvesTo": [],
+    "evolvesFrom": "520",
+    "processed": true
+  },
+  {
+    "id": "522",
+    "name": "Blitzle",
+    "evolvesTo": [
+      "523"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "523",
+    "name": "Zebstrika",
+    "evolvesTo": [],
+    "evolvesFrom": "522",
+    "processed": true
+  },
+  {
+    "id": "524",
+    "name": "Roggenrola",
+    "evolvesTo": [
+      "525"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "525",
+    "name": "Boldore",
+    "evolvesTo": [
+      "526"
+    ],
+    "evolvesFrom": "524",
+    "processed": true
+  },
+  {
+    "id": "526",
+    "name": "Gigalith",
+    "evolvesTo": [],
+    "evolvesFrom": "525",
+    "processed": true
+  },
+  {
+    "id": "527",
+    "name": "Woobat",
+    "evolvesTo": [
+      "528"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "528",
+    "name": "Swoobat",
+    "evolvesTo": [],
+    "evolvesFrom": "527",
+    "processed": true
+  },
+  {
+    "id": "529",
+    "name": "Drilbur",
+    "evolvesTo": [
+      "530"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "530",
+    "name": "Excadrill",
+    "evolvesTo": [],
+    "evolvesFrom": "529",
+    "processed": true
+  },
+  {
+    "id": "531",
+    "name": "Audino",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "532",
+    "name": "Timburr",
+    "evolvesTo": [
+      "533"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "533",
+    "name": "Gurdurr",
+    "evolvesTo": [
+      "534"
+    ],
+    "evolvesFrom": "532",
+    "processed": true
+  },
+  {
+    "id": "534",
+    "name": "Conkeldurr",
+    "evolvesTo": [],
+    "evolvesFrom": "533",
+    "processed": true
+  },
+  {
+    "id": "535",
+    "name": "Tympole",
+    "evolvesTo": [
+      "536"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "536",
+    "name": "Palpitoad",
+    "evolvesTo": [
+      "537"
+    ],
+    "evolvesFrom": "535",
+    "processed": true
+  },
+  {
+    "id": "537",
+    "name": "Seismitoad",
+    "evolvesTo": [],
+    "evolvesFrom": "536",
+    "processed": true
+  },
+  {
+    "id": "538",
+    "name": "Throh",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "539",
+    "name": "Sawk",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "540",
+    "name": "Sewaddle",
+    "evolvesTo": [
+      "541"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "541",
+    "name": "Swadloon",
+    "evolvesTo": [
+      "542"
+    ],
+    "evolvesFrom": "540",
+    "processed": true
+  },
+  {
+    "id": "542",
+    "name": "Leavanny",
+    "evolvesTo": [],
+    "evolvesFrom": "541",
+    "processed": true
+  },
+  {
+    "id": "543",
+    "name": "Venipede",
+    "evolvesTo": [
+      "544"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "544",
+    "name": "Whirlipede",
+    "evolvesTo": [
+      "545"
+    ],
+    "evolvesFrom": "543",
+    "processed": true
+  },
+  {
+    "id": "545",
+    "name": "Scolipede",
+    "evolvesTo": [],
+    "evolvesFrom": "544",
+    "processed": true
+  },
+  {
+    "id": "546",
+    "name": "Cottonee",
+    "evolvesTo": [
+      "547"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "547",
+    "name": "Whimsicott",
+    "evolvesTo": [],
+    "evolvesFrom": "546",
+    "processed": true
+  },
+  {
+    "id": "548",
+    "name": "Petilil",
+    "evolvesTo": [
+      "549"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "549",
+    "name": "Lilligant",
+    "evolvesTo": [],
+    "evolvesFrom": "548",
+    "processed": true
+  },
+  {
+    "id": "551",
+    "name": "Sandile",
+    "evolvesTo": [
+      "552"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "552",
+    "name": "Krokorok",
+    "evolvesTo": [
+      "553"
+    ],
+    "evolvesFrom": "551",
+    "processed": true
+  },
+  {
+    "id": "553",
+    "name": "Krookodile",
+    "evolvesTo": [],
+    "evolvesFrom": "552",
+    "processed": true
+  },
+  {
+    "id": "554",
+    "name": "Darumaka",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "556",
+    "name": "Maractus",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "557",
+    "name": "Dwebble",
+    "evolvesTo": [
+      "558"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "558",
+    "name": "Crustle",
+    "evolvesTo": [],
+    "evolvesFrom": "557",
+    "processed": true
+  },
+  {
+    "id": "559",
+    "name": "Scraggy",
+    "evolvesTo": [
+      "560"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "560",
+    "name": "Scrafty",
+    "evolvesTo": [],
+    "evolvesFrom": "559",
+    "processed": true
+  },
+  {
+    "id": "561",
+    "name": "Sigilyph",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "562",
+    "name": "Yamask",
+    "evolvesTo": [
+      "563",
+      "867"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "563",
+    "name": "Cofagrigus",
+    "evolvesTo": [],
+    "evolvesFrom": "562",
+    "processed": true
+  },
+  {
+    "id": "564",
+    "name": "Tirtouga",
+    "evolvesTo": [
+      "565"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "565",
+    "name": "Carracosta",
+    "evolvesTo": [],
+    "evolvesFrom": "564",
+    "processed": true
+  },
+  {
+    "id": "566",
+    "name": "Archen",
+    "evolvesTo": [
+      "567"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "567",
+    "name": "Archeops",
+    "evolvesTo": [],
+    "evolvesFrom": "566",
+    "processed": true
+  },
+  {
+    "id": "568",
+    "name": "Trubbish",
+    "evolvesTo": [
+      "569"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "569",
+    "name": "Garbodor",
+    "evolvesTo": [],
+    "evolvesFrom": "568",
+    "processed": true
+  },
+  {
+    "id": "570",
+    "name": "Zorua",
+    "evolvesTo": [
+      "571"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "571",
+    "name": "Zoroark",
+    "evolvesTo": [],
+    "evolvesFrom": "570",
+    "processed": true
+  },
+  {
+    "id": "572",
+    "name": "Minccino",
+    "evolvesTo": [
+      "573"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "573",
+    "name": "Cinccino",
+    "evolvesTo": [],
+    "evolvesFrom": "572",
+    "processed": true
+  },
+  {
+    "id": "574",
+    "name": "Gothita",
+    "evolvesTo": [
+      "575"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "575",
+    "name": "Gothorita",
+    "evolvesTo": [
+      "576"
+    ],
+    "evolvesFrom": "574",
+    "processed": true
+  },
+  {
+    "id": "576",
+    "name": "Gothitelle",
+    "evolvesTo": [],
+    "evolvesFrom": "575",
+    "processed": true
+  },
+  {
+    "id": "577",
+    "name": "Solosis",
+    "evolvesTo": [
+      "578"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "578",
+    "name": "Duosion",
+    "evolvesTo": [
+      "579"
+    ],
+    "evolvesFrom": "577",
+    "processed": true
+  },
+  {
+    "id": "579",
+    "name": "Reuniclus",
+    "evolvesTo": [],
+    "evolvesFrom": "578",
+    "processed": true
+  },
+  {
+    "id": "580",
+    "name": "Ducklett",
+    "evolvesTo": [
+      "581"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "581",
+    "name": "Swanna",
+    "evolvesTo": [],
+    "evolvesFrom": "580",
+    "processed": true
+  },
+  {
+    "id": "582",
+    "name": "Vanillite",
+    "evolvesTo": [
+      "583"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "583",
+    "name": "Vanillish",
+    "evolvesTo": [
+      "584"
+    ],
+    "evolvesFrom": "582",
+    "processed": true
+  },
+  {
+    "id": "584",
+    "name": "Vanilluxe",
+    "evolvesTo": [],
+    "evolvesFrom": "583",
+    "processed": true
+  },
+  {
+    "id": "585",
+    "name": "Deerling",
+    "evolvesTo": [
+      "586"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "586",
+    "name": "Sawsbuck",
+    "evolvesTo": [],
+    "evolvesFrom": "585",
+    "processed": true
+  },
+  {
+    "id": "587",
+    "name": "Emolga",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "588",
+    "name": "Karrablast",
+    "evolvesTo": [
+      "589"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "589",
+    "name": "Escavalier",
+    "evolvesTo": [],
+    "evolvesFrom": "588",
+    "processed": true
+  },
+  {
+    "id": "590",
+    "name": "Foongus",
+    "evolvesTo": [
+      "591"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "591",
+    "name": "Amoonguss",
+    "evolvesTo": [],
+    "evolvesFrom": "590",
+    "processed": true
+  },
+  {
+    "id": "594",
+    "name": "Alomomola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "595",
+    "name": "Joltik",
+    "evolvesTo": [
+      "596"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "596",
+    "name": "Galvantula",
+    "evolvesTo": [],
+    "evolvesFrom": "595",
+    "processed": true
+  },
+  {
+    "id": "597",
+    "name": "Ferroseed",
+    "evolvesTo": [
+      "598"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "598",
+    "name": "Ferrothorn",
+    "evolvesTo": [],
+    "evolvesFrom": "597",
+    "processed": true
+  },
+  {
+    "id": "599",
+    "name": "Klink",
+    "evolvesTo": [
+      "600"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "600",
+    "name": "Klang",
+    "evolvesTo": [
+      "601"
+    ],
+    "evolvesFrom": "599",
+    "processed": true
+  },
+  {
+    "id": "601",
+    "name": "Klinklang",
+    "evolvesTo": [],
+    "evolvesFrom": "600",
+    "processed": true
+  },
+  {
+    "id": "602",
+    "name": "Tynamo",
+    "evolvesTo": [
+      "603"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "603",
+    "name": "Eelektrik",
+    "evolvesTo": [
+      "604"
+    ],
+    "evolvesFrom": "602",
+    "processed": true
+  },
+  {
+    "id": "604",
+    "name": "Eelektross",
+    "evolvesTo": [],
+    "evolvesFrom": "603",
+    "processed": true
+  },
+  {
+    "id": "605",
+    "name": "Elgyem",
+    "evolvesTo": [
+      "606"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "606",
+    "name": "Beheeyem",
+    "evolvesTo": [],
+    "evolvesFrom": "605",
+    "processed": true
+  },
+  {
+    "id": "607",
+    "name": "Litwick",
+    "evolvesTo": [
+      "608"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "608",
+    "name": "Lampent",
+    "evolvesTo": [
+      "609"
+    ],
+    "evolvesFrom": "607",
+    "processed": true
+  },
+  {
+    "id": "609",
+    "name": "Chandelure",
+    "evolvesTo": [],
+    "evolvesFrom": "608",
+    "processed": true
+  },
+  {
+    "id": "610",
+    "name": "Axew",
+    "evolvesTo": [
+      "611"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "611",
+    "name": "Fraxure",
+    "evolvesTo": [
+      "612"
+    ],
+    "evolvesFrom": "610",
+    "processed": true
+  },
+  {
+    "id": "612",
+    "name": "Haxorus",
+    "evolvesTo": [],
+    "evolvesFrom": "611",
+    "processed": true
+  },
+  {
+    "id": "613",
+    "name": "Cubchoo",
+    "evolvesTo": [
+      "614"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "614",
+    "name": "Beartic",
+    "evolvesTo": [],
+    "evolvesFrom": "613",
+    "processed": true
+  },
+  {
+    "id": "615",
+    "name": "Cryogonal",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "616",
+    "name": "Shelmet",
+    "evolvesTo": [
+      "617"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "617",
+    "name": "Accelgor",
+    "evolvesTo": [],
+    "evolvesFrom": "616",
+    "processed": true
+  },
+  {
+    "id": "618",
+    "name": "Stunfisk",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "619",
+    "name": "Mienfoo",
+    "evolvesTo": [
+      "620"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "620",
+    "name": "Mienshao",
+    "evolvesTo": [],
+    "evolvesFrom": "619",
+    "processed": true
+  },
+  {
+    "id": "621",
+    "name": "Druddigon",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "622",
+    "name": "Golett",
+    "evolvesTo": [
+      "623"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "623",
+    "name": "Golurk",
+    "evolvesTo": [],
+    "evolvesFrom": "622",
+    "processed": true
+  },
+  {
+    "id": "624",
+    "name": "Pawniard",
+    "evolvesTo": [
+      "625"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "625",
+    "name": "Bisharp",
+    "evolvesTo": [
+      "983"
+    ],
+    "evolvesFrom": "624",
+    "processed": true
+  },
+  {
+    "id": "626",
+    "name": "Bouffalant",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "627",
+    "name": "Rufflet",
+    "evolvesTo": [
+      "628"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "628",
+    "name": "Braviary",
+    "evolvesTo": [],
+    "evolvesFrom": "627",
+    "processed": true
+  },
+  {
+    "id": "629",
+    "name": "Vullaby",
+    "evolvesTo": [
+      "630"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "630",
+    "name": "Mandibuzz",
+    "evolvesTo": [],
+    "evolvesFrom": "629",
+    "processed": true
+  },
+  {
+    "id": "631",
+    "name": "Heatmor",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "632",
+    "name": "Durant",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "633",
+    "name": "Deino",
+    "evolvesTo": [
+      "634"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "634",
+    "name": "Zweilous",
+    "evolvesTo": [
+      "635"
+    ],
+    "evolvesFrom": "633",
+    "processed": true
+  },
+  {
+    "id": "635",
+    "name": "Hydreigon",
+    "evolvesTo": [],
+    "evolvesFrom": "634",
+    "processed": true
+  },
+  {
+    "id": "636",
+    "name": "Larvesta",
+    "evolvesTo": [
+      "637"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "637",
+    "name": "Volcarona",
+    "evolvesTo": [],
+    "evolvesFrom": "636",
+    "processed": true
+  },
+  {
+    "id": "638",
+    "name": "Cobalion",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "639",
+    "name": "Terrakion",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "640",
+    "name": "Virizion",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "643",
+    "name": "Reshiram",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "644",
+    "name": "Zekrom",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "646",
+    "name": "Kyurem",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "649",
+    "name": "Genesect",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "650",
+    "name": "Chespin",
+    "evolvesTo": [
+      "651"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "651",
+    "name": "Quilladin",
+    "evolvesTo": [
+      "652"
+    ],
+    "evolvesFrom": "650",
+    "processed": true
+  },
+  {
+    "id": "652",
+    "name": "Chesnaught",
+    "evolvesTo": [],
+    "evolvesFrom": "651",
+    "processed": true
+  },
+  {
+    "id": "653",
+    "name": "Fennekin",
+    "evolvesTo": [
+      "654"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "654",
+    "name": "Braixen",
+    "evolvesTo": [
+      "655"
+    ],
+    "evolvesFrom": "653",
+    "processed": true
+  },
+  {
+    "id": "655",
+    "name": "Delphox",
+    "evolvesTo": [],
+    "evolvesFrom": "654",
+    "processed": true
+  },
+  {
+    "id": "656",
+    "name": "Froakie",
+    "evolvesTo": [
+      "657"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "657",
+    "name": "Frogadier",
+    "evolvesTo": [
+      "658"
+    ],
+    "evolvesFrom": "656",
+    "processed": true
+  },
+  {
+    "id": "658",
+    "name": "Greninja",
+    "evolvesTo": [],
+    "evolvesFrom": "657",
+    "processed": true
+  },
+  {
+    "id": "659",
+    "name": "Bunnelby",
+    "evolvesTo": [
+      "660"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "660",
+    "name": "Diggersby",
+    "evolvesTo": [],
+    "evolvesFrom": "659",
+    "processed": true
+  },
+  {
+    "id": "661",
+    "name": "Fletchling",
+    "evolvesTo": [
+      "662"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "662",
+    "name": "Fletchinder",
+    "evolvesTo": [
+      "663"
+    ],
+    "evolvesFrom": "661",
+    "processed": true
+  },
+  {
+    "id": "663",
+    "name": "Talonflame",
+    "evolvesTo": [],
+    "evolvesFrom": "662",
+    "processed": true
+  },
+  {
+    "id": "664",
+    "name": "Scatterbug",
+    "evolvesTo": [
+      "665"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "665",
+    "name": "Spewpa",
+    "evolvesTo": [
+      "666"
+    ],
+    "evolvesFrom": "664",
+    "processed": true
+  },
+  {
+    "id": "666",
+    "name": "Vivillon",
+    "evolvesTo": [],
+    "evolvesFrom": "665",
+    "processed": true
+  },
+  {
+    "id": "667",
+    "name": "Litleo",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "669",
+    "name": "Flabebe",
+    "evolvesTo": [
+      "670"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "670",
+    "name": "Floette",
+    "evolvesTo": [
+      "671"
+    ],
+    "evolvesFrom": "669",
+    "processed": true
+  },
+  {
+    "id": "671",
+    "name": "Florges",
+    "evolvesTo": [],
+    "evolvesFrom": "670",
+    "processed": true
+  },
+  {
+    "id": "672",
+    "name": "Skiddo",
+    "evolvesTo": [
+      "673"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "673",
+    "name": "Gogoat",
+    "evolvesTo": [],
+    "evolvesFrom": "672",
+    "processed": true
+  },
+  {
+    "id": "674",
+    "name": "Pancham",
+    "evolvesTo": [
+      "675"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "675",
+    "name": "Pangoro",
+    "evolvesTo": [],
+    "evolvesFrom": "674",
+    "processed": true
+  },
+  {
+    "id": "676",
+    "name": "Furfrou",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "677",
+    "name": "Espurr",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "679",
+    "name": "Honedge",
+    "evolvesTo": [
+      "680"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "680",
+    "name": "Doublade",
+    "evolvesTo": [],
+    "evolvesFrom": "679",
+    "processed": true
+  },
+  {
+    "id": "682",
+    "name": "Spritzee",
+    "evolvesTo": [
+      "683"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "683",
+    "name": "Aromatisse",
+    "evolvesTo": [],
+    "evolvesFrom": "682",
+    "processed": true
+  },
+  {
+    "id": "684",
+    "name": "Swirlix",
+    "evolvesTo": [
+      "685"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "685",
+    "name": "Slurpuff",
+    "evolvesTo": [],
+    "evolvesFrom": "684",
+    "processed": true
+  },
+  {
+    "id": "686",
+    "name": "Inkay",
+    "evolvesTo": [
+      "687"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "687",
+    "name": "Malamar",
+    "evolvesTo": [],
+    "evolvesFrom": "686",
+    "processed": true
+  },
+  {
+    "id": "688",
+    "name": "Binacle",
+    "evolvesTo": [
+      "689"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "689",
+    "name": "Barbaracle",
+    "evolvesTo": [],
+    "evolvesFrom": "688",
+    "processed": true
+  },
+  {
+    "id": "690",
+    "name": "Skrelp",
+    "evolvesTo": [
+      "691"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "691",
+    "name": "Dragalge",
+    "evolvesTo": [],
+    "evolvesFrom": "690",
+    "processed": true
+  },
+  {
+    "id": "692",
+    "name": "Clauncher",
+    "evolvesTo": [
+      "693"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "693",
+    "name": "Clawitzer",
+    "evolvesTo": [],
+    "evolvesFrom": "692",
+    "processed": true
+  },
+  {
+    "id": "694",
+    "name": "Helioptile",
+    "evolvesTo": [
+      "695"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "695",
+    "name": "Heliolisk",
+    "evolvesTo": [],
+    "evolvesFrom": "694",
+    "processed": true
+  },
+  {
+    "id": "696",
+    "name": "Tyrunt",
+    "evolvesTo": [
+      "697"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "697",
+    "name": "Tyrantrum",
+    "evolvesTo": [],
+    "evolvesFrom": "696",
+    "processed": true
+  },
+  {
+    "id": "698",
+    "name": "Amaura",
+    "evolvesTo": [
+      "699"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "699",
+    "name": "Aurorus",
+    "evolvesTo": [],
+    "evolvesFrom": "698",
+    "processed": true
+  },
+  {
+    "id": "700",
+    "name": "Sylveon",
+    "evolvesTo": [],
+    "evolvesFrom": "133",
+    "processed": true
+  },
+  {
+    "id": "701",
+    "name": "Hawlucha",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "702",
+    "name": "Dedenne",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "703",
+    "name": "Carbink",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "704",
+    "name": "Goomy",
+    "evolvesTo": [
+      "705"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "705",
+    "name": "Sliggoo",
+    "evolvesTo": [
+      "706"
+    ],
+    "evolvesFrom": "704",
+    "processed": true
+  },
+  {
+    "id": "706",
+    "name": "Goodra",
+    "evolvesTo": [],
+    "evolvesFrom": "705",
+    "processed": true
+  },
+  {
+    "id": "707",
+    "name": "Klefki",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "708",
+    "name": "Phantump",
+    "evolvesTo": [
+      "709"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "709",
+    "name": "Trevenant",
+    "evolvesTo": [],
+    "evolvesFrom": "708",
+    "processed": true
+  },
+  {
+    "id": "712",
+    "name": "Bergmite",
+    "evolvesTo": [
+      "713"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "713",
+    "name": "Avalugg",
+    "evolvesTo": [],
+    "evolvesFrom": "712",
+    "processed": true
+  },
+  {
+    "id": "714",
+    "name": "Noibat",
+    "evolvesTo": [
+      "715"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "715",
+    "name": "Noivern",
+    "evolvesTo": [],
+    "evolvesFrom": "714",
+    "processed": true
+  },
+  {
+    "id": "716",
+    "name": "Xerneas",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "717",
+    "name": "Yveltal",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "719",
+    "name": "Diancie",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "720",
+    "name": "Hoopa",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "721",
+    "name": "Volcanion",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "722",
+    "name": "Rowlet",
+    "evolvesTo": [
+      "723"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "723",
+    "name": "Dartrix",
+    "evolvesTo": [
+      "724"
+    ],
+    "evolvesFrom": "722",
+    "processed": true
+  },
+  {
+    "id": "724",
+    "name": "Decidueye",
+    "evolvesTo": [],
+    "evolvesFrom": "723",
+    "processed": true
+  },
+  {
+    "id": "725",
+    "name": "Litten",
+    "evolvesTo": [
+      "726"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "726",
+    "name": "Torracat",
+    "evolvesTo": [
+      "727"
+    ],
+    "evolvesFrom": "725",
+    "processed": true
+  },
+  {
+    "id": "727",
+    "name": "Incineroar",
+    "evolvesTo": [],
+    "evolvesFrom": "726",
+    "processed": true
+  },
+  {
+    "id": "728",
+    "name": "Popplio",
+    "evolvesTo": [
+      "729"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "729",
+    "name": "Brionne",
+    "evolvesTo": [
+      "730"
+    ],
+    "evolvesFrom": "728",
+    "processed": true
+  },
+  {
+    "id": "730",
+    "name": "Primarina",
+    "evolvesTo": [],
+    "evolvesFrom": "729",
+    "processed": true
+  },
+  {
+    "id": "731",
+    "name": "Pikipek",
+    "evolvesTo": [
+      "732"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "732",
+    "name": "Trumbeak",
+    "evolvesTo": [
+      "733"
+    ],
+    "evolvesFrom": "731",
+    "processed": true
+  },
+  {
+    "id": "733",
+    "name": "Toucannon",
+    "evolvesTo": [],
+    "evolvesFrom": "732",
+    "processed": true
+  },
+  {
+    "id": "734",
+    "name": "Yungoos",
+    "evolvesTo": [
+      "735"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "735",
+    "name": "Gumshoos",
+    "evolvesTo": [],
+    "evolvesFrom": "734",
+    "processed": true
+  },
+  {
+    "id": "736",
+    "name": "Grubbin",
+    "evolvesTo": [
+      "737"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "737",
+    "name": "Charjabug",
+    "evolvesTo": [
+      "738"
+    ],
+    "evolvesFrom": "736",
+    "processed": true
+  },
+  {
+    "id": "738",
+    "name": "Vikavolt",
+    "evolvesTo": [],
+    "evolvesFrom": "737",
+    "processed": true
+  },
+  {
+    "id": "739",
+    "name": "Crabrawler",
+    "evolvesTo": [
+      "740"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "740",
+    "name": "Crabominable",
+    "evolvesTo": [],
+    "evolvesFrom": "739",
+    "processed": true
+  },
+  {
+    "id": "742",
+    "name": "Cutiefly",
+    "evolvesTo": [
+      "743"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "743",
+    "name": "Ribombee",
+    "evolvesTo": [],
+    "evolvesFrom": "742",
+    "processed": true
+  },
+  {
+    "id": "744",
+    "name": "Rockruff",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "747",
+    "name": "Mareanie",
+    "evolvesTo": [
+      "748"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "748",
+    "name": "Toxapex",
+    "evolvesTo": [],
+    "evolvesFrom": "747",
+    "processed": true
+  },
+  {
+    "id": "749",
+    "name": "Mudbray",
+    "evolvesTo": [
+      "750"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "750",
+    "name": "Mudsdale",
+    "evolvesTo": [],
+    "evolvesFrom": "749",
+    "processed": true
+  },
+  {
+    "id": "751",
+    "name": "Dewpider",
+    "evolvesTo": [
+      "752"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "752",
+    "name": "Araquanid",
+    "evolvesTo": [],
+    "evolvesFrom": "751",
+    "processed": true
+  },
+  {
+    "id": "753",
+    "name": "Fomantis",
+    "evolvesTo": [
+      "754"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "754",
+    "name": "Lurantis",
+    "evolvesTo": [],
+    "evolvesFrom": "753",
+    "processed": true
+  },
+  {
+    "id": "755",
+    "name": "Morelull",
+    "evolvesTo": [
+      "756"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "756",
+    "name": "Shiinotic",
+    "evolvesTo": [],
+    "evolvesFrom": "755",
+    "processed": true
+  },
+  {
+    "id": "757",
+    "name": "Salandit",
+    "evolvesTo": [
+      "758"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "758",
+    "name": "Salazzle",
+    "evolvesTo": [],
+    "evolvesFrom": "757",
+    "processed": true
+  },
+  {
+    "id": "759",
+    "name": "Stufful",
+    "evolvesTo": [
+      "760"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "760",
+    "name": "Bewear",
+    "evolvesTo": [],
+    "evolvesFrom": "759",
+    "processed": true
+  },
+  {
+    "id": "761",
+    "name": "Bounsweet",
+    "evolvesTo": [
+      "762"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "762",
+    "name": "Steenee",
+    "evolvesTo": [
+      "763"
+    ],
+    "evolvesFrom": "761",
+    "processed": true
+  },
+  {
+    "id": "763",
+    "name": "Tsareena",
+    "evolvesTo": [],
+    "evolvesFrom": "762",
+    "processed": true
+  },
+  {
+    "id": "764",
+    "name": "Comfey",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "765",
+    "name": "Oranguru",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "766",
+    "name": "Passimian",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "767",
+    "name": "Wimpod",
+    "evolvesTo": [
+      "768"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "768",
+    "name": "Golisopod",
+    "evolvesTo": [],
+    "evolvesFrom": "767",
+    "processed": true
+  },
+  {
+    "id": "769",
+    "name": "Sandygast",
+    "evolvesTo": [
+      "770"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "770",
+    "name": "Palossand",
+    "evolvesTo": [],
+    "evolvesFrom": "769",
+    "processed": true
+  },
+  {
+    "id": "771",
+    "name": "Pyukumuku",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "773",
+    "name": "Silvally",
+    "evolvesTo": [],
+    "evolvesFrom": "772",
+    "processed": true
+  },
+  {
+    "id": "775",
+    "name": "Komala",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "776",
+    "name": "Turtonator",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "777",
+    "name": "Togedemaru",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "779",
+    "name": "Bruxish",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "780",
+    "name": "Drampa",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "781",
+    "name": "Dhelmise",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "789",
+    "name": "Cosmog",
+    "evolvesTo": [
+      "790"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "790",
+    "name": "Cosmoem",
+    "evolvesTo": [
+      "791",
+      "792"
+    ],
+    "evolvesFrom": "789",
+    "processed": true
+  },
+  {
+    "id": "791",
+    "name": "Solgaleo",
+    "evolvesTo": [],
+    "evolvesFrom": "790",
+    "processed": true
+  },
+  {
+    "id": "792",
+    "name": "Lunala",
+    "evolvesTo": [],
+    "evolvesFrom": "790",
+    "processed": true
+  },
+  {
+    "id": "793",
+    "name": "Nihilego",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "794",
+    "name": "Buzzwole",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "795",
+    "name": "Pheromosa",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "796",
+    "name": "Xurkitree",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "797",
+    "name": "Celesteela",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "798",
+    "name": "Kartana",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "799",
+    "name": "Guzzlord",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "800",
+    "name": "Necrozma",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "801",
+    "name": "Magearna",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "802",
+    "name": "Marshadow",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "803",
+    "name": "Poipole",
+    "evolvesTo": [
+      "804"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "804",
+    "name": "Naganadel",
+    "evolvesTo": [],
+    "evolvesFrom": "803",
+    "processed": true
+  },
+  {
+    "id": "805",
+    "name": "Stakataka",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "806",
+    "name": "Blacephalon",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "807",
+    "name": "Zeraora",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "808",
+    "name": "Meltan",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "809",
+    "name": "Melmetal",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "810",
+    "name": "Grookey",
+    "evolvesTo": [
+      "811"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "811",
+    "name": "Thwackey",
+    "evolvesTo": [
+      "812"
+    ],
+    "evolvesFrom": "810",
+    "processed": true
+  },
+  {
+    "id": "812",
+    "name": "Rillaboom",
+    "evolvesTo": [],
+    "evolvesFrom": "811",
+    "processed": true
+  },
+  {
+    "id": "813",
+    "name": "Scorbunny",
+    "evolvesTo": [
+      "814"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "814",
+    "name": "Raboot",
+    "evolvesTo": [
+      "815"
+    ],
+    "evolvesFrom": "813",
+    "processed": true
+  },
+  {
+    "id": "815",
+    "name": "Cinderace",
+    "evolvesTo": [],
+    "evolvesFrom": "814",
+    "processed": true
+  },
+  {
+    "id": "816",
+    "name": "Sobble",
+    "evolvesTo": [
+      "817"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "817",
+    "name": "Drizzile",
+    "evolvesTo": [
+      "818"
+    ],
+    "evolvesFrom": "816",
+    "processed": true
+  },
+  {
+    "id": "818",
+    "name": "Inteleon",
+    "evolvesTo": [],
+    "evolvesFrom": "817",
+    "processed": true
+  },
+  {
+    "id": "819",
+    "name": "Skwovet",
+    "evolvesTo": [
+      "820"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "820",
+    "name": "Greedent",
+    "evolvesTo": [],
+    "evolvesFrom": "819",
+    "processed": true
+  },
+  {
+    "id": "821",
+    "name": "Rookidee",
+    "evolvesTo": [
+      "822"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "822",
+    "name": "Corvisquire",
+    "evolvesTo": [
+      "823"
+    ],
+    "evolvesFrom": "821",
+    "processed": true
+  },
+  {
+    "id": "823",
+    "name": "Corviknight",
+    "evolvesTo": [],
+    "evolvesFrom": "822",
+    "processed": true
+  },
+  {
+    "id": "824",
+    "name": "Blipbug",
+    "evolvesTo": [
+      "825"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "825",
+    "name": "Dottler",
+    "evolvesTo": [
+      "826"
+    ],
+    "evolvesFrom": "824",
+    "processed": true
+  },
+  {
+    "id": "826",
+    "name": "Orbeetle",
+    "evolvesTo": [],
+    "evolvesFrom": "825",
+    "processed": true
+  },
+  {
+    "id": "827",
+    "name": "Nickit",
+    "evolvesTo": [
+      "828"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "828",
+    "name": "Thievul",
+    "evolvesTo": [],
+    "evolvesFrom": "827",
+    "processed": true
+  },
+  {
+    "id": "829",
+    "name": "Gossifleur",
+    "evolvesTo": [
+      "830"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "830",
+    "name": "Eldegoss",
+    "evolvesTo": [],
+    "evolvesFrom": "829",
+    "processed": true
+  },
+  {
+    "id": "831",
+    "name": "Wooloo",
+    "evolvesTo": [
+      "832"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "832",
+    "name": "Dubwool",
+    "evolvesTo": [],
+    "evolvesFrom": "831",
+    "processed": true
+  },
+  {
+    "id": "833",
+    "name": "Chewtle",
+    "evolvesTo": [
+      "834"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "834",
+    "name": "Drednaw",
+    "evolvesTo": [],
+    "evolvesFrom": "833",
+    "processed": true
+  },
+  {
+    "id": "835",
+    "name": "Yamper",
+    "evolvesTo": [
+      "836"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "836",
+    "name": "Boltund",
+    "evolvesTo": [],
+    "evolvesFrom": "835",
+    "processed": true
+  },
+  {
+    "id": "837",
+    "name": "Rolycoly",
+    "evolvesTo": [
+      "838"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "838",
+    "name": "Carkol",
+    "evolvesTo": [
+      "839"
+    ],
+    "evolvesFrom": "837",
+    "processed": true
+  },
+  {
+    "id": "839",
+    "name": "Coalossal",
+    "evolvesTo": [],
+    "evolvesFrom": "838",
+    "processed": true
+  },
+  {
+    "id": "840",
+    "name": "Applin",
+    "evolvesTo": [
+      "841",
+      "842",
+      "1011"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "841",
+    "name": "Flapple",
+    "evolvesTo": [],
+    "evolvesFrom": "840",
+    "processed": true
+  },
+  {
+    "id": "842",
+    "name": "Appletun",
+    "evolvesTo": [],
+    "evolvesFrom": "840",
+    "processed": true
+  },
+  {
+    "id": "843",
+    "name": "Silicobra",
+    "evolvesTo": [
+      "844"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "844",
+    "name": "Sandaconda",
+    "evolvesTo": [],
+    "evolvesFrom": "843",
+    "processed": true
+  },
+  {
+    "id": "845",
+    "name": "Cramorant",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "846",
+    "name": "Arrokuda",
+    "evolvesTo": [
+      "847"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "847",
+    "name": "Barraskewda",
+    "evolvesTo": [],
+    "evolvesFrom": "846",
+    "processed": true
+  },
+  {
+    "id": "848",
+    "name": "Toxel",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "850",
+    "name": "Sizzlipede",
+    "evolvesTo": [
+      "851"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "851",
+    "name": "Centiskorch",
+    "evolvesTo": [],
+    "evolvesFrom": "850",
+    "processed": true
+  },
+  {
+    "id": "852",
+    "name": "Clobbopus",
+    "evolvesTo": [
+      "853"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "853",
+    "name": "Grapploct",
+    "evolvesTo": [],
+    "evolvesFrom": "852",
+    "processed": true
+  },
+  {
+    "id": "854",
+    "name": "Sinistea",
+    "evolvesTo": [
+      "855"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "855",
+    "name": "Polteageist",
+    "evolvesTo": [],
+    "evolvesFrom": "854",
+    "processed": true
+  },
+  {
+    "id": "856",
+    "name": "Hatenna",
+    "evolvesTo": [
+      "857"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "857",
+    "name": "Hattrem",
+    "evolvesTo": [
+      "858"
+    ],
+    "evolvesFrom": "856",
+    "processed": true
+  },
+  {
+    "id": "858",
+    "name": "Hatterene",
+    "evolvesTo": [],
+    "evolvesFrom": "857",
+    "processed": true
+  },
+  {
+    "id": "859",
+    "name": "Impidimp",
+    "evolvesTo": [
+      "860"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "860",
+    "name": "Morgrem",
+    "evolvesTo": [
+      "861"
+    ],
+    "evolvesFrom": "859",
+    "processed": true
+  },
+  {
+    "id": "861",
+    "name": "Grimmsnarl",
+    "evolvesTo": [],
+    "evolvesFrom": "860",
+    "processed": true
+  },
+  {
+    "id": "862",
+    "name": "Obstagoon",
+    "evolvesTo": [],
+    "evolvesFrom": "264",
+    "processed": true
+  },
+  {
+    "id": "863",
+    "name": "Perrserker",
+    "evolvesTo": [],
+    "evolvesFrom": "52",
+    "processed": true
+  },
+  {
+    "id": "864",
+    "name": "Cursola",
+    "evolvesTo": [],
+    "evolvesFrom": "222",
+    "processed": true
+  },
+  {
+    "id": "865",
+    "name": "Sirfetchd",
+    "evolvesTo": [],
+    "evolvesFrom": "83",
+    "processed": true
+  },
+  {
+    "id": "867",
+    "name": "Runerigus",
+    "evolvesTo": [],
+    "evolvesFrom": "562",
+    "processed": true
+  },
+  {
+    "id": "868",
+    "name": "Milcery",
+    "evolvesTo": [
+      "869"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "869",
+    "name": "Alcremie",
+    "evolvesTo": [],
+    "evolvesFrom": "868",
+    "processed": true
+  },
+  {
+    "id": "870",
+    "name": "Falinks",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "871",
+    "name": "Pincurchin",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "872",
+    "name": "Snom",
+    "evolvesTo": [
+      "873"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "873",
+    "name": "Frosmoth",
+    "evolvesTo": [],
+    "evolvesFrom": "872",
+    "processed": true
+  },
+  {
+    "id": "874",
+    "name": "Stonjourner",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "878",
+    "name": "Cufant",
+    "evolvesTo": [
+      "879"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "879",
+    "name": "Copperajah",
+    "evolvesTo": [],
+    "evolvesFrom": "878",
+    "processed": true
+  },
+  {
+    "id": "880",
+    "name": "Dracozolt",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "881",
+    "name": "Arctozolt",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "882",
+    "name": "Dracovish",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "883",
+    "name": "Arctovish",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "884",
+    "name": "Duraludon",
+    "evolvesTo": [
+      "1018"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "885",
+    "name": "Dreepy",
+    "evolvesTo": [
+      "886"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "886",
+    "name": "Drakloak",
+    "evolvesTo": [
+      "887"
+    ],
+    "evolvesFrom": "885",
+    "processed": true
+  },
+  {
+    "id": "887",
+    "name": "Dragapult",
+    "evolvesTo": [],
+    "evolvesFrom": "886",
+    "processed": true
+  },
+  {
+    "id": "888",
+    "name": "Zacian",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "889",
+    "name": "Zamazenta",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "890",
+    "name": "Eternatus",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "891",
+    "name": "Kubfu",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "893",
+    "name": "Zarude",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "894",
+    "name": "Regieleki",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "895",
+    "name": "Regidrago",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "896",
+    "name": "Glastrier",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "897",
+    "name": "Spectrier",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "898",
+    "name": "Calyrex",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "899",
+    "name": "Wyrdeer",
+    "evolvesTo": [],
+    "evolvesFrom": "234",
+    "processed": true
+  },
+  {
+    "id": "900",
+    "name": "Kleavor",
+    "evolvesTo": [],
+    "evolvesFrom": "123",
+    "processed": true
+  },
+  {
+    "id": "901",
+    "name": "Ursaluna",
+    "evolvesTo": [],
+    "evolvesFrom": "217",
+    "processed": true
+  },
+  {
+    "id": "903",
+    "name": "Sneasler",
+    "evolvesTo": [],
+    "evolvesFrom": "215",
+    "processed": true
+  },
+  {
+    "id": "904",
+    "name": "Overqwil",
+    "evolvesTo": [],
+    "evolvesFrom": "211",
+    "processed": true
+  },
+  {
+    "id": "906",
+    "name": "Sprigatito",
+    "evolvesTo": [
+      "907"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "907",
+    "name": "Floragato",
+    "evolvesTo": [
+      "908"
+    ],
+    "evolvesFrom": "906",
+    "processed": true
+  },
+  {
+    "id": "908",
+    "name": "Meowscarada",
+    "evolvesTo": [],
+    "evolvesFrom": "907",
+    "processed": true
+  },
+  {
+    "id": "909",
+    "name": "Fuecoco",
+    "evolvesTo": [
+      "910"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "910",
+    "name": "Crocalor",
+    "evolvesTo": [
+      "911"
+    ],
+    "evolvesFrom": "909",
+    "processed": true
+  },
+  {
+    "id": "911",
+    "name": "Skeledirge",
+    "evolvesTo": [],
+    "evolvesFrom": "910",
+    "processed": true
+  },
+  {
+    "id": "912",
+    "name": "Quaxly",
+    "evolvesTo": [
+      "913"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "913",
+    "name": "Quaxwell",
+    "evolvesTo": [
+      "914"
+    ],
+    "evolvesFrom": "912",
+    "processed": true
+  },
+  {
+    "id": "914",
+    "name": "Quaquaval",
+    "evolvesTo": [],
+    "evolvesFrom": "913",
+    "processed": true
+  },
+  {
+    "id": "915",
+    "name": "Lechonk",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "917",
+    "name": "Tarountula",
+    "evolvesTo": [
+      "918"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "918",
+    "name": "Spidops",
+    "evolvesTo": [],
+    "evolvesFrom": "917",
+    "processed": true
+  },
+  {
+    "id": "919",
+    "name": "Nymble",
+    "evolvesTo": [
+      "920"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "920",
+    "name": "Lokix",
+    "evolvesTo": [],
+    "evolvesFrom": "919",
+    "processed": true
+  },
+  {
+    "id": "921",
+    "name": "Pawmi",
+    "evolvesTo": [
+      "922"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "922",
+    "name": "Pawmo",
+    "evolvesTo": [
+      "923"
+    ],
+    "evolvesFrom": "921",
+    "processed": true
+  },
+  {
+    "id": "923",
+    "name": "Pawmot",
+    "evolvesTo": [],
+    "evolvesFrom": "922",
+    "processed": true
+  },
+  {
+    "id": "924",
+    "name": "Tandemaus",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "926",
+    "name": "Fidough",
+    "evolvesTo": [
+      "927"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "927",
+    "name": "Dachsbun",
+    "evolvesTo": [],
+    "evolvesFrom": "926",
+    "processed": true
+  },
+  {
+    "id": "928",
+    "name": "Smoliv",
+    "evolvesTo": [
+      "929"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "929",
+    "name": "Dolliv",
+    "evolvesTo": [
+      "930"
+    ],
+    "evolvesFrom": "928",
+    "processed": true
+  },
+  {
+    "id": "930",
+    "name": "Arboliva",
+    "evolvesTo": [],
+    "evolvesFrom": "929",
+    "processed": true
+  },
+  {
+    "id": "932",
+    "name": "Nacli",
+    "evolvesTo": [
+      "933"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "933",
+    "name": "Naclstack",
+    "evolvesTo": [
+      "934"
+    ],
+    "evolvesFrom": "932",
+    "processed": true
+  },
+  {
+    "id": "934",
+    "name": "Garganacl",
+    "evolvesTo": [],
+    "evolvesFrom": "933",
+    "processed": true
+  },
+  {
+    "id": "935",
+    "name": "Charcadet",
+    "evolvesTo": [
+      "936",
+      "937"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "936",
+    "name": "Armarouge",
+    "evolvesTo": [],
+    "evolvesFrom": "935",
+    "processed": true
+  },
+  {
+    "id": "937",
+    "name": "Ceruledge",
+    "evolvesTo": [],
+    "evolvesFrom": "935",
+    "processed": true
+  },
+  {
+    "id": "938",
+    "name": "Tadbulb",
+    "evolvesTo": [
+      "939"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "939",
+    "name": "Bellibolt",
+    "evolvesTo": [],
+    "evolvesFrom": "938",
+    "processed": true
+  },
+  {
+    "id": "940",
+    "name": "Wattrel",
+    "evolvesTo": [
+      "941"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "941",
+    "name": "Kilowattrel",
+    "evolvesTo": [],
+    "evolvesFrom": "940",
+    "processed": true
+  },
+  {
+    "id": "942",
+    "name": "Maschiff",
+    "evolvesTo": [
+      "943"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "943",
+    "name": "Mabosstiff",
+    "evolvesTo": [],
+    "evolvesFrom": "942",
+    "processed": true
+  },
+  {
+    "id": "944",
+    "name": "Shroodle",
+    "evolvesTo": [
+      "945"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "945",
+    "name": "Grafaiai",
+    "evolvesTo": [],
+    "evolvesFrom": "944",
+    "processed": true
+  },
+  {
+    "id": "946",
+    "name": "Bramblin",
+    "evolvesTo": [
+      "947"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "947",
+    "name": "Brambleghast",
+    "evolvesTo": [],
+    "evolvesFrom": "946",
+    "processed": true
+  },
+  {
+    "id": "948",
+    "name": "Toedscool",
+    "evolvesTo": [
+      "949"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "949",
+    "name": "Toedscruel",
+    "evolvesTo": [],
+    "evolvesFrom": "948",
+    "processed": true
+  },
+  {
+    "id": "950",
+    "name": "Klawf",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "951",
+    "name": "Capsakid",
+    "evolvesTo": [
+      "952"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "952",
+    "name": "Scovillain",
+    "evolvesTo": [],
+    "evolvesFrom": "951",
+    "processed": true
+  },
+  {
+    "id": "953",
+    "name": "Rellor",
+    "evolvesTo": [
+      "954"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "954",
+    "name": "Rabsca",
+    "evolvesTo": [],
+    "evolvesFrom": "953",
+    "processed": true
+  },
+  {
+    "id": "955",
+    "name": "Flittle",
+    "evolvesTo": [
+      "956"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "956",
+    "name": "Espathra",
+    "evolvesTo": [],
+    "evolvesFrom": "955",
+    "processed": true
+  },
+  {
+    "id": "957",
+    "name": "Tinkatink",
+    "evolvesTo": [
+      "958"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "958",
+    "name": "Tinkatuff",
+    "evolvesTo": [
+      "959"
+    ],
+    "evolvesFrom": "957",
+    "processed": true
+  },
+  {
+    "id": "959",
+    "name": "Tinkaton",
+    "evolvesTo": [],
+    "evolvesFrom": "958",
+    "processed": true
+  },
+  {
+    "id": "960",
+    "name": "Wiglett",
+    "evolvesTo": [
+      "961"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "961",
+    "name": "Wugtrio",
+    "evolvesTo": [],
+    "evolvesFrom": "960",
+    "processed": true
+  },
+  {
+    "id": "962",
+    "name": "Bombirdier",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "963",
+    "name": "Finizen",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "965",
+    "name": "Varoom",
+    "evolvesTo": [
+      "966"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "966",
+    "name": "Revavroom",
+    "evolvesTo": [],
+    "evolvesFrom": "965",
+    "processed": true
+  },
+  {
+    "id": "967",
+    "name": "Cyclizar",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "968",
+    "name": "Orthworm",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "969",
+    "name": "Glimmet",
+    "evolvesTo": [
+      "970"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "970",
+    "name": "Glimmora",
+    "evolvesTo": [],
+    "evolvesFrom": "969",
+    "processed": true
+  },
+  {
+    "id": "971",
+    "name": "Greavard",
+    "evolvesTo": [
+      "972"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "972",
+    "name": "Houndstone",
+    "evolvesTo": [],
+    "evolvesFrom": "971",
+    "processed": true
+  },
+  {
+    "id": "973",
+    "name": "Flamigo",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "974",
+    "name": "Cetoddle",
+    "evolvesTo": [
+      "975"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "975",
+    "name": "Cetitan",
+    "evolvesTo": [],
+    "evolvesFrom": "974",
+    "processed": true
+  },
+  {
+    "id": "976",
+    "name": "Veluza",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "977",
+    "name": "Dondozo",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "979",
+    "name": "Annihilape",
+    "evolvesTo": [],
+    "evolvesFrom": "57",
+    "processed": true
+  },
+  {
+    "id": "980",
+    "name": "Clodsire",
+    "evolvesTo": [],
+    "evolvesFrom": "194",
+    "processed": true
+  },
+  {
+    "id": "981",
+    "name": "Farigiraf",
+    "evolvesTo": [],
+    "evolvesFrom": "203",
+    "processed": true
+  },
+  {
+    "id": "983",
+    "name": "Kingambit",
+    "evolvesTo": [],
+    "evolvesFrom": "625",
+    "processed": true
+  },
+  {
+    "id": "996",
+    "name": "Frigibax",
+    "evolvesTo": [
+      "997"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "997",
+    "name": "Arctibax",
+    "evolvesTo": [
+      "998"
+    ],
+    "evolvesFrom": "996",
+    "processed": true
+  },
+  {
+    "id": "998",
+    "name": "Baxcalibur",
+    "evolvesTo": [],
+    "evolvesFrom": "997",
+    "processed": true
+  },
+  {
+    "id": "999",
+    "name": "Gimmighoul",
+    "evolvesTo": [
+      "1000"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "1000",
+    "name": "Gholdengo",
+    "evolvesTo": [],
+    "evolvesFrom": "999",
+    "processed": true
+  },
+  {
+    "id": "1007",
+    "name": "Koraidon",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "1008",
+    "name": "Miraidon",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "1011",
+    "name": "Dipplin",
+    "evolvesTo": [
+      "1019"
+    ],
+    "evolvesFrom": "840",
+    "processed": true
+  },
+  {
+    "id": "1012",
+    "name": "Poltchageist",
+    "evolvesTo": [
+      "1013"
+    ],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "1013",
+    "name": "Sinistcha",
+    "evolvesTo": [],
+    "evolvesFrom": "1012",
+    "processed": true
+  },
+  {
+    "id": "1014",
+    "name": "Okidogi",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "1015",
+    "name": "Munkidori",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "1016",
+    "name": "Fezandipiti",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "1017",
+    "name": "Ogerpon",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "1018",
+    "name": "Archaludon",
+    "evolvesTo": [],
+    "evolvesFrom": "884",
+    "processed": true
+  },
+  {
+    "id": "1019",
+    "name": "Hydrapple",
+    "evolvesTo": [],
+    "evolvesFrom": "1011",
+    "processed": true
+  },
+  {
+    "id": "1024",
+    "name": "Terapagos",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "1025",
+    "name": "Pecharunt",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": true
+  },
+  {
+    "id": "10091",
+    "name": "Rattata-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10092",
+    "name": "Raticate-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10093",
+    "name": "Raticate-totem-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10100",
+    "name": "Raichu-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10101",
+    "name": "Sandshrew-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10102",
+    "name": "Sandslash-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10103",
+    "name": "Vulpix-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10104",
+    "name": "Ninetales-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10105",
+    "name": "Diglett-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10106",
+    "name": "Dugtrio-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10107",
+    "name": "Meowth-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10108",
+    "name": "Persian-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10109",
+    "name": "Geodude-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10110",
+    "name": "Graveler-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10111",
+    "name": "Golem-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10112",
+    "name": "Grimer-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10113",
+    "name": "Muk-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10114",
+    "name": "Exeggutor-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10115",
+    "name": "Marowak-alola",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10229",
+    "name": "Growlithe-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10230",
+    "name": "Arcanine-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10231",
+    "name": "Voltorb-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10232",
+    "name": "Electrode-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10233",
+    "name": "Typhlosion-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10234",
+    "name": "Qwilfish-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10235",
+    "name": "Sneasel-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10236",
+    "name": "Samurott-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10237",
+    "name": "Lilligant-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10238",
+    "name": "Zorua-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10239",
+    "name": "Zoroark-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10240",
+    "name": "Braviary-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10241",
+    "name": "Sliggoo-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10242",
+    "name": "Goodra-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10243",
+    "name": "Avalugg-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  },
+  {
+    "id": "10244",
+    "name": "Decidueye-hisui",
+    "evolvesTo": [],
+    "evolvesFrom": null,
+    "processed": false
+  }
+]
