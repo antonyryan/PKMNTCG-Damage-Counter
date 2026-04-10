@@ -51,7 +51,15 @@ function SideBoard({ side, rotated }: { side: Side; rotated?: boolean }) {
   );
 }
 
-function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boolean; anchor: "left" | "right" }) {
+function PlayerMiniMenu({
+  side,
+  rotated,
+  anchor,
+}: {
+  side: Side;
+  rotated?: boolean;
+  anchor: "left" | "right";
+}) {
   const {
     state,
     evolvePokemon,
@@ -61,15 +69,16 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
     toggleVSTAR,
     isSessionReady,
     sessionError,
-  } =
-    useGame();
+  } = useGame();
   const player = state[side];
   const title = side === "me" ? "You" : "Opponent";
   const [evolveMobileOpen, setEvolveMobileOpen] = useState(false);
   const [evolveDesktopOpen, setEvolveDesktopOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  const [evolveResults, setEvolveResults] = useState<PokemonEvolutionOption[]>([]);
+  const [evolveResults, setEvolveResults] = useState<PokemonEvolutionOption[]>(
+    [],
+  );
 
   const canEvolveActive = Boolean(player.active.pokemon);
   const isEvolveOpen = evolveMobileOpen || evolveDesktopOpen;
@@ -99,7 +108,10 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
     const timer = window.setTimeout(async () => {
       setLoading(true);
       try {
-        const results = await getEvolutionOptions(player.active.pokemon!.id, query);
+        const results = await getEvolutionOptions(
+          player.active.pokemon!.id,
+          query,
+        );
         if (!cancelled) {
           setEvolveResults(results);
         }
@@ -139,26 +151,31 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
           <p className="p-2 text-xs text-slate-500">No results</p>
         )}
         {evolveResults.map((pokemon) => (
-            <button
-              key={`${side}-active-evolve-${pokemon.id}`}
-              type="button"
-              className="flex w-full items-center justify-between gap-2 border-b border-slate-100 px-3 py-2 text-left text-sm last:border-none active:bg-slate-100"
-              onClick={() => {
-                evolvePokemon(side, "active", { id: pokemon.id, name: pokemon.name });
-                setEvolveMobileOpen(false);
-                setEvolveDesktopOpen(false);
-              }}
-            >
-              <span>{pokemon.name}</span>
-              <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
+          <button
+            key={`${side}-active-evolve-${pokemon.id}`}
+            type="button"
+            className="flex w-full items-center justify-between gap-2 border-b border-slate-100 px-3 py-2 text-left text-sm last:border-none active:bg-slate-100"
+            onClick={() => {
+              evolvePokemon(side, "active", {
+                id: pokemon.id,
+                name: pokemon.name,
+              });
+              setEvolveMobileOpen(false);
+              setEvolveDesktopOpen(false);
+            }}
+          >
+            <span>{pokemon.name}</span>
+            <span
+              className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
                 pokemon.action === "Evolve"
                   ? "border-emerald-300 bg-emerald-50 text-emerald-800"
                   : "border-amber-300 bg-amber-50 text-amber-800"
-              }`}>
-                {pokemon.action}
-              </span>
-            </button>
-          ))}
+              }`}
+            >
+              {pokemon.action}
+            </span>
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -188,7 +205,7 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
             className="flex items-center justify-center gap-1 rounded-lg border border-teal-900/20 bg-board-panel px-2 py-1 text-[10px] font-semibold active:scale-95"
           >
             <Coins size={12} />
-            {state.coinFlipping ? "..." : state.coinResult ?? "-"}
+            {state.coinFlipping ? "..." : (state.coinResult ?? "-")}
           </button>
           <button
             type="button"
@@ -272,7 +289,6 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
             {evolveSearchPanel}
           </DialogContent>
         </Dialog>
-
       </div>
     </aside>
   );

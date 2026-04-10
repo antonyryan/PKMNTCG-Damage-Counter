@@ -54,25 +54,105 @@ Behavior:
 
 Creates a new session or restores an existing one when `sessionId` is provided.
 
+```bash
+# New session
+curl -s -X POST http://localhost:8080/api/sessions \
+  -H 'Content-Type: application/json' -d '{}'
+
+# Restore
+curl -s -X POST http://localhost:8080/api/sessions \
+  -H 'Content-Type: application/json' \
+  -d '{"sessionId": "<id>"}'
+```
+
 ### `GET /api/sessions/:id`
 
 Returns the authoritative current snapshot for one match session.
+
+```bash
+curl http://localhost:8080/api/sessions/<id>
+```
 
 ### `GET /api/sessions/:id/history`
 
 Returns the persisted action log for one match session.
 
+```bash
+curl http://localhost:8080/api/sessions/<id>/history
+```
+
 ### `POST /api/sessions/:id/actions`
 
 Applies a validated action to the current session and persists both state and history.
 
+Supported `type` values and their required fields:
+
+| type             | required fields                                                    |
+| ---------------- | ------------------------------------------------------------------ |
+| `set-pokemon`    | `side`, `zone`, `pokemonId` (+ `benchIndex` if zone=bench)         |
+| `evolve-pokemon` | `side`, `zone`, `pokemonId` (+ `benchIndex` if zone=bench)         |
+| `knockout`       | `side`, `zone` (+ `benchIndex` if zone=bench)                      |
+| `adjust-damage`  | `side`, `zone`, `amount` (+ `benchIndex` if zone=bench)            |
+| `toggle-status`  | `side`, `status` (`sleep`/`confusion`/`paralysis`/`poison`/`burn`) |
+| `promote-bench`  | `side`, `benchIndex`                                               |
+| `toggle-gx`      | `side`                                                             |
+| `toggle-vstar`   | `side`                                                             |
+| `flip-coin`      | _(none)_                                                           |
+| `roll-die`       | _(none)_                                                           |
+| `reset`          | _(none)_                                                           |
+
+```bash
+curl -s -X POST http://localhost:8080/api/sessions/<id>/actions \
+  -H 'Content-Type: application/json' \
+  -d '{"type":"set-pokemon","side":"me","zone":"active","pokemonId":25}'
+```
+
+### `GET /api/analytics/pokemon-usage?limit={n}`
+
+Returns the most-used Pokémon sorted by usage count descending.
+
+```bash
+curl "http://localhost:8080/api/analytics/pokemon-usage?limit=10"
+```
+
 Example response:
 
 ```json
-[
-  { "id": 4, "name": "Arceus" },
-  { "id": 2, "name": "Charizard" }
-]
+{
+  "pokemon": [
+    { "pokemonId": 25, "name": "Pikachu", "useCount": 14 },
+    { "pokemonId": 6, "name": "Charizard", "useCount": 9 }
+  ]
+}
+```
+
+### `GET /api/analytics/damage`
+
+Returns total damage dealt and total intentional healing across all sessions.
+Damage removals within 2 seconds of the previous damage event on the same slot are excluded (treated as corrections).
+
+```bash
+curl http://localhost:8080/api/analytics/damage
+```
+
+Example response:
+
+```json
+{ "totalDealt": 2480, "totalHealed": 120 }
+```
+
+### `GET /api/analytics/knockouts`
+
+Returns the total knockout count across all sessions.
+
+```bash
+curl http://localhost:8080/api/analytics/knockouts
+```
+
+Example response:
+
+```json
+{ "totalKnockouts": 37 }
 ```
 
 ## Design Notes
@@ -110,6 +190,6 @@ go build ./...
 Good next places for backend growth:
 
 - add versioned API routes
-- add analytics endpoints over persisted session history
+- add per-session analytics breakdown
 - add services/repositories if business logic grows further
 - introduce request logging or structured configuration

@@ -78,8 +78,12 @@ export function PokemonSlot({
   const [evolvingDesktopOpen, setEvolvingDesktopOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [addSearchResults, setAddSearchResults] = useState<PokemonSearchResult[]>([]);
-  const [evolutionResults, setEvolutionResults] = useState<PokemonEvolutionOption[]>([]);
+  const [addSearchResults, setAddSearchResults] = useState<
+    PokemonSearchResult[]
+  >([]);
+  const [evolutionResults, setEvolutionResults] = useState<
+    PokemonEvolutionOption[]
+  >([]);
   const [loading, setLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const lastMobileDamageTapAtRef = useRef(0);
@@ -162,7 +166,15 @@ export function PokemonSlot({
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [addingDesktopOpen, addingMobileOpen, evolvingDesktopOpen, evolvingMobileOpen, isAdding, query, slot.pokemon?.id]);
+  }, [
+    addingDesktopOpen,
+    addingMobileOpen,
+    evolvingDesktopOpen,
+    evolvingMobileOpen,
+    isAdding,
+    query,
+    slot.pokemon?.id,
+  ]);
 
   const chipClass = (active: boolean) =>
     `inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[10px] font-semibold ${
@@ -213,12 +225,15 @@ export function PokemonSlot({
           <p className="p-2 text-xs text-rose-600">{searchError}</p>
         )}
         {loading && <p className="p-2 text-xs text-slate-500">Searching...</p>}
-        {!loading && !searchError && (isEvolutionSearchOpen
-          ? evolutionResults.length === 0
-          : addSearchResults.length === 0) && (
-          <p className="p-2 text-xs text-slate-500">No results</p>
-        )}
-        {(isEvolutionSearchOpen ? evolutionResults : addSearchResults).map((pokemon) => (
+        {!loading &&
+          !searchError &&
+          (isEvolutionSearchOpen
+            ? evolutionResults.length === 0
+            : addSearchResults.length === 0) && (
+            <p className="p-2 text-xs text-slate-500">No results</p>
+          )}
+        {(isEvolutionSearchOpen ? evolutionResults : addSearchResults).map(
+          (pokemon) => (
             <button
               key={pokemon.id}
               type="button"
@@ -247,16 +262,19 @@ export function PokemonSlot({
             >
               <span>{pokemon.name}</span>
               {isEvolutionSearchOpen && (
-                <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
-                  (pokemon as PokemonEvolutionOption).action === "Evolve"
-                    ? "border-emerald-300 bg-emerald-50 text-emerald-800"
-                    : "border-amber-300 bg-amber-50 text-amber-800"
-                }`}>
+                <span
+                  className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
+                    (pokemon as PokemonEvolutionOption).action === "Evolve"
+                      ? "border-emerald-300 bg-emerald-50 text-emerald-800"
+                      : "border-amber-300 bg-amber-50 text-amber-800"
+                  }`}
+                >
                   {(pokemon as PokemonEvolutionOption).action}
                 </span>
               )}
             </button>
-          ))}
+          ),
+        )}
       </div>
     </div>
   );
@@ -341,7 +359,10 @@ export function PokemonSlot({
 
       {isBench && (
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-          <SheetContent side={benchMenuSheetSide} className={benchMenuSheetClass}>
+          <SheetContent
+            side={benchMenuSheetSide}
+            className={benchMenuSheetClass}
+          >
             <div className={opponentSheetOrientationClass}>
               <SheetHeader className="mb-3 flex-row items-center justify-between">
                 <SheetTitle className="truncate text-sm font-bold text-board-ink">
@@ -442,7 +463,10 @@ export function PokemonSlot({
       )}
 
       {isBench && (
-        <Dialog open={evolvingDesktopOpen} onOpenChange={setEvolvingDesktopOpen}>
+        <Dialog
+          open={evolvingDesktopOpen}
+          onOpenChange={setEvolvingDesktopOpen}
+        >
           <DialogContent className="hidden md:block">
             <DialogHeader className="mb-3 flex-row items-center justify-between">
               <DialogTitle className="text-sm font-bold text-board-ink">

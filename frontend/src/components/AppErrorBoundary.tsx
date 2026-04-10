@@ -27,9 +27,12 @@ export class AppErrorBoundary extends Component<
       return (
         <main className="flex min-h-dvh items-center justify-center bg-[#f5f3ee] px-6 text-center text-slate-800">
           <div className="max-w-sm space-y-3 rounded-2xl border border-rose-200 bg-white p-6 shadow-xl">
-            <h1 className="text-lg font-bold">The board crashed while rendering</h1>
+            <h1 className="text-lg font-bold">
+              The board crashed while rendering
+            </h1>
             <p className="text-sm text-slate-600">
-              Reload the page. If it happens again, the browser console will now show the exact frontend error.
+              Reload the page. If it happens again, the browser console will now
+              show the exact frontend error.
             </p>
           </div>
         </main>

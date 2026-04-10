@@ -132,7 +132,10 @@ export function GameProvider({ children }: PropsWithChildren) {
   }, [bootstrapSession]);
 
   const enqueueAction = useCallback(
-    (request: SessionActionRequest, optimisticUpdate?: (prev: GameState) => GameState) => {
+    (
+      request: SessionActionRequest,
+      optimisticUpdate?: (prev: GameState) => GameState,
+    ) => {
       if (!sessionId) {
         setSessionError("Session not ready yet. Try again in a moment.");
         return;
@@ -200,30 +203,39 @@ export function GameProvider({ children }: PropsWithChildren) {
     [enqueueAction],
   );
 
-  const toggleStatus = useCallback((side: Side, status: SpecialStatus) => {
-    enqueueAction({ type: "toggle-status", side, status });
-  }, [enqueueAction]);
+  const toggleStatus = useCallback(
+    (side: Side, status: SpecialStatus) => {
+      enqueueAction({ type: "toggle-status", side, status });
+    },
+    [enqueueAction],
+  );
 
-  const promoteBenchToActive = useCallback((side: Side, benchIndex: number) => {
-    enqueueAction({ type: "promote-bench", side, benchIndex });
-  }, [enqueueAction]);
+  const promoteBenchToActive = useCallback(
+    (side: Side, benchIndex: number) => {
+      enqueueAction({ type: "promote-bench", side, benchIndex });
+    },
+    [enqueueAction],
+  );
 
-  const toggleGX = useCallback((side: Side) => {
-    enqueueAction({ type: "toggle-gx", side });
-  }, [enqueueAction]);
+  const toggleGX = useCallback(
+    (side: Side) => {
+      enqueueAction({ type: "toggle-gx", side });
+    },
+    [enqueueAction],
+  );
 
-  const toggleVSTAR = useCallback((side: Side) => {
-    enqueueAction({ type: "toggle-vstar", side });
-  }, [enqueueAction]);
+  const toggleVSTAR = useCallback(
+    (side: Side) => {
+      enqueueAction({ type: "toggle-vstar", side });
+    },
+    [enqueueAction],
+  );
 
   const flipCoin = useCallback(() => {
-    enqueueAction(
-      { type: "flip-coin" },
-      (prev) => ({
-        ...prev,
-        coinFlipping: true,
-      }),
-    );
+    enqueueAction({ type: "flip-coin" }, (prev) => ({
+      ...prev,
+      coinFlipping: true,
+    }));
   }, [enqueueAction]);
 
   const rollDie = useCallback(() => {

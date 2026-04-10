@@ -41,9 +41,8 @@ export function buildApiUrl(
   path: string,
   query?: Record<string, string | number | undefined>,
 ): string {
-  const baseOrigin = typeof window === "undefined"
-    ? "http://localhost"
-    : window.location.origin;
+  const baseOrigin =
+    typeof window === "undefined" ? "http://localhost" : window.location.origin;
   const url = new URL(path, baseOrigin);
   if (query) {
     for (const [key, value] of Object.entries(query)) {
@@ -104,10 +103,13 @@ export function applySessionAction(
   sessionId: string,
   action: SessionActionRequest,
 ): Promise<SessionSnapshotResponse> {
-  return fetchJson<SessionSnapshotResponse>(`/api/sessions/${sessionId}/actions`, {
-    method: "POST",
-    body: JSON.stringify(action),
-  });
+  return fetchJson<SessionSnapshotResponse>(
+    `/api/sessions/${sessionId}/actions`,
+    {
+      method: "POST",
+      body: JSON.stringify(action),
+    },
+  );
 }
 
 export function toActionPokemon(pokemon: PokemonRef): number {
