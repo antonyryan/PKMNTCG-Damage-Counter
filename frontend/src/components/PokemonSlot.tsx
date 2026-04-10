@@ -24,12 +24,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import {
-  getEvolutionCandidates,
-  searchPokemonCatalog,
-} from "../data/pokemonEvolution";
+import { getEvolutionOptions, searchPokemon } from "../api/client";
 import { useGame } from "../context/GameContext";
 import type {
+  PokemonEvolutionOption,
   PokemonSearchResult,
   Side,
   SlotState,
@@ -65,6 +63,9 @@ export function PokemonSlot({
   benchIndex,
 }: PokemonSlotProps) {
   const {
+    evolvePokemon,
+    isSessionReady,
+    sessionError,
     setPokemon,
     knockout,
     adjustDamage,
@@ -78,6 +79,9 @@ export function PokemonSlot({
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [addSearchResults, setAddSearchResults] = useState<PokemonSearchResult[]>([]);
+  const [evolutionResults, setEvolutionResults] = useState<PokemonEvolutionOption[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
   const lastMobileDamageTapAtRef = useRef(0);
   const isAdding =
     addingMobileOpen ||
@@ -96,25 +100,69 @@ export function PokemonSlot({
     if (!isAdding) {
       setQuery("");
       setAddSearchResults([]);
+      setEvolutionResults([]);
+      setLoading(false);
+      setSearchError(null);
       return;
     }
 
-    if (!addingMobileOpen && !addingDesktopOpen) {
+    if (!isSessionReady) {
+      setAddSearchResults([]);
+      setEvolutionResults([]);
+      setLoading(false);
+      setSearchError(sessionError ?? "Backend session is still loading.");
       return;
     }
 
-    // Keep a short debounce for smoother typing while using local dataset.
+    const isAddSearchOpen = addingMobileOpen || addingDesktopOpen;
+    const isEvolutionOpen = evolvingMobileOpen || evolvingDesktopOpen;
+    if (!isAddSearchOpen && !isEvolutionOpen) {
+      return;
+    }
+
+    let cancelled = false;
     const timer = window.setTimeout(() => {
-      setAddSearchResults(searchPokemonCatalog(query));
-    }, 100);
+      const loadResults = async () => {
+        setLoading(true);
+        try {
+          setSearchError(null);
+          if (isAddSearchOpen) {
+            const results = await searchPokemon(query);
+            if (!cancelled) {
+              setAddSearchResults(Array.isArray(results) ? results : []);
+              setEvolutionResults([]);
+            }
+            return;
+          }
 
-    return () => window.clearTimeout(timer);
-  }, [query, isAdding]);
+          if (slot.pokemon) {
+            const results = await getEvolutionOptions(slot.pokemon.id, query);
+            if (!cancelled) {
+              setEvolutionResults(Array.isArray(results) ? results : []);
+              setAddSearchResults([]);
+            }
+          }
+        } catch {
+          if (!cancelled) {
+            setAddSearchResults([]);
+            setEvolutionResults([]);
+            setSearchError("Could not load Pokemon results.");
+          }
+        } finally {
+          if (!cancelled) {
+            setLoading(false);
+          }
+        }
+      };
 
-  const evolutionResults = useMemo(
-    () => getEvolutionCandidates(slot.pokemon?.id ?? -1, query),
-    [slot.pokemon?.id, query],
-  );
+      void loadResults();
+    }, 120);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [addingDesktopOpen, addingMobileOpen, evolvingDesktopOpen, evolvingMobileOpen, isAdding, query, slot.pokemon?.id]);
 
   const chipClass = (active: boolean) =>
     `inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[10px] font-semibold ${
@@ -139,6 +187,7 @@ export function PokemonSlot({
   const iconToTopClass = side === "opponent" ? "rotate-180" : "";
   const opponentSheetOrientationClass = side === "opponent" ? "rotate-180" : "";
   const isBench = zone === "bench";
+  const slotStatuses = slot.statuses ?? [];
 
   const adjustMobileDamage = (amount: number) => {
     const now = performance.now();
@@ -157,9 +206,14 @@ export function PokemonSlot({
         placeholder="Search Pokemon"
         className="w-full rounded-xl border border-teal-900/20 bg-white px-3 py-2 text-sm outline-none focus:border-board-accent"
         autoFocus
+        disabled={!isSessionReady}
       />
       <div className="max-h-52 overflow-y-auto rounded-xl border border-teal-900/15 bg-white">
-        {(isEvolutionSearchOpen
+        {searchError && !loading && (
+          <p className="p-2 text-xs text-rose-600">{searchError}</p>
+        )}
+        {loading && <p className="p-2 text-xs text-slate-500">Searching...</p>}
+        {!loading && !searchError && (isEvolutionSearchOpen
           ? evolutionResults.length === 0
           : addSearchResults.length === 0) && (
           <p className="p-2 text-xs text-slate-500">No results</p>
@@ -168,21 +222,39 @@ export function PokemonSlot({
             <button
               key={pokemon.id}
               type="button"
-              className="block w-full border-b border-slate-100 px-3 py-2 text-left text-sm last:border-none active:bg-slate-100"
+              className="flex w-full items-center justify-between gap-2 border-b border-slate-100 px-3 py-2 text-left text-sm last:border-none active:bg-slate-100"
               onClick={() => {
-                setPokemon(
-                  side,
-                  zone,
-                  { id: pokemon.id, name: pokemon.name },
-                  benchIndex,
-                );
+                if (isEvolutionSearchOpen) {
+                  evolvePokemon(
+                    side,
+                    zone,
+                    { id: pokemon.id, name: pokemon.name },
+                    benchIndex,
+                  );
+                } else {
+                  setPokemon(
+                    side,
+                    zone,
+                    { id: pokemon.id, name: pokemon.name },
+                    benchIndex,
+                  );
+                }
                 setAddingMobileOpen(false);
                 setAddingDesktopOpen(false);
                 setEvolvingMobileOpen(false);
                 setEvolvingDesktopOpen(false);
               }}
             >
-              {pokemon.name}
+              <span>{pokemon.name}</span>
+              {isEvolutionSearchOpen && (
+                <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
+                  (pokemon as PokemonEvolutionOption).action === "Evolve"
+                    ? "border-emerald-300 bg-emerald-50 text-emerald-800"
+                    : "border-amber-300 bg-amber-50 text-amber-800"
+                }`}>
+                  {(pokemon as PokemonEvolutionOption).action}
+                </span>
+              )}
             </button>
           ))}
       </div>
@@ -197,6 +269,7 @@ export function PokemonSlot({
             <button
               type="button"
               className="flex h-full min-h-20 w-full items-center justify-center rounded-xl bg-white/70 py-5 text-board-ink active:scale-95 md:hidden"
+              disabled={!isSessionReady}
             >
               <Plus size={32} />
             </button>
@@ -229,6 +302,7 @@ export function PokemonSlot({
             <button
               type="button"
               className="hidden h-full min-h-20 w-full items-center justify-center rounded-xl bg-white/70 py-5 text-board-ink active:scale-95 md:flex"
+              disabled={!isSessionReady}
             >
               <Plus size={32} />
             </button>
@@ -433,7 +507,7 @@ export function PokemonSlot({
               <button
                 key={statusBtn.status}
                 type="button"
-                className={chipClass(slot.statuses.includes(statusBtn.status))}
+                className={chipClass(slotStatuses.includes(statusBtn.status))}
                 onClick={() => toggleStatus(side, statusBtn.status)}
               >
                 {statusBtn.icon}

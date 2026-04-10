@@ -4,26 +4,29 @@ PKMN TCG Companion is a mobile-first web application designed to replace physica
 
 ## Project Structure
 
-- `backend/`: Go + Gin API used to expose static Pokemon data and provide a clean backend foundation for future multiplayer features.
-- `frontend/`: React + Tailwind CSS application focused on a full-screen mobile layout with offline state persistence.
+- `backend/`: Go + Gin API that owns the Pokemon catalog, evolution validation, match rules, session persistence, and action history.
+- `frontend/`: React + Tailwind CSS application focused on a full-screen mobile layout backed by the backend session API.
+- `pokemon_data.json`: authoritative Pokemon catalog consumed by the backend.
 
 ## What Was Implemented
 
 ### Backend
 
-- A modular Gin server with separated files for startup, routing, handlers, middleware, models, and mock data.
-- A `GET /api/pokemon/search?q=` endpoint that filters the in-memory Pokemon list and returns at most 10 results.
-- Unit tests covering empty search, filtered search, alphabetical ordering, and no-result cases.
+- A modular Gin server with separated files for startup, routing, handlers, catalog loading, game rules, and session storage.
+- Catalog search and per-Pokemon evolution-option endpoints backed by the root JSON dataset.
+- Session endpoints that create or restore a match, apply validated actions, and expose persisted history.
+- Unit tests covering catalog search, full-chain evolution options, and session action validation.
 
 ### Frontend
 
 - A mobile-first fixed battlefield split into two halves.
 - An inverted opponent field for face-to-face play.
 - Reusable Pokemon slot rendering for both active and bench positions.
-- Match state management with React Context and automatic `localStorage` persistence.
-- TCG-specific rules for special conditions, damage clamping, knockouts, and bench-to-active promotion.
+- Match state management with React Context backed by the backend session API.
+- Local persistence limited to the backend `sessionId`, so reloads restore the authoritative server-side snapshot.
 - Utilities for coin flips, die rolls, GX markers, VSTAR markers, and full game reset.
-- Unit tests for the core game-rule functions.
+- Backend-driven add and evolve flows for active and bench slots.
+- Unit tests for the API client helpers.
 
 ## Development Notes
 
@@ -33,6 +36,7 @@ Run from the `backend/` directory:
 
 ```bash
 go test ./...
+go build ./...
 go run main.go
 ```
 
@@ -42,8 +46,9 @@ Run from the `frontend/` directory:
 
 ```bash
 npm install
-npm test
+npm run test -- --run
 npm run dev
+npm run build
 ```
 
 ## Additional Documentation

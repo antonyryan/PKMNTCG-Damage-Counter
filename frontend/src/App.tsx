@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Coins, Dice6, RotateCcw } from "lucide-react";
+import { getEvolutionOptions } from "./api/client";
 import { GameProvider, useGame } from "./context/GameContext";
 import { PokemonSlot } from "./components/PokemonSlot";
 import {
@@ -18,8 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
-import { getEvolutionCandidates } from "./data/pokemonEvolution";
-import type { Side } from "./types";
+import type { PokemonEvolutionOption, Side } from "./types";
 
 // SideBoard renders one half of the table and optionally rotates it for the opposing player.
 function SideBoard({ side, rotated }: { side: Side; rotated?: boolean }) {
@@ -52,13 +52,24 @@ function SideBoard({ side, rotated }: { side: Side; rotated?: boolean }) {
 }
 
 function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boolean; anchor: "left" | "right" }) {
-  const { state, flipCoin, rollDie, toggleGX, toggleVSTAR, setPokemon } =
+  const {
+    state,
+    evolvePokemon,
+    flipCoin,
+    rollDie,
+    toggleGX,
+    toggleVSTAR,
+    isSessionReady,
+    sessionError,
+  } =
     useGame();
   const player = state[side];
   const title = side === "me" ? "You" : "Opponent";
   const [evolveMobileOpen, setEvolveMobileOpen] = useState(false);
   const [evolveDesktopOpen, setEvolveDesktopOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [evolveResults, setEvolveResults] = useState<PokemonEvolutionOption[]>([]);
 
   const canEvolveActive = Boolean(player.active.pokemon);
   const isEvolveOpen = evolveMobileOpen || evolveDesktopOpen;
@@ -68,10 +79,46 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
   useEffect(() => {
     if (!isEvolveOpen) {
       setQuery("");
-    };
-  }, [isEvolveOpen]);
+      setEvolveResults([]);
+      setLoading(false);
+      return;
+    }
 
-  const evolveResults = getEvolutionCandidates(player.active.pokemon?.id ?? -1, query);
+    if (!isSessionReady) {
+      setEvolveResults([]);
+      setLoading(false);
+      return;
+    }
+
+    if (!player.active.pokemon) {
+      setEvolveResults([]);
+      return;
+    }
+
+    let cancelled = false;
+    const timer = window.setTimeout(async () => {
+      setLoading(true);
+      try {
+        const results = await getEvolutionOptions(player.active.pokemon!.id, query);
+        if (!cancelled) {
+          setEvolveResults(results);
+        }
+      } catch {
+        if (!cancelled) {
+          setEvolveResults([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }, 120);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [isEvolveOpen, player.active.pokemon, query]);
 
   const evolveSearchPanel = (
     <div className="space-y-2">
@@ -81,23 +128,35 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
         placeholder="Search Pokemon"
         className="w-full rounded-xl border border-teal-900/20 bg-white px-3 py-2 text-sm outline-none focus:border-board-accent"
         autoFocus
+        disabled={!isSessionReady}
       />
       <div className="max-h-52 overflow-y-auto rounded-xl border border-teal-900/15 bg-white">
-        {evolveResults.length === 0 && (
+        {!isSessionReady && sessionError && (
+          <p className="p-2 text-xs text-rose-600">{sessionError}</p>
+        )}
+        {loading && <p className="p-2 text-xs text-slate-500">Searching...</p>}
+        {!loading && isSessionReady && evolveResults.length === 0 && (
           <p className="p-2 text-xs text-slate-500">No results</p>
         )}
         {evolveResults.map((pokemon) => (
             <button
               key={`${side}-active-evolve-${pokemon.id}`}
               type="button"
-              className="block w-full border-b border-slate-100 px-3 py-2 text-left text-sm last:border-none active:bg-slate-100"
+              className="flex w-full items-center justify-between gap-2 border-b border-slate-100 px-3 py-2 text-left text-sm last:border-none active:bg-slate-100"
               onClick={() => {
-                setPokemon(side, "active", { id: pokemon.id, name: pokemon.name });
+                evolvePokemon(side, "active", { id: pokemon.id, name: pokemon.name });
                 setEvolveMobileOpen(false);
                 setEvolveDesktopOpen(false);
               }}
             >
-              {pokemon.name}
+              <span>{pokemon.name}</span>
+              <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
+                pokemon.action === "Evolve"
+                  ? "border-emerald-300 bg-emerald-50 text-emerald-800"
+                  : "border-amber-300 bg-amber-50 text-amber-800"
+              }`}>
+                {pokemon.action}
+              </span>
             </button>
           ))}
       </div>
@@ -162,7 +221,7 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
           <SheetTrigger asChild>
             <button
               type="button"
-              disabled={!canEvolveActive}
+              disabled={!canEvolveActive || !isSessionReady}
               className="rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-[10px] font-semibold text-board-ink active:scale-95 disabled:cursor-not-allowed disabled:opacity-45 md:hidden"
             >
               Evolve Active
@@ -190,7 +249,7 @@ function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boole
           <DialogTrigger asChild>
             <button
               type="button"
-              disabled={!canEvolveActive}
+              disabled={!canEvolveActive || !isSessionReady}
               className="hidden rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-[10px] font-semibold text-board-ink active:scale-95 disabled:cursor-not-allowed disabled:opacity-45 md:block"
             >
               Evolve Active
@@ -248,9 +307,25 @@ function Toolbox() {
 
 // Battlefield enforces the fixed two-half mobile layout used during a physical match.
 function Battlefield() {
+  const { isSessionReady, retrySession, sessionError } = useGame();
+
   return (
     <main className="relative h-dvh overflow-hidden bg-[radial-gradient(circle_at_20%_20%,rgba(226,113,29,0.25),transparent_40%),radial-gradient(circle_at_80%_75%,rgba(26,46,44,0.2),transparent_45%),linear-gradient(180deg,#f5f3ee_0%,#efe6d3_100%)] font-sans text-board-ink">
       <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(26,46,44,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(26,46,44,0.08)_1px,transparent_1px)] [background-size:18px_18px]" />
+      {!isSessionReady && (
+        <div className="absolute inset-x-2 top-2 z-30 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-900 shadow-card">
+          {sessionError ?? "Connecting to backend session..."}
+          {sessionError && (
+            <button
+              type="button"
+              onClick={retrySession}
+              className="ml-3 rounded-md border border-amber-400 bg-white px-2 py-1 text-[11px] font-semibold"
+            >
+              Retry
+            </button>
+          )}
+        </div>
+      )}
       <SideBoard side="opponent" rotated />
       <SideBoard side="me" />
       <CenterMenus />

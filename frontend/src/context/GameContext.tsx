@@ -4,36 +4,42 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type PropsWithChildren,
 } from "react";
+import {
+  applySessionAction,
+  createOrLoadSession,
+  type SessionActionRequest,
+} from "../api/client";
 import type {
+  GameHistoryEntry,
   GameState,
   PlayerState,
   PokemonRef,
   Side,
-  SlotState,
   SpecialStatus,
   Zone,
 } from "../types";
-import {
-  computeDamage,
-  computeNextStatuses,
-  emptySlot,
-  promoteBenchWithSwap,
-} from "./gameRules";
 
-const LOCAL_STORAGE_KEY = "pkmntcg-companion-state-v1";
+const SESSION_STORAGE_KEY = "pkmntcg-companion-session-id-v1";
 
 // emptyPlayer builds the initial board for one side of the match.
 const emptyPlayer = (): PlayerState => ({
-  active: emptySlot(),
-  bench: [emptySlot(), emptySlot(), emptySlot(), emptySlot(), emptySlot()],
+  active: { pokemon: null, damage: 0, statuses: [] },
+  bench: [
+    { pokemon: null, damage: 0, statuses: [] },
+    { pokemon: null, damage: 0, statuses: [] },
+    { pokemon: null, damage: 0, statuses: [] },
+    { pokemon: null, damage: 0, statuses: [] },
+    { pokemon: null, damage: 0, statuses: [] },
+  ],
   usedGX: false,
   usedVSTAR: false,
 });
 
-// initialState builds a full offline match snapshot.
+// initialState builds a safe placeholder snapshot until the backend session loads.
 const initialState = (): GameState => ({
   me: emptyPlayer(),
   opponent: emptyPlayer(),
@@ -44,7 +50,16 @@ const initialState = (): GameState => ({
 
 interface GameContextValue {
   state: GameState;
+  history: GameHistoryEntry[];
+  isSessionReady: boolean;
+  sessionError: string | null;
   setPokemon: (
+    side: Side,
+    zone: Zone,
+    pokemon: PokemonRef,
+    benchIndex?: number,
+  ) => void;
+  evolvePokemon: (
     side: Side,
     zone: Zone,
     pokemon: PokemonRef,
@@ -64,197 +79,169 @@ interface GameContextValue {
   flipCoin: () => void;
   rollDie: () => void;
   resetGame: () => void;
+  retrySession: () => void;
 }
 
 const GameContext = createContext<GameContextValue | null>(null);
 
-// loadState restores the last match from localStorage and falls back to a safe empty state.
-function loadState(): GameState {
-  const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
-  if (!raw) {
-    return initialState();
-  }
-
-  try {
-    const parsed = JSON.parse(raw) as GameState;
-    if (!parsed.me || !parsed.opponent) {
-      return initialState();
-    }
-    return parsed;
-  } catch {
-    return initialState();
-  }
-}
-
-// updatePlayerSlot applies a slot-level mutation without duplicating active/bench branching logic.
-function updatePlayerSlot(
-  player: PlayerState,
-  zone: Zone,
-  updater: (slot: SlotState) => SlotState,
-  benchIndex?: number,
-): PlayerState {
-  if (zone === "active") {
-    return { ...player, active: updater(player.active) };
-  }
-
-  if (benchIndex === undefined || benchIndex < 0 || benchIndex > 4) {
-    return player;
-  }
-
-  const nextBench = [...player.bench] as PlayerState["bench"];
-  nextBench[benchIndex] = updater(player.bench[benchIndex]);
-  return { ...player, bench: nextBench };
-}
-
 // GameProvider owns the match state, persistence, and all board mutations used by the UI.
 export function GameProvider({ children }: PropsWithChildren) {
-  const [state, setState] = useState<GameState>(loadState);
+  const [state, setState] = useState<GameState>(initialState);
+  const [history, setHistory] = useState<GameHistoryEntry[]>([]);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [isSessionReady, setIsSessionReady] = useState(false);
+  const [sessionError, setSessionError] = useState<string | null>(null);
+  const actionQueueRef = useRef(Promise.resolve());
+
+  const bootstrapSession = useCallback(async () => {
+    setIsSessionReady(false);
+    setSessionError(null);
+
+    try {
+      const savedSessionId = localStorage.getItem(SESSION_STORAGE_KEY);
+      const session = await createOrLoadSession(savedSessionId);
+      localStorage.setItem(SESSION_STORAGE_KEY, session.sessionId);
+      setSessionId(session.sessionId);
+      setState(session.state);
+      setHistory(session.history);
+      setIsSessionReady(true);
+    } catch (error) {
+      console.error("Failed to initialize backend session", error);
+      setSessionId(null);
+      setState(initialState());
+      setHistory([]);
+      setSessionError("Could not connect to the backend session service.");
+    }
+  }, []);
 
   useEffect(() => {
-    // Persist every mutation immediately so reloading the page does not lose the current game.
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
-  }, [state]);
+    let cancelled = false;
+
+    const run = async () => {
+      await bootstrapSession();
+      if (cancelled) {
+        return;
+      }
+    };
+
+    void run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [bootstrapSession]);
+
+  const enqueueAction = useCallback(
+    (request: SessionActionRequest, optimisticUpdate?: (prev: GameState) => GameState) => {
+      if (!sessionId) {
+        setSessionError("Session not ready yet. Try again in a moment.");
+        return;
+      }
+
+      setSessionError(null);
+
+      if (optimisticUpdate) {
+        setState(optimisticUpdate);
+      }
+
+      actionQueueRef.current = actionQueueRef.current
+        .catch(() => undefined)
+        .then(async () => {
+          const session = await applySessionAction(sessionId, request);
+          setState(session.state);
+          setHistory(session.history);
+          setIsSessionReady(true);
+        })
+        .catch((error) => {
+          console.error(`Failed to apply action ${request.type}`, error);
+          setSessionError("Failed to sync the action with the backend.");
+        });
+    },
+    [sessionId],
+  );
 
   const setPokemon = useCallback(
     (side: Side, zone: Zone, pokemon: PokemonRef, benchIndex?: number) => {
-      setState((prev) => ({
-        ...prev,
-        [side]: updatePlayerSlot(
-          prev[side],
-          zone,
-          (slot) => ({
-            ...slot,
-            pokemon,
-            damage: slot.pokemon ? slot.damage : 0,
-            statuses: zone === "active" ? slot.statuses : [],
-          }),
-          benchIndex,
-        ),
-      }));
+      enqueueAction({
+        type: "set-pokemon",
+        side,
+        zone,
+        benchIndex,
+        pokemonId: pokemon.id,
+      });
     },
-    [],
+    [enqueueAction],
+  );
+
+  const evolvePokemon = useCallback(
+    (side: Side, zone: Zone, pokemon: PokemonRef, benchIndex?: number) => {
+      enqueueAction({
+        type: "evolve-pokemon",
+        side,
+        zone,
+        benchIndex,
+        pokemonId: pokemon.id,
+      });
+    },
+    [enqueueAction],
   );
 
   const knockout = useCallback(
     (side: Side, zone: Zone, benchIndex?: number) => {
-      setState((prev) => ({
-        ...prev,
-        [side]: updatePlayerSlot(
-          prev[side],
-          zone,
-          () => emptySlot(),
-          benchIndex,
-        ),
-      }));
+      enqueueAction({ type: "knockout", side, zone, benchIndex });
     },
-    [],
+    [enqueueAction],
   );
 
   const adjustDamage = useCallback(
     (side: Side, zone: Zone, amount: number, benchIndex?: number) => {
-      setState((prev) => ({
-        ...prev,
-        [side]: updatePlayerSlot(
-          prev[side],
-          zone,
-          (slot) => ({
-            ...slot,
-            damage: computeDamage(slot.damage, amount),
-          }),
-          benchIndex,
-        ),
-      }));
+      enqueueAction({ type: "adjust-damage", side, zone, amount, benchIndex });
     },
-    [],
+    [enqueueAction],
   );
 
   const toggleStatus = useCallback((side: Side, status: SpecialStatus) => {
-    setState((prev) => {
-      const player = prev[side];
-      const current = player.active.statuses;
-      const nextStatuses = computeNextStatuses(current, status);
-
-      return {
-        ...prev,
-        [side]: {
-          ...player,
-          active: {
-            ...player.active,
-            statuses: nextStatuses,
-          },
-        },
-      };
-    });
-  }, []);
+    enqueueAction({ type: "toggle-status", side, status });
+  }, [enqueueAction]);
 
   const promoteBenchToActive = useCallback((side: Side, benchIndex: number) => {
-    setState((prev) => {
-      return {
-        ...prev,
-        [side]: promoteBenchWithSwap(prev[side], benchIndex),
-      };
-    });
-  }, []);
+    enqueueAction({ type: "promote-bench", side, benchIndex });
+  }, [enqueueAction]);
 
   const toggleGX = useCallback((side: Side) => {
-    setState((prev) => ({
-      ...prev,
-      [side]: {
-        ...prev[side],
-        usedGX: !prev[side].usedGX,
-      },
-    }));
-  }, []);
+    enqueueAction({ type: "toggle-gx", side });
+  }, [enqueueAction]);
 
   const toggleVSTAR = useCallback((side: Side) => {
-    setState((prev) => ({
-      ...prev,
-      [side]: {
-        ...prev[side],
-        usedVSTAR: !prev[side].usedVSTAR,
-      },
-    }));
-  }, []);
+    enqueueAction({ type: "toggle-vstar", side });
+  }, [enqueueAction]);
 
   const flipCoin = useCallback(() => {
-    setState((prev) => ({ ...prev, coinFlipping: true }));
-
-    let ticks = 0;
-    // A short interval creates lightweight feedback before the final random result settles.
-    const timer = window.setInterval(() => {
-      ticks += 1;
-      setState((prev) => ({
+    enqueueAction(
+      { type: "flip-coin" },
+      (prev) => ({
         ...prev,
-        coinResult: Math.random() < 0.5 ? "Heads" : "Tails",
-      }));
-
-      if (ticks >= 8) {
-        window.clearInterval(timer);
-        setState((prev) => ({
-          ...prev,
-          coinFlipping: false,
-          coinResult: Math.random() < 0.5 ? "Heads" : "Tails",
-        }));
-      }
-    }, 75);
-  }, []);
+        coinFlipping: true,
+      }),
+    );
+  }, [enqueueAction]);
 
   const rollDie = useCallback(() => {
-    setState((prev) => ({
-      ...prev,
-      dieResult: Math.floor(Math.random() * 6) + 1,
-    }));
-  }, []);
+    enqueueAction({ type: "roll-die" });
+  }, [enqueueAction]);
 
   const resetGame = useCallback(() => {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
-    setState(initialState());
-  }, []);
+    enqueueAction({ type: "reset" });
+  }, [enqueueAction]);
 
   const value = useMemo<GameContextValue>(
     () => ({
       state,
+      history,
+      isSessionReady,
+      sessionError,
       setPokemon,
+      evolvePokemon,
       knockout,
       adjustDamage,
       toggleStatus,
@@ -264,10 +251,17 @@ export function GameProvider({ children }: PropsWithChildren) {
       flipCoin,
       rollDie,
       resetGame,
+      retrySession: () => {
+        void bootstrapSession();
+      },
     }),
     [
       state,
+      history,
+      isSessionReady,
+      sessionError,
       setPokemon,
+      evolvePokemon,
       knockout,
       adjustDamage,
       toggleStatus,
@@ -277,6 +271,7 @@ export function GameProvider({ children }: PropsWithChildren) {
       flipCoin,
       rollDie,
       resetGame,
+      bootstrapSession,
     ],
   );
 

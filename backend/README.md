@@ -2,17 +2,19 @@
 
 ## Overview
 
-The backend is a small Go application built with Gin. Its current role is intentionally simple: serve static Pokemon data through an API that supports the frontend autocomplete flow. The project structure is already prepared for future expansion, such as multiplayer synchronization, persistence, or more detailed game logic.
+The backend is a Go + Gin application that acts as the source of truth for the companion app. It owns the Pokemon catalog, evolution validation, match-state mutations, persisted sessions, and action history exposed to the frontend.
 
 ## File Responsibilities
 
 - `main.go`: application entry point. It only starts the HTTP server.
 - `router.go`: central route registration. This is the place to add new endpoints.
-- `handlers.go`: request handlers and the reusable filtering logic used by the Pokemon search endpoint.
+- `handlers.go`: request handlers for catalog lookup, session restore, and action application.
 - `middleware.go`: cross-cutting HTTP middleware. Right now it only contains CORS handling for local development.
-- `pokemon.go`: minimal domain model returned by the API.
-- `pokemon_data.go`: mock Pokemon dataset used by the autocomplete endpoint.
-- `main_test.go`: backend tests that validate the current API behavior.
+- `pokemon.go`: transport types returned by catalog and evolution endpoints.
+- `catalog.go`: JSON catalog loader plus search and evolution graph queries.
+- `domain.go`: backend-owned match state and validated rule application.
+- `session_store.go`: persisted session snapshots and history storage.
+- `main_test.go`: backend tests that validate the API behavior.
 
 ## Current API
 
@@ -30,14 +32,39 @@ Example response:
 
 ### `GET /api/pokemon/search?q={query}`
 
-Searches the in-memory Pokemon catalog by name.
+Searches the backend-owned Pokemon catalog by name.
 
 Behavior:
 
-- If `q` is empty, the endpoint returns the first 10 Pokemon from the mock list.
+- If `q` is empty, the endpoint returns Pokemon in ascending National Dex ID order.
 - If `q` is provided, the endpoint performs a case-insensitive substring match.
-- Results are sorted alphabetically when a query is used.
-- Responses are capped at 10 items.
+- Responses are capped by `limit` and default to 20 items.
+
+### `GET /api/pokemon/:id/evolution-options?q={query}`
+
+Returns only valid evolution and de-evolution targets for the given Pokemon.
+
+Behavior:
+
+- Traverses the full evolution chain, so stage jumps in either direction are supported.
+- Labels each result as `Evolve` or `De-evolve`.
+- Filters by optional case-insensitive substring query.
+
+### `POST /api/sessions`
+
+Creates a new session or restores an existing one when `sessionId` is provided.
+
+### `GET /api/sessions/:id`
+
+Returns the authoritative current snapshot for one match session.
+
+### `GET /api/sessions/:id/history`
+
+Returns the persisted action log for one match session.
+
+### `POST /api/sessions/:id/actions`
+
+Applies a validated action to the current session and persists both state and history.
 
 Example response:
 
@@ -50,15 +77,15 @@ Example response:
 
 ## Design Notes
 
-### Why the Pokemon list is isolated
+### Catalog source of truth
 
-The mock dataset lives in `pokemon_data.go` so it can be replaced later without touching routing or handler logic. This keeps the backend easier to evolve when the app moves from mock data to a real source.
+The backend loads the catalog from the repository-root `pokemon_data.json` file. This keeps frontend bundles smaller and ensures search and evolution validation use the same dataset.
 
-### Why filtering is extracted
+### Session authority
 
-The `filterPokemon` function is kept separate from the HTTP handler to make the search behavior easier to test and reuse.
+The frontend sends actions, but the backend validates and applies them. This keeps evolution logic, damage/status rules, and restore behavior centralized.
 
-### Why the router is isolated
+### Router isolation
 
 `setupRouter()` lives in `router.go` so tests can exercise the full HTTP surface without booting the real server process.
 
@@ -66,9 +93,10 @@ The `filterPokemon` function is kept separate from the HTTP handler to make the 
 
 The backend test suite currently verifies:
 
-- empty search returns 10 items
-- filtered search returns sorted results
-- unmatched searches return an empty array
+- empty search returns catalog data in ID order
+- filtered search returns matching Pokemon only
+- evolution options cover full-chain evolve and de-evolve transitions
+- session actions validate evolution targets and persist history
 
 Run the backend checks with:
 
@@ -81,7 +109,7 @@ go build ./...
 
 Good next places for backend growth:
 
-- move Pokemon data to JSON or database-backed storage
 - add versioned API routes
-- add services/repositories if business logic grows
+- add analytics endpoints over persisted session history
+- add services/repositories if business logic grows further
 - introduce request logging or structured configuration

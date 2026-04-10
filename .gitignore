@@ -43,3 +43,10 @@ Thumbs.db
 *.tmp
 *.swp
 *.swo
+
+# Backend runtime data
+backend/data/sessions/*.json
+!backend/data/sessions/.gitkeep
+backend/data/analytics.db
+backend/data/analytics.db-shm
+backend/data/analytics.db-wal
