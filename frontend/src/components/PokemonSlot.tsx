@@ -24,6 +24,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import {
+  getEvolutionCandidates,
+  searchPokemonCatalog,
+} from "../data/pokemonEvolution";
 import { useGame } from "../context/GameContext";
 import type {
   PokemonSearchResult,
@@ -73,14 +77,14 @@ export function PokemonSlot({
   const [evolvingDesktopOpen, setEvolvingDesktopOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState<PokemonSearchResult[]>([]);
+  const [addSearchResults, setAddSearchResults] = useState<PokemonSearchResult[]>([]);
   const lastMobileDamageTapAtRef = useRef(0);
   const isAdding =
     addingMobileOpen ||
     addingDesktopOpen ||
     evolvingMobileOpen ||
     evolvingDesktopOpen;
+  const isEvolutionSearchOpen = evolvingMobileOpen || evolvingDesktopOpen;
 
   useEffect(() => {
     if (zone !== "bench" || !slot.pokemon) {
@@ -91,35 +95,26 @@ export function PokemonSlot({
   useEffect(() => {
     if (!isAdding) {
       setQuery("");
-      setResults([]);
+      setAddSearchResults([]);
       return;
     }
 
-    const control = new AbortController();
-    // Debounce search requests so the autocomplete stays responsive on mobile.
-    const timer = window.setTimeout(async () => {
-      setLoading(true);
-      try {
-        const url = `/api/pokemon/search?q=${encodeURIComponent(query)}`;
-        const response = await fetch(url, { signal: control.signal });
-        if (!response.ok) {
-          setResults([]);
-          return;
-        }
-        const data = (await response.json()) as PokemonSearchResult[];
-        setResults(data);
-      } catch {
-        setResults([]);
-      } finally {
-        setLoading(false);
-      }
-    }, 180);
+    if (!addingMobileOpen && !addingDesktopOpen) {
+      return;
+    }
 
-    return () => {
-      control.abort();
-      window.clearTimeout(timer);
-    };
+    // Keep a short debounce for smoother typing while using local dataset.
+    const timer = window.setTimeout(() => {
+      setAddSearchResults(searchPokemonCatalog(query));
+    }, 100);
+
+    return () => window.clearTimeout(timer);
   }, [query, isAdding]);
+
+  const evolutionResults = useMemo(
+    () => getEvolutionCandidates(slot.pokemon?.id ?? -1, query),
+    [slot.pokemon?.id, query],
+  );
 
   const chipClass = (active: boolean) =>
     `inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[10px] font-semibold ${
@@ -164,14 +159,12 @@ export function PokemonSlot({
         autoFocus
       />
       <div className="max-h-52 overflow-y-auto rounded-xl border border-teal-900/15 bg-white">
-        {loading && (
-          <p className="p-2 text-xs text-slate-500">Searching...</p>
-        )}
-        {!loading && results.length === 0 && (
+        {(isEvolutionSearchOpen
+          ? evolutionResults.length === 0
+          : addSearchResults.length === 0) && (
           <p className="p-2 text-xs text-slate-500">No results</p>
         )}
-        {!loading &&
-          results.map((pokemon) => (
+        {(isEvolutionSearchOpen ? evolutionResults : addSearchResults).map((pokemon) => (
             <button
               key={pokemon.id}
               type="button"
