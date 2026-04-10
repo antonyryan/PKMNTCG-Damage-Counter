@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState, type ReactElement } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactElement } from "react";
 import {
   ArrowUpCircle,
-  ChevronDown,
   Flame,
   Moon,
   Plus,
@@ -17,6 +16,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 import { useGame } from "../context/GameContext";
 import type {
   PokemonSearchResult,
@@ -60,11 +67,20 @@ export function PokemonSlot({
     toggleStatus,
     promoteBenchToActive,
   } = useGame();
-  const [adding, setAdding] = useState(false);
+  const [addingMobileOpen, setAddingMobileOpen] = useState(false);
+  const [addingDesktopOpen, setAddingDesktopOpen] = useState(false);
+  const [evolvingMobileOpen, setEvolvingMobileOpen] = useState(false);
+  const [evolvingDesktopOpen, setEvolvingDesktopOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<PokemonSearchResult[]>([]);
+  const lastMobileDamageTapAtRef = useRef(0);
+  const isAdding =
+    addingMobileOpen ||
+    addingDesktopOpen ||
+    evolvingMobileOpen ||
+    evolvingDesktopOpen;
 
   useEffect(() => {
     if (zone !== "bench" || !slot.pokemon) {
@@ -73,7 +89,7 @@ export function PokemonSlot({
   }, [zone, slot.pokemon]);
 
   useEffect(() => {
-    if (!adding) {
+    if (!isAdding) {
       setQuery("");
       setResults([]);
       return;
@@ -103,7 +119,7 @@ export function PokemonSlot({
       control.abort();
       window.clearTimeout(timer);
     };
-  }, [query, adding]);
+  }, [query, isAdding]);
 
   const chipClass = (active: boolean) =>
     `inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[10px] font-semibold ${
@@ -122,8 +138,21 @@ export function PokemonSlot({
   const benchMenuSheetSide = side === "opponent" ? "top" : "bottom";
   const benchMenuSheetClass =
     side === "opponent"
-      ? "z-[121] min-h-[56vh] max-h-[76vh] overflow-y-auto rounded-b-3xl border-b border-teal-900/15 bg-board-panel p-4 pb-8 md:hidden"
-      : "z-[121] min-h-[56vh] max-h-[76vh] overflow-y-auto rounded-t-3xl border-t border-teal-900/15 bg-board-panel p-4 pb-8 md:hidden";
+      ? "z-[121] min-h-[36vh] max-h-[58vh] overflow-y-auto rounded-b-3xl border-b border-teal-900/15 bg-board-panel p-4 pb-6 md:hidden"
+      : "z-[121] min-h-[36vh] max-h-[58vh] overflow-y-auto rounded-t-3xl border-t border-teal-900/15 bg-board-panel p-4 pb-6 md:hidden";
+
+  const iconToTopClass = side === "opponent" ? "rotate-180" : "";
+  const opponentSheetOrientationClass = side === "opponent" ? "rotate-180" : "";
+  const isBench = zone === "bench";
+
+  const adjustMobileDamage = (amount: number) => {
+    const now = performance.now();
+    if (now - lastMobileDamageTapAtRef.current < 140) {
+      return;
+    }
+    lastMobileDamageTapAtRef.current = now;
+    adjustDamage(side, zone, amount, benchIndex);
+  };
 
   const searchPanel = (
     <div className="space-y-2">
@@ -154,7 +183,10 @@ export function PokemonSlot({
                   { id: pokemon.id, name: pokemon.name },
                   benchIndex,
                 );
-                setAdding(false);
+                setAddingMobileOpen(false);
+                setAddingDesktopOpen(false);
+                setEvolvingMobileOpen(false);
+                setEvolvingDesktopOpen(false);
               }}
             >
               {pokemon.name}
@@ -167,7 +199,7 @@ export function PokemonSlot({
   if (!slot.pokemon) {
     return (
       <div className="relative rounded-2xl border border-dashed border-teal-900/25 bg-white/40 p-2">
-        <Sheet open={adding} onOpenChange={setAdding}>
+        <Sheet open={addingMobileOpen} onOpenChange={setAddingMobileOpen}>
           <SheetTrigger asChild>
             <button
               type="button"
@@ -179,7 +211,7 @@ export function PokemonSlot({
 
           <SheetContent
             side="bottom"
-            className="z-[121] min-h-[56vh] max-h-[76vh] overflow-y-auto rounded-t-3xl border-t border-teal-900/15 bg-board-panel p-4 pb-8 md:hidden"
+            className="z-[121] min-h-[36vh] max-h-[58vh] overflow-y-auto rounded-t-3xl border-t border-teal-900/15 bg-board-panel p-4 pb-6 md:hidden"
           >
             <SheetHeader className="mb-3 flex-row items-center justify-between">
               <SheetTitle className="text-sm font-bold text-board-ink">
@@ -199,55 +231,51 @@ export function PokemonSlot({
           </SheetContent>
         </Sheet>
 
-        {!adding && (
-          <button
-            type="button"
-            onClick={() => setAdding(true)}
-            className="hidden h-full min-h-20 w-full items-center justify-center rounded-xl bg-white/70 py-5 text-board-ink active:scale-95 md:flex"
-          >
-            <Plus size={32} />
-          </button>
-        )}
-
-        {adding && (
-          <div className="hidden space-y-2 md:block">
-            {searchPanel}
+        <Dialog open={addingDesktopOpen} onOpenChange={setAddingDesktopOpen}>
+          <DialogTrigger asChild>
             <button
               type="button"
-              className="w-full rounded-xl border border-slate-300 bg-white py-1 text-xs"
-              onClick={() => setAdding(false)}
+              className="hidden h-full min-h-20 w-full items-center justify-center rounded-xl bg-white/70 py-5 text-board-ink active:scale-95 md:flex"
             >
-              Cancel
+              <Plus size={32} />
             </button>
-          </div>
-        )}
+          </DialogTrigger>
+          <DialogContent className="hidden md:block">
+            <DialogHeader className="mb-3 flex-row items-center justify-between">
+              <DialogTitle className="text-sm font-bold text-board-ink">
+                Add Pokemon
+              </DialogTitle>
+              <DialogClose asChild>
+                <button
+                  type="button"
+                  className="rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-xs font-semibold"
+                >
+                  Close
+                </button>
+              </DialogClose>
+            </DialogHeader>
+            {searchPanel}
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-teal-900/20 bg-white/80 p-2 shadow-card backdrop-blur-sm">
-      <div className="mb-1 flex items-center justify-between gap-1">
-        <p
-          className={`truncate text-xs font-semibold tracking-wide text-board-ink ${
-            zone === "active" ? "w-full text-center" : "text-left"
-          }`}
-        >
-          {title}
-        </p>
-        {zone === "bench" && (
-          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-            <SheetTrigger asChild>
-              <button
-                type="button"
-                className="inline-flex items-center gap-1 rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-[10px] font-semibold md:hidden"
-              >
-                <ChevronDown size={12} />
-                Menu
-              </button>
-            </SheetTrigger>
+    <div className="relative rounded-2xl border border-teal-900/20 bg-white/80 p-2 shadow-card backdrop-blur-sm">
+      {isBench && (
+        <button
+          type="button"
+          onClick={() => setMenuOpen(true)}
+          aria-label={`Open bench menu for ${title}`}
+          className="absolute inset-0 z-10 rounded-2xl md:hidden"
+        />
+      )}
 
-            <SheetContent side={benchMenuSheetSide} className={benchMenuSheetClass}>
+      {isBench && (
+        <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+          <SheetContent side={benchMenuSheetSide} className={benchMenuSheetClass}>
+            <div className={opponentSheetOrientationClass}>
               <SheetHeader className="mb-3 flex-row items-center justify-between">
                 <SheetTitle className="truncate text-sm font-bold text-board-ink">
                   {title}
@@ -266,7 +294,7 @@ export function PokemonSlot({
                 <button
                   type="button"
                   className="rounded-xl border border-teal-900/20 bg-white px-3 py-2 text-base font-bold active:scale-95"
-                  onClick={() => adjustDamage(side, zone, -10, benchIndex)}
+                  onClick={() => adjustMobileDamage(-10)}
                 >
                   -10
                 </button>
@@ -276,7 +304,7 @@ export function PokemonSlot({
                 <button
                   type="button"
                   className="rounded-xl border border-teal-900/20 bg-white px-3 py-2 text-base font-bold active:scale-95"
-                  onClick={() => adjustDamage(side, zone, 10, benchIndex)}
+                  onClick={() => adjustMobileDamage(10)}
                 >
                   +10
                 </button>
@@ -289,7 +317,7 @@ export function PokemonSlot({
                     onClick={() => promoteBenchToActive(side, benchIndex ?? 0)}
                     className="flex items-center justify-center gap-1 rounded-xl border border-teal-900/20 bg-board-accentSoft px-2 py-3 text-xs font-semibold text-board-ink active:scale-95"
                   >
-                    <ArrowUpCircle size={15} />
+                    <ArrowUpCircle size={15} className={iconToTopClass} />
                     Promote
                   </button>
                 </SheetClose>
@@ -305,16 +333,85 @@ export function PokemonSlot({
                   </button>
                 </SheetClose>
               </div>
-            </SheetContent>
-          </Sheet>
-        )}
+
+              <div className="mt-2">
+                <SheetClose asChild>
+                  <button
+                    type="button"
+                    onClick={() => setEvolvingMobileOpen(true)}
+                    className="w-full rounded-xl border border-teal-900/20 bg-white px-2 py-3 text-xs font-semibold text-board-ink active:scale-95"
+                  >
+                    Evolve
+                  </button>
+                </SheetClose>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+      )}
+
+      {isBench && (
+        <Sheet open={evolvingMobileOpen} onOpenChange={setEvolvingMobileOpen}>
+          <SheetContent
+            side="bottom"
+            className="z-[121] min-h-[36vh] max-h-[58vh] overflow-y-auto rounded-t-3xl border-t border-teal-900/15 bg-board-panel p-4 pb-6 md:hidden"
+          >
+            <SheetHeader className="mb-3 flex-row items-center justify-between">
+              <SheetTitle className="text-sm font-bold text-board-ink">
+                Evolve Pokemon
+              </SheetTitle>
+              <SheetClose asChild>
+                <button
+                  type="button"
+                  className="rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-xs font-semibold"
+                >
+                  Close
+                </button>
+              </SheetClose>
+            </SheetHeader>
+            {searchPanel}
+          </SheetContent>
+        </Sheet>
+      )}
+
+      {isBench && (
+        <Dialog open={evolvingDesktopOpen} onOpenChange={setEvolvingDesktopOpen}>
+          <DialogContent className="hidden md:block">
+            <DialogHeader className="mb-3 flex-row items-center justify-between">
+              <DialogTitle className="text-sm font-bold text-board-ink">
+                Evolve Pokemon
+              </DialogTitle>
+              <DialogClose asChild>
+                <button
+                  type="button"
+                  className="rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-xs font-semibold"
+                >
+                  Close
+                </button>
+              </DialogClose>
+            </DialogHeader>
+            {searchPanel}
+          </DialogContent>
+        </Dialog>
+      )}
+
+      <div className="mb-1 flex items-center justify-between gap-1">
+        <p
+          className={`truncate text-xs font-semibold tracking-wide text-board-ink ${
+            zone === "active" ? "w-full text-center" : "text-left"
+          }`}
+        >
+          {title}
+        </p>
       </div>
 
-      <div className="mb-2 flex items-center justify-center">
-        <div className="min-w-14 rounded-xl bg-board-ink px-3 py-2 text-center text-sm font-black text-white">
-          {slot.damage}
+      {isBench && (
+        <div className="mb-2 flex items-center justify-center md:hidden">
+          <div className="min-w-14 rounded-xl bg-board-ink px-3 py-2 text-center text-sm font-black text-white">
+            {slot.damage}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className={`${zone === "bench" ? "hidden md:block" : "block"}`}>
         <div className="my-2 flex items-center justify-center gap-2">
@@ -360,7 +457,7 @@ export function PokemonSlot({
               onClick={() => promoteBenchToActive(side, benchIndex ?? 0)}
               className="flex flex-1 items-center justify-center gap-1 rounded-xl border border-teal-900/20 bg-board-accentSoft px-2 py-2 text-xs font-semibold text-board-ink active:scale-95"
             >
-              <ArrowUpCircle size={15} />
+              <ArrowUpCircle size={15} className={iconToTopClass} />
               Promote
             </button>
           )}
@@ -373,6 +470,16 @@ export function PokemonSlot({
             Knock Out
           </button>
         </div>
+
+        {zone === "bench" && (
+          <button
+            type="button"
+            onClick={() => setEvolvingDesktopOpen(true)}
+            className="mt-2 w-full rounded-xl border border-teal-900/20 bg-white px-2 py-2 text-xs font-semibold text-board-ink active:scale-95"
+          >
+            Evolve
+          </button>
+        )}
       </div>
     </div>
   );
