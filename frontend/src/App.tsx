@@ -33,90 +33,94 @@ function SideBoard({ side, rotated }: { side: Side; rotated?: boolean }) {
   );
 }
 
-// Toolbox groups shared match actions that are not tied to a single board slot.
-function Toolbox() {
-  const { state, flipCoin, rollDie, toggleGX, toggleVSTAR, resetGame } =
+function PlayerMiniMenu({ side, rotated, anchor }: { side: Side; rotated?: boolean; anchor: "left" | "right" }) {
+  const { state, flipCoin, rollDie, toggleGX, toggleVSTAR } =
     useGame();
+  const player = state[side];
+  const title = side === "me" ? "You" : "Opponent";
 
   const markerClass = (used: boolean) =>
-    `rounded-xl border px-2 py-2 text-xs font-black tracking-wide transition ${
+    `rounded-lg border px-2 py-1 text-[10px] font-black tracking-wide transition ${
       used
         ? "border-slate-400 bg-slate-300 text-slate-600"
         : "border-emerald-700 bg-emerald-500 text-white"
     }`;
 
   return (
-    <aside className="pointer-events-none absolute inset-x-0 top-1/2 z-20 -translate-y-1/2 px-2">
-      <div className="pointer-events-auto mx-auto flex max-w-[540px] flex-col gap-2 rounded-2xl border border-teal-900/15 bg-white/85 p-2 shadow-card backdrop-blur">
-        <div className="grid grid-cols-2 gap-2">
+    <aside
+      className={`pointer-events-none absolute top-1/2 z-20 -translate-y-1/2 ${anchor === "left" ? "left-2" : "right-2"}`}
+    >
+      <div
+        className={`pointer-events-auto flex w-[132px] flex-col gap-1 rounded-2xl border border-teal-900/20 bg-white/90 p-2 shadow-card backdrop-blur ${rotated ? "rotate-180" : ""}`}
+      >
+        <p className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-board-ink/60">
+          {title}
+        </p>
+
+        <div className="grid grid-cols-2 gap-1">
           <button
             type="button"
             onClick={flipCoin}
-            className="flex items-center justify-center gap-2 rounded-xl border border-teal-900/20 bg-board-panel px-3 py-3 text-sm font-semibold active:scale-95"
+            className="flex items-center justify-center gap-1 rounded-lg border border-teal-900/20 bg-board-panel px-2 py-1 text-[10px] font-semibold active:scale-95"
           >
-            <Coins size={18} />
-            {state.coinFlipping
-              ? "Flipping..."
-              : `Coin: ${state.coinResult ?? "-"}`}
+            <Coins size={12} />
+            {state.coinFlipping ? "..." : state.coinResult ?? "-"}
           </button>
           <button
             type="button"
             onClick={rollDie}
-            className="flex items-center justify-center gap-2 rounded-xl border border-teal-900/20 bg-board-panel px-3 py-3 text-sm font-semibold active:scale-95"
+            className="flex items-center justify-center gap-1 rounded-lg border border-teal-900/20 bg-board-panel px-2 py-1 text-[10px] font-semibold active:scale-95"
           >
-            <Dice6 size={18} />
-            Die: {state.dieResult ?? "-"}
+            <Dice6 size={12} />
+            {state.dieResult ?? "-"}
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-board-ink/60">
-          <span>Opponent</span>
-          <span>You</span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-1">
           <button
             type="button"
-            onClick={() => toggleGX("opponent")}
-            className={markerClass(state.opponent.usedGX)}
+            onClick={() => toggleGX(side)}
+            className={markerClass(player.usedGX)}
           >
             GX
           </button>
           <button
             type="button"
-            onClick={() => toggleGX("me")}
-            className={markerClass(state.me.usedGX)}
-          >
-            GX
-          </button>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() => toggleVSTAR("opponent")}
-            className={markerClass(state.opponent.usedVSTAR)}
-          >
-            VSTAR
-          </button>
-          <button
-            type="button"
-            onClick={() => toggleVSTAR("me")}
-            className={markerClass(state.me.usedVSTAR)}
+            onClick={() => toggleVSTAR(side)}
+            className={markerClass(player.usedVSTAR)}
           >
             VSTAR
           </button>
         </div>
 
-        <button
-          type="button"
-          onClick={resetGame}
-          className="flex items-center justify-center gap-2 rounded-xl border border-rose-400 bg-rose-500 px-3 py-3 text-sm font-bold text-white active:scale-95"
-        >
-          <RotateCcw size={16} />
-          New Game
-        </button>
       </div>
+    </aside>
+  );
+}
+
+function CenterMenus() {
+  return (
+    <>
+      <PlayerMiniMenu side="opponent" rotated anchor="left" />
+      <PlayerMiniMenu side="me" anchor="right" />
+    </>
+  );
+}
+
+// Toolbox groups shared match actions that are not tied to a single board slot.
+function Toolbox() {
+  const { resetGame } = useGame();
+
+  return (
+    <aside className="pointer-events-none absolute bottom-2 inset-x-0 z-20 flex justify-center px-2">
+      <button
+        type="button"
+        onClick={resetGame}
+        className="pointer-events-auto flex items-center justify-center gap-2 rounded-xl border border-rose-400 bg-rose-500 px-3 py-2 text-xs font-bold text-white active:scale-95"
+      >
+        <RotateCcw size={14} />
+        New Game
+      </button>
     </aside>
   );
 }
@@ -128,6 +132,7 @@ function Battlefield() {
       <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(26,46,44,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(26,46,44,0.08)_1px,transparent_1px)] [background-size:18px_18px]" />
       <SideBoard side="opponent" rotated />
       <SideBoard side="me" />
+      <CenterMenus />
       <Toolbox />
     </main>
   );
