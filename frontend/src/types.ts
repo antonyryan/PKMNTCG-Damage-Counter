@@ -43,3 +43,20 @@ export interface PokemonSearchResult {
   id: number;
   name: string;
 }
+
+export type PokemonEvolutionAction = "Evolve" | "De-evolve";
+
+export interface PokemonEvolutionOption extends PokemonSearchResult {
+  action: PokemonEvolutionAction;
+}
+
+export interface GameHistoryEntry {
+  timestamp: string;
+  action: string;
+  side?: Side;
+  zone?: Zone;
+  benchIndex?: number;
+  pokemonId?: number;
+  amount?: number;
+  status?: SpecialStatus;
+}
