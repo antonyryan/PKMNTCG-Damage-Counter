@@ -12,4 +12,7 @@ export default defineConfig({
       },
     },
   },
+  preview: {
+    allowedHosts: ["web-pkmntcg-production.up.railway.app"],
+  },
 });
