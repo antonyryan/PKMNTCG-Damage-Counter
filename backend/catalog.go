@@ -4,11 +4,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"runtime"
 	"sort"
 	"strings"
+	"time"
 )
 
 const defaultSearchLimit = 20
@@ -54,7 +57,26 @@ func loadPokemonCatalog() (*PokemonCatalog, error) {
 	}
 
 	if readErr != nil {
-		return nil, fmt.Errorf("read pokemon catalog: %w", readErr)
+		remoteURL := os.Getenv("POKEMON_DATA_URL")
+		if remoteURL == "" {
+			remoteURL = "https://raw.githubusercontent.com/antonyryan/PKMNTCG-Damage-Counter/master/pokemon_data.json"
+		}
+
+		client := &http.Client{Timeout: 10 * time.Second}
+		resp, err := client.Get(remoteURL)
+		if err != nil {
+			return nil, fmt.Errorf("read pokemon catalog: %w", readErr)
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			return nil, fmt.Errorf("read pokemon catalog: %w", readErr)
+		}
+
+		raw, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return nil, fmt.Errorf("read pokemon catalog: %w", readErr)
+		}
 	}
 
 	var parsed []pokemonCatalogRawEntry

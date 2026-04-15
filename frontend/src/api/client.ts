@@ -9,6 +9,11 @@ import type {
   Zone,
 } from "../types";
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "").replace(
+  /\/+$/,
+  "",
+);
+
 export interface SessionSnapshotResponse {
   sessionId: string;
   state: GameState;
@@ -56,7 +61,10 @@ export function buildApiUrl(
 }
 
 async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(path, {
+  const requestUrl =
+    API_BASE_URL && path.startsWith("/") ? `${API_BASE_URL}${path}` : path;
+
+  const response = await fetch(requestUrl, {
     headers: {
       "Content-Type": "application/json",
       ...(init?.headers ?? {}),

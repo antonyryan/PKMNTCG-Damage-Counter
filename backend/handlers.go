@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -15,8 +16,16 @@ import (
 )
 
 var pokemonCatalog = mustLoadPokemonCatalog()
-var sessionStore = newSessionStore("data/sessions")
-var analyticsStore = mustNewAnalyticsStore("data/analytics.db")
+
+func dataDir() string {
+	if path := os.Getenv("DATA_DIR"); path != "" {
+		return path
+	}
+	return "data"
+}
+
+var sessionStore = newSessionStore(filepath.Join(dataDir(), "sessions"))
+var analyticsStore = mustNewAnalyticsStore(filepath.Join(dataDir(), "analytics.db"))
 
 type createSessionRequest struct {
 	SessionID string `json:"sessionId"`
