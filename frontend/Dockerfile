@@ -18,6 +18,7 @@ COPY package*.json ./
 RUN npm ci --include=dev
 
 COPY --from=build /app/dist /app/dist
+COPY --from=build /app/vite.config.ts /app/vite.config.ts
 
 EXPOSE 8080
 
