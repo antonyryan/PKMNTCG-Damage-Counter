@@ -12,9 +12,7 @@ FROM alpine:3.20
 
 WORKDIR /app
 
-RUN adduser -D appuser && \
-    mkdir -p /app/data && \
-    chown -R appuser:appuser /app
+RUN mkdir -p /app/data /data
 
 COPY --from=build /app/server /app/server
 
@@ -22,7 +20,5 @@ ENV PORT=8080
 ENV DATA_DIR=/app/data
 
 EXPOSE 8080
-
-USER appuser
 
 CMD ["/app/server"]
