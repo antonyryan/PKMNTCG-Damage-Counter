@@ -15,7 +15,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --include=dev
 
 COPY --from=build /app/dist /app/dist
 
