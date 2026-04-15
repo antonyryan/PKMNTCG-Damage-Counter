@@ -281,12 +281,18 @@ export function PokemonSlot({
 
   if (!slot.pokemon) {
     return (
-      <div className="relative rounded-2xl border border-dashed border-teal-900/25 bg-white/40 p-2">
+      <div
+        className={`relative rounded-2xl border border-dashed border-teal-900/25 bg-white/40 ${
+          isBench ? "p-1.5 md:p-2" : "p-2"
+        }`}
+      >
         <Sheet open={addingMobileOpen} onOpenChange={setAddingMobileOpen}>
           <SheetTrigger asChild>
             <button
               type="button"
-              className="flex h-full min-h-20 w-full items-center justify-center rounded-xl bg-white/70 py-5 text-board-ink active:scale-95 md:hidden"
+              className={`flex h-full w-full items-center justify-center rounded-xl bg-white/70 text-board-ink active:scale-95 md:hidden ${
+                isBench ? "min-h-16 py-3" : "min-h-20 py-5"
+              }`}
               disabled={!isSessionReady}
             >
               <Plus size={32} />
@@ -319,7 +325,7 @@ export function PokemonSlot({
           <DialogTrigger asChild>
             <button
               type="button"
-              className="hidden h-full min-h-20 w-full items-center justify-center rounded-xl bg-white/70 py-5 text-board-ink active:scale-95 md:flex"
+              className="hidden h-full w-full min-h-20 items-center justify-center rounded-xl bg-white/70 py-5 text-board-ink active:scale-95 md:flex"
               disabled={!isSessionReady}
             >
               <Plus size={32} />
@@ -347,7 +353,11 @@ export function PokemonSlot({
   }
 
   return (
-    <div className="relative rounded-2xl border border-teal-900/20 bg-white/80 p-2 shadow-card backdrop-blur-sm">
+    <div
+      className={`relative rounded-2xl border border-teal-900/20 bg-white/80 shadow-card backdrop-blur-sm ${
+        isBench ? "p-1.5 md:p-2" : "p-2"
+      }`}
+    >
       {isBench && (
         <button
           type="button"

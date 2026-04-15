@@ -28,15 +28,15 @@ function SideBoard({ side, rotated }: { side: Side; rotated?: boolean }) {
 
   return (
     <section
-      className={`relative grid h-1/2 grid-rows-[auto_1fr] gap-2 p-2 sm:p-3 ${rotated ? "rotate-180" : ""}`}
+      className={`relative grid h-1/2 grid-rows-[auto_0.82fr] gap-2 p-2 sm:p-3 md:grid-rows-[auto_1fr] ${rotated ? "rotate-180" : ""}`}
     >
       <div className="grid grid-cols-5 gap-2 rounded-2xl bg-white/30 p-2">
-        <div className="col-start-2 col-end-5 md:col-start-3 md:col-end-4">
+        <div className="col-start-2 col-end-5 mt-14 md:col-start-3 md:col-end-4 md:mt-0">
           <PokemonSlot side={side} zone="active" slot={player.active} />
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-1 rounded-2xl bg-white/30 p-2 md:gap-2">
+      <div className="grid grid-cols-5 items-start gap-1 rounded-2xl bg-white/30 p-1.5 md:items-stretch md:gap-2 md:p-2">
         {player.bench.map((slot, index) => (
           <PokemonSlot
             key={`${side}-bench-${index}`}
@@ -62,6 +62,7 @@ function PlayerMiniMenu({
 }) {
   const {
     state,
+    adjustTeamDamage,
     evolvePokemon,
     flipCoin,
     rollDie,
@@ -81,6 +82,9 @@ function PlayerMiniMenu({
   );
 
   const canEvolveActive = Boolean(player.active.pokemon);
+  const canAdjustTeamDamage =
+    Boolean(player.active.pokemon) ||
+    player.bench.some((slot) => Boolean(slot.pokemon));
   const isEvolveOpen = evolveMobileOpen || evolveDesktopOpen;
   const evolveSheetClass =
     "z-[121] min-h-[36vh] max-h-[58vh] overflow-y-auto rounded-t-3xl border-t border-teal-900/15 bg-board-panel p-4 pb-6 md:hidden";
@@ -289,6 +293,25 @@ function PlayerMiniMenu({
             {evolveSearchPanel}
           </DialogContent>
         </Dialog>
+
+        <div className="grid grid-cols-2 gap-1">
+          <button
+            type="button"
+            onClick={() => adjustTeamDamage(side, -10)}
+            disabled={!isSessionReady || !canAdjustTeamDamage}
+            className="rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-[10px] font-semibold text-board-ink active:scale-95 disabled:cursor-not-allowed disabled:opacity-45"
+          >
+            Team -10
+          </button>
+          <button
+            type="button"
+            onClick={() => adjustTeamDamage(side, 10)}
+            disabled={!isSessionReady || !canAdjustTeamDamage}
+            className="rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-[10px] font-semibold text-board-ink active:scale-95 disabled:cursor-not-allowed disabled:opacity-45"
+          >
+            Team +10
+          </button>
+        </div>
       </div>
     </aside>
   );

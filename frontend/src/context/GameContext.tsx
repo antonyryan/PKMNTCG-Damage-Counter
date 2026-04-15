@@ -72,6 +72,7 @@ interface GameContextValue {
     amount: number,
     benchIndex?: number,
   ) => void;
+  adjustTeamDamage: (side: Side, amount: number) => void;
   toggleStatus: (side: Side, status: SpecialStatus) => void;
   promoteBenchToActive: (side: Side, benchIndex: number) => void;
   toggleGX: (side: Side) => void;
@@ -203,6 +204,33 @@ export function GameProvider({ children }: PropsWithChildren) {
     [enqueueAction],
   );
 
+  const adjustTeamDamage = useCallback(
+    (side: Side, amount: number) => {
+      if (!amount) {
+        return;
+      }
+
+      const player = state[side];
+      if (player.active.pokemon) {
+        enqueueAction({ type: "adjust-damage", side, zone: "active", amount });
+      }
+
+      player.bench.forEach((slot, benchIndex) => {
+        if (!slot.pokemon) {
+          return;
+        }
+        enqueueAction({
+          type: "adjust-damage",
+          side,
+          zone: "bench",
+          amount,
+          benchIndex,
+        });
+      });
+    },
+    [enqueueAction, state],
+  );
+
   const toggleStatus = useCallback(
     (side: Side, status: SpecialStatus) => {
       enqueueAction({ type: "toggle-status", side, status });
@@ -256,6 +284,7 @@ export function GameProvider({ children }: PropsWithChildren) {
       evolvePokemon,
       knockout,
       adjustDamage,
+      adjustTeamDamage,
       toggleStatus,
       promoteBenchToActive,
       toggleGX,
@@ -276,6 +305,7 @@ export function GameProvider({ children }: PropsWithChildren) {
       evolvePokemon,
       knockout,
       adjustDamage,
+      adjustTeamDamage,
       toggleStatus,
       promoteBenchToActive,
       toggleGX,
