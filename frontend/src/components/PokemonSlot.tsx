@@ -6,7 +6,7 @@ import {
   Plus,
   Skull,
   Sparkles,
-  Waves,
+  Zap,
 } from "lucide-react";
 import {
   Sheet,
@@ -50,7 +50,7 @@ const STATUS_BUTTONS: {
 }[] = [
   { status: "sleep", label: "Sleep", icon: <Moon size={16} /> },
   { status: "confusion", label: "Conf", icon: <Sparkles size={16} /> },
-  { status: "paralysis", label: "Para", icon: <Waves size={16} /> },
+  { status: "paralysis", label: "Para", icon: <Zap size={16} /> },
   { status: "poison", label: "Poison", icon: <Skull size={16} /> },
   { status: "burn", label: "Burn", icon: <Flame size={16} /> },
 ];
@@ -86,7 +86,7 @@ export function PokemonSlot({
   >([]);
   const [loading, setLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
-  const lastMobileDamageTapAtRef = useRef(0);
+  const lastDamageTouchAtRef = useRef(0);
   const isAdding =
     addingMobileOpen ||
     addingDesktopOpen ||
@@ -201,13 +201,22 @@ export function PokemonSlot({
   const isBench = zone === "bench";
   const slotStatuses = slot.statuses ?? [];
 
-  const adjustMobileDamage = (amount: number) => {
-    const now = performance.now();
-    if (now - lastMobileDamageTapAtRef.current < 140) {
+  const DAMAGE_TOUCH_GUARD_MS = 450;
+
+  const applyDamage = (amount: number) => {
+    adjustDamage(side, zone, amount, benchIndex);
+  };
+
+  const handleDamageTouch = (amount: number) => {
+    lastDamageTouchAtRef.current = Date.now();
+    applyDamage(amount);
+  };
+
+  const handleDamageClick = (amount: number) => {
+    if (Date.now() - lastDamageTouchAtRef.current < DAMAGE_TOUCH_GUARD_MS) {
       return;
     }
-    lastMobileDamageTapAtRef.current = now;
-    adjustDamage(side, zone, amount, benchIndex);
+    applyDamage(amount);
   };
 
   const searchPanel = (
@@ -392,7 +401,11 @@ export function PokemonSlot({
                 <button
                   type="button"
                   className="rounded-xl border border-teal-900/20 bg-white px-3 py-2 text-base font-bold active:scale-95"
-                  onClick={() => adjustMobileDamage(-10)}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    handleDamageTouch(-10);
+                  }}
+                  onClick={() => handleDamageClick(-10)}
                 >
                   -10
                 </button>
@@ -402,7 +415,11 @@ export function PokemonSlot({
                 <button
                   type="button"
                   className="rounded-xl border border-teal-900/20 bg-white px-3 py-2 text-base font-bold active:scale-95"
-                  onClick={() => adjustMobileDamage(10)}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    handleDamageTouch(10);
+                  }}
+                  onClick={() => handleDamageClick(10)}
                 >
                   +10
                 </button>
@@ -519,7 +536,11 @@ export function PokemonSlot({
           <button
             type="button"
             className="rounded-xl border border-teal-900/20 bg-white px-3 py-2 text-base font-bold active:scale-95"
-            onClick={() => adjustDamage(side, zone, -10, benchIndex)}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              handleDamageTouch(-10);
+            }}
+            onClick={() => handleDamageClick(-10)}
           >
             -10
           </button>
@@ -529,7 +550,11 @@ export function PokemonSlot({
           <button
             type="button"
             className="rounded-xl border border-teal-900/20 bg-white px-3 py-2 text-base font-bold active:scale-95"
-            onClick={() => adjustDamage(side, zone, 10, benchIndex)}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              handleDamageTouch(10);
+            }}
+            onClick={() => handleDamageClick(10)}
           >
             +10
           </button>

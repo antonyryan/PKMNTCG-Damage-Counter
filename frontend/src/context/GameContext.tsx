@@ -24,6 +24,14 @@ import type {
 } from "../types";
 
 const SESSION_STORAGE_KEY = "pkmntcg-companion-session-id-v1";
+const DAMAGE_DEBOUNCE_MS = 160;
+
+interface PendingDamageAction {
+  side: Side;
+  zone: Zone;
+  benchIndex?: number;
+  amount: number;
+}
 
 // emptyPlayer builds the initial board for one side of the match.
 const emptyPlayer = (): PlayerState => ({
@@ -93,6 +101,8 @@ export function GameProvider({ children }: PropsWithChildren) {
   const [isSessionReady, setIsSessionReady] = useState(false);
   const [sessionError, setSessionError] = useState<string | null>(null);
   const actionQueueRef = useRef(Promise.resolve());
+  const pendingDamageRef = useRef<Map<string, PendingDamageAction>>(new Map());
+  const damageDebounceTimerRef = useRef<number | null>(null);
 
   const bootstrapSession = useCallback(async () => {
     setIsSessionReady(false);
@@ -132,7 +142,7 @@ export function GameProvider({ children }: PropsWithChildren) {
     };
   }, [bootstrapSession]);
 
-  const enqueueAction = useCallback(
+  const enqueueActionImmediate = useCallback(
     (
       request: SessionActionRequest,
       optimisticUpdate?: (prev: GameState) => GameState,
@@ -162,6 +172,81 @@ export function GameProvider({ children }: PropsWithChildren) {
         });
     },
     [sessionId],
+  );
+
+  const flushPendingDamage = useCallback(() => {
+    if (damageDebounceTimerRef.current !== null) {
+      window.clearTimeout(damageDebounceTimerRef.current);
+      damageDebounceTimerRef.current = null;
+    }
+
+    if (pendingDamageRef.current.size === 0) {
+      return;
+    }
+
+    const batchedDamageActions = Array.from(pendingDamageRef.current.values());
+    pendingDamageRef.current.clear();
+
+    batchedDamageActions.forEach((entry) => {
+      enqueueActionImmediate({
+        type: "adjust-damage",
+        side: entry.side,
+        zone: entry.zone,
+        benchIndex: entry.benchIndex,
+        amount: entry.amount,
+      });
+    });
+  }, [enqueueActionImmediate]);
+
+  useEffect(() => {
+    return () => {
+      flushPendingDamage();
+    };
+  }, [flushPendingDamage]);
+
+  const enqueueAction = useCallback(
+    (
+      request: SessionActionRequest,
+      optimisticUpdate?: (prev: GameState) => GameState,
+    ) => {
+      if (request.type === "adjust-damage") {
+        const side = request.side;
+        const zone = request.zone;
+        const amount = request.amount;
+
+        if (!side || !zone || !amount) {
+          return;
+        }
+
+        const key = `${side}:${zone}:${request.benchIndex ?? -1}`;
+        const current = pendingDamageRef.current.get(key);
+        const nextAmount = (current?.amount ?? 0) + amount;
+
+        if (nextAmount === 0) {
+          pendingDamageRef.current.delete(key);
+        } else {
+          pendingDamageRef.current.set(key, {
+            side,
+            zone,
+            benchIndex: request.benchIndex,
+            amount: nextAmount,
+          });
+        }
+
+        if (damageDebounceTimerRef.current !== null) {
+          window.clearTimeout(damageDebounceTimerRef.current);
+        }
+
+        damageDebounceTimerRef.current = window.setTimeout(() => {
+          flushPendingDamage();
+        }, DAMAGE_DEBOUNCE_MS);
+        return;
+      }
+
+      flushPendingDamage();
+      enqueueActionImmediate(request, optimisticUpdate);
+    },
+    [enqueueActionImmediate, flushPendingDamage],
   );
 
   const setPokemon = useCallback(

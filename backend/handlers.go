@@ -2,7 +2,9 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -119,7 +121,86 @@ func applySessionActionHandler(c *gin.Context) {
 	}
 
 	analyticsStore.Record(c.Param("id"), req, pokemonCatalog, now)
+	log.Printf("session=%s action=%s summary=%s", c.Param("id"), req.Type, actionSummary(req, session, pokemonCatalog))
 	c.JSON(http.StatusOK, session)
+}
+
+func actionSummary(req SessionActionRequest, session *GameSession, catalog *PokemonCatalog) string {
+	zoneLabel := string(req.Zone)
+	if req.Zone == ZoneBench && req.BenchIndex != nil {
+		zoneLabel = fmt.Sprintf("bench#%d", *req.BenchIndex+1)
+	}
+
+	sideLabel := string(req.Side)
+	if sideLabel == "" {
+		sideLabel = "n/a"
+	}
+
+	switch req.Type {
+	case ActionAdjust:
+		amount := 0
+		if req.Amount != nil {
+			amount = *req.Amount
+		}
+		sign := ""
+		if amount > 0 {
+			sign = "+"
+		}
+		pokemonName := pokemonNameFromSlot(session, req)
+		if pokemonName == "" {
+			pokemonName = "Unknown Pokemon"
+		}
+		return fmt.Sprintf("%s, %s%d damage (%s, %s)", pokemonName, sign, amount, zoneLabel, sideLabel)
+	case ActionSetPokemon, ActionEvolve:
+		if req.PokemonID != nil {
+			if pokemon, ok := catalog.Get(*req.PokemonID); ok {
+				return fmt.Sprintf("%s on %s (%s)", pokemon.Pokemon.Name, zoneLabel, sideLabel)
+			}
+			return fmt.Sprintf("pokemonId=%d on %s (%s)", *req.PokemonID, zoneLabel, sideLabel)
+		}
+		return fmt.Sprintf("pokemon update on %s (%s)", zoneLabel, sideLabel)
+	case ActionKnockout:
+		return fmt.Sprintf("knockout on %s (%s)", zoneLabel, sideLabel)
+	case ActionStatus:
+		if req.Status != nil {
+			return fmt.Sprintf("toggle %s status (%s)", *req.Status, sideLabel)
+		}
+		return fmt.Sprintf("toggle status (%s)", sideLabel)
+	case ActionPromote:
+		return fmt.Sprintf("promote from %s (%s)", zoneLabel, sideLabel)
+	case ActionToggleGX:
+		return fmt.Sprintf("toggle GX (%s)", sideLabel)
+	case ActionToggleVSTAR:
+		return fmt.Sprintf("toggle VSTAR (%s)", sideLabel)
+	case ActionFlipCoin:
+		if session.State.CoinResult != nil {
+			return fmt.Sprintf("flip coin -> %s", *session.State.CoinResult)
+		}
+		return "flip coin"
+	case ActionRollDie:
+		if session.State.DieResult != nil {
+			return fmt.Sprintf("roll die -> %d", *session.State.DieResult)
+		}
+		return "roll die"
+	case ActionReset:
+		return "reset game"
+	default:
+		return req.Type
+	}
+}
+
+func pokemonNameFromSlot(session *GameSession, req SessionActionRequest) string {
+	player, err := getPlayer(&session.State, req.Side)
+	if err != nil {
+		return ""
+	}
+
+	slot, err := getSlot(player, req.Zone, req.BenchIndex)
+	if err != nil || slot.Pokemon == nil {
+		return ""
+	}
+
+	return slot.Pokemon.Name
 }
 
 // analyticsTopPokemonHandler returns the most used Pokemon sorted by usage count.

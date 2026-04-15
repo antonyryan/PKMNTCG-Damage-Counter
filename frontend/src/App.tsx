@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Coins, Dice6, RotateCcw } from "lucide-react";
 import { getEvolutionOptions } from "./api/client";
 import { GameProvider, useGame } from "./context/GameContext";
@@ -80,14 +80,32 @@ function PlayerMiniMenu({
   const [evolveResults, setEvolveResults] = useState<PokemonEvolutionOption[]>(
     [],
   );
+  const lastTeamDamageTouchAtRef = useRef(0);
 
   const canEvolveActive = Boolean(player.active.pokemon);
   const canAdjustTeamDamage =
     Boolean(player.active.pokemon) ||
     player.bench.some((slot) => Boolean(slot.pokemon));
   const isEvolveOpen = evolveMobileOpen || evolveDesktopOpen;
+  const TEAM_DAMAGE_TOUCH_GUARD_MS = 450;
   const evolveSheetClass =
     "z-[121] min-h-[36vh] max-h-[58vh] overflow-y-auto rounded-t-3xl border-t border-teal-900/15 bg-board-panel p-4 pb-6 md:hidden";
+
+  const applyTeamDamage = (amount: number) => {
+    adjustTeamDamage(side, amount);
+  };
+
+  const handleTeamDamageTouch = (amount: number) => {
+    lastTeamDamageTouchAtRef.current = Date.now();
+    applyTeamDamage(amount);
+  };
+
+  const handleTeamDamageClick = (amount: number) => {
+    if (Date.now() - lastTeamDamageTouchAtRef.current < TEAM_DAMAGE_TOUCH_GUARD_MS) {
+      return;
+    }
+    applyTeamDamage(amount);
+  };
 
   useEffect(() => {
     if (!isEvolveOpen) {
@@ -297,7 +315,11 @@ function PlayerMiniMenu({
         <div className="grid grid-cols-2 gap-1">
           <button
             type="button"
-            onClick={() => adjustTeamDamage(side, -10)}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              handleTeamDamageTouch(-10);
+            }}
+            onClick={() => handleTeamDamageClick(-10)}
             disabled={!isSessionReady || !canAdjustTeamDamage}
             className="rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-[10px] font-semibold text-board-ink active:scale-95 disabled:cursor-not-allowed disabled:opacity-45"
           >
@@ -305,7 +327,11 @@ function PlayerMiniMenu({
           </button>
           <button
             type="button"
-            onClick={() => adjustTeamDamage(side, 10)}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              handleTeamDamageTouch(10);
+            }}
+            onClick={() => handleTeamDamageClick(10)}
             disabled={!isSessionReady || !canAdjustTeamDamage}
             className="rounded-lg border border-teal-900/20 bg-white px-2 py-1 text-[10px] font-semibold text-board-ink active:scale-95 disabled:cursor-not-allowed disabled:opacity-45"
           >
