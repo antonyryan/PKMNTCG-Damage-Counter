@@ -9,10 +9,25 @@ import type {
   Zone,
 } from "../types";
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "").replace(
-  /\/+$/,
-  "",
-);
+const API_BASE_URL = (() => {
+  const configured = (import.meta.env.VITE_API_BASE_URL ?? "")
+    .trim()
+    .replace(/\/+$/, "");
+  if (configured) {
+    return configured;
+  }
+
+  // Railway fallback: when WEB and API services follow the common
+  // web-*/backend-* naming pattern, infer the backend URL at runtime.
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host.endsWith(".up.railway.app") && host.startsWith("web-")) {
+      return `https://${host.replace(/^web-/, "backend-")}`;
+    }
+  }
+
+  return "";
+})();
 
 export interface SessionSnapshotResponse {
   sessionId: string;
