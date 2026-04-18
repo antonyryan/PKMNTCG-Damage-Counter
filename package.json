@@ -5,7 +5,12 @@
   "scripts": {
     "server": "cd backend && go run .",
     "client": "cd frontend && npm run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "railway:backend:test": "cd backend && go test ./...",
+    "railway:frontend:build": "cd frontend && npm run build",
+    "railway:check": "npm run railway:backend:test && npm run railway:frontend:build",
+    "docker:backend": "docker build -t pkmntcg-backend ./backend",
+    "docker:frontend": "docker build -t pkmntcg-frontend ./frontend"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"

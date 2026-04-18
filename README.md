@@ -1,7 +1,9 @@
+![Demo](demo.gif)
+
 # PKMN TCG Companion
 You can check it at: https://web-pkmntcg-production.up.railway.app/
 
-PKMN TCG Companion is a mobile-first web application designed to replace physical match accessories in in-person Pokemon TCG games. The app tracks the active Pokemon, bench slots, damage, special conditions, and once-per-game markers, while also providing quick utilities such as coin flips and die rolls. It is also open source, so feel free to contribute in any way you want. 
+PKMN TCG Companion is a mobile-first web application designed to replace physical match accessories in in-person Pokemon TCG games. The app tracks the active Pokemon, bench slots, damage, special conditions, and once-per-game markers, while also providing quick utilities such as coin flips and die rolls. It is also open source, so feel free to contribute in any way you want.
 
 ## Project Structure
 
@@ -182,3 +184,56 @@ curl http://localhost:8080/api/analytics/knockouts
 
 - `backend/README.md`: backend architecture, responsibilities, and API behavior.
 - `frontend/README.md`: frontend architecture, game state design, and UI behavior.
+
+## Deploy on Railway
+
+This repository is easiest to deploy as two Railway services:
+
+- Backend service from `backend/`
+- Frontend service from `frontend/`
+
+Quick sanity check before pushing:
+
+```bash
+npm run railway:check
+```
+
+To avoid stack auto-detection issues, prefer Dockerfile deploys:
+
+- Backend Dockerfile file in repo: `backend/Dockerfile`
+- Frontend Dockerfile file in repo: `frontend/Dockerfile`
+
+With each service root configured (`backend` or `frontend`), set Dockerfile path to `Dockerfile`.
+
+### Backend service settings
+
+- Root directory: `backend`
+- Builder: `Dockerfile`
+- Dockerfile path: `Dockerfile`
+
+Environment variables:
+
+- `PORT`: provided automatically by Railway
+- `CORS_ALLOWED_ORIGIN`: frontend public URL (example: `https://pkmntcg-web.up.railway.app`)
+- `DATA_DIR`: optional persistent path (example: `/data`)
+
+Notes:
+
+- The backend now reads `PORT` automatically and falls back to `8080` locally.
+- Session files and analytics SQLite database are written under `DATA_DIR` (default: `backend/data`).
+- For persistence across restarts, attach a Railway Volume and set `DATA_DIR` to that mount path.
+
+### Frontend service settings
+
+- Root directory: `frontend`
+- Builder: `Dockerfile`
+- Dockerfile path: `Dockerfile`
+
+Environment variables:
+
+- `VITE_API_BASE_URL`: backend public URL (example: `https://pkmntcg-api.up.railway.app`)
+
+Notes:
+
+- In production, API requests use `VITE_API_BASE_URL`.
+- In local dev, requests continue to use relative `/api` paths with the Vite proxy.
