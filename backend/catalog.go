@@ -115,9 +115,9 @@ func loadPokemonCatalog() (*PokemonCatalog, error) {
 
 		catalog.ordered = append(catalog.ordered, Pokemon{ID: id, Name: entry.Name})
 		catalog.byID[id] = PokemonCatalogEntry{
-			Pokemon:      Pokemon{ID: id, Name: entry.Name},
-			EvolvesTo:    evolvesTo,
-			EvolvesFrom:  evolvesFrom,
+			Pokemon:     Pokemon{ID: id, Name: entry.Name},
+			EvolvesTo:   evolvesTo,
+			EvolvesFrom: evolvesFrom,
 		}
 	}
 
