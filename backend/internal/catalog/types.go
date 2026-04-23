@@ -1,4 +1,4 @@
-package main
+package catalog
 
 // Pokemon is the minimal response shape used by autocomplete and board state payloads.
 type Pokemon struct {
@@ -6,8 +6,8 @@ type Pokemon struct {
 	Name string `json:"name"`
 }
 
-// PokemonCatalogEntry is the backend-only representation enriched with evolution links.
-type PokemonCatalogEntry struct {
+// Entry is the backend-only representation enriched with evolution links.
+type Entry struct {
 	Pokemon     Pokemon
 	EvolvesTo   []int
 	EvolvesFrom *int

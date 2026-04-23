@@ -11,6 +11,7 @@ import {
 import {
   applySessionAction,
   createOrLoadSession,
+  trackVisit,
   type SessionActionRequest,
 } from "../api/client";
 import type {
@@ -24,7 +25,21 @@ import type {
 } from "../types";
 
 const SESSION_STORAGE_KEY = "pkmntcg-companion-session-id-v1";
+const VISITOR_STORAGE_KEY = "pkmntcg-companion-visitor-id-v1";
 const DAMAGE_DEBOUNCE_MS = 160;
+
+function getOrCreateVisitorId(): string {
+  const existing = localStorage.getItem(VISITOR_STORAGE_KEY);
+  if (existing) {
+    return existing;
+  }
+  const generated =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  localStorage.setItem(VISITOR_STORAGE_KEY, generated);
+  return generated;
+}
 
 interface PendingDamageAction {
   side: Side;
@@ -109,6 +124,16 @@ export function GameProvider({ children }: PropsWithChildren) {
     setSessionError(null);
 
     try {
+      const visitorId = getOrCreateVisitorId();
+      void trackVisit({
+        visitorId,
+        visitedAt: new Date().toISOString(),
+        source:
+          typeof window !== "undefined" ? window.location.hostname : "unknown",
+      }).catch((error) => {
+        console.warn("Anonymous visit tracking failed", error);
+      });
+
       const savedSessionId = localStorage.getItem(SESSION_STORAGE_KEY);
       const session = await createOrLoadSession(savedSessionId);
       localStorage.setItem(SESSION_STORAGE_KEY, session.sessionId);
