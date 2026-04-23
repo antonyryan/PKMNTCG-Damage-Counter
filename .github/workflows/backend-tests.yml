@@ -1,0 +1,31 @@
+name: Backend Tests
+
+on:
+  pull_request:
+    paths:
+      - backend/**
+      - .github/workflows/backend-tests.yml
+  push:
+    branches: [main]
+    paths:
+      - backend/**
+      - .github/workflows/backend-tests.yml
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: backend/go.mod
+
+      - name: Run Verbose Test Suite
+        run: go test -v ./...

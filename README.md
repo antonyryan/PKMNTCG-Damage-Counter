@@ -1,6 +1,7 @@
 ![Demo](demo.gif)
 
 # PKMN TCG Companion
+
 You can check it at: https://web-pkmntcg-production.up.railway.app/
 
 PKMN TCG Companion is a mobile-first web application designed to replace physical match accessories in in-person Pokemon TCG games. The app tracks the active Pokemon, bench slots, damage, special conditions, and once-per-game markers, while also providing quick utilities such as coin flips and die rolls. It is also open source, so feel free to contribute in any way you want.
@@ -38,10 +39,15 @@ PKMN TCG Companion is a mobile-first web application designed to replace physica
 Run from the `backend/` directory:
 
 ```bash
+go test .
 go test ./...
+go test -v ./...
+gotestsum --format testname -- -v ./...
 go build ./...
 go run main.go
 ```
+
+If `gotestsum` is unavailable, use `go test -v ./...`.
 
 ### Frontend
 

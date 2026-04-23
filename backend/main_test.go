@@ -5,10 +5,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
 	"sync"
 	"testing"
-	"time"
 
 	"pkmntcg/backend/internal/app"
 )
@@ -61,7 +59,7 @@ func getSessionID(t *testing.T, session map[string]any) string {
 	return id
 }
 
-func TestSearchPokemon_EmptyQueryReturnsCatalogInIDOrder(t *testing.T) {
+func TestIntegracaoCatalog_SearchQueryVazia_RetornaOrdemPorID(t *testing.T) {
 	s := newTestServer(t)
 	req := httptest.NewRequest(http.MethodGet, "/api/pokemon/search?limit=3", nil)
 	w := httptest.NewRecorder()
@@ -87,7 +85,7 @@ func TestSearchPokemon_EmptyQueryReturnsCatalogInIDOrder(t *testing.T) {
 	}
 }
 
-func TestSearchPokemon_FilterBySubstring(t *testing.T) {
+func TestIntegracaoCatalog_SearchComFiltro_RetornaSomenteCorrespondencias(t *testing.T) {
 	s := newTestServer(t)
 	req := httptest.NewRequest(http.MethodGet, "/api/pokemon/search?q=saur&limit=5", nil)
 	w := httptest.NewRecorder()
@@ -113,33 +111,35 @@ func TestSearchPokemon_FilterBySubstring(t *testing.T) {
 	}
 }
 
-func TestEvolutionOptions_ReturnsFullChainAndActions(t *testing.T) {
+func TestIntegracaoCatalog_EvolutionOptionsComCadeiaCompleta_RetornaAcoesValidas(t *testing.T) {
 	s := newTestServer(t)
-	req := httptest.NewRequest(http.MethodGet, "/api/pokemon/1/evolution-options", nil)
-	w := httptest.NewRecorder()
+	t.Run("Bulbasaur_DeveRetornarIvysaurEVenusaurComoEvolve", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "/api/pokemon/1/evolution-options", nil)
+		w := httptest.NewRecorder()
 
-	s.handler.ServeHTTP(w, req)
-	if w.Code != http.StatusOK {
-		t.Fatalf("expected status %d, got %d", http.StatusOK, w.Code)
-	}
+		s.handler.ServeHTTP(w, req)
+		if w.Code != http.StatusOK {
+			t.Fatalf("expected status %d, got %d", http.StatusOK, w.Code)
+		}
 
-	var got []map[string]any
-	if err := json.Unmarshal(w.Body.Bytes(), &got); err != nil {
-		t.Fatalf("failed to parse response: %v", err)
-	}
-	if len(got) != 2 {
-		t.Fatalf("expected 2 evolution options, got %d", len(got))
-	}
+		var got []map[string]any
+		if err := json.Unmarshal(w.Body.Bytes(), &got); err != nil {
+			t.Fatalf("failed to parse response: %v", err)
+		}
+		if len(got) != 2 {
+			t.Fatalf("expected 2 evolution options, got %d", len(got))
+		}
 
-	if int(got[0]["id"].(float64)) != 2 || got[0]["action"].(string) != "Evolve" {
-		t.Fatalf("unexpected first option: %+v", got[0])
-	}
-	if int(got[1]["id"].(float64)) != 3 || got[1]["action"].(string) != "Evolve" {
-		t.Fatalf("unexpected second option: %+v", got[1])
-	}
+		if int(got[0]["id"].(float64)) != 2 || got[0]["action"].(string) != "Evolve" {
+			t.Fatalf("unexpected first option: %+v", got[0])
+		}
+		if int(got[1]["id"].(float64)) != 3 || got[1]["action"].(string) != "Evolve" {
+			t.Fatalf("unexpected second option: %+v", got[1])
+		}
+	})
 }
 
-func TestSessionActions_ValidateEvolutionTransitionAndPersistHistory(t *testing.T) {
+func TestIntegracaoSession_AcaoEvolucaoValida_PersisteHistorico(t *testing.T) {
 	s := newTestServer(t)
 	session := createTestSession(t, s.handler)
 	sessionID := getSessionID(t, session)
@@ -178,7 +178,7 @@ func TestSessionActions_ValidateEvolutionTransitionAndPersistHistory(t *testing.
 	}
 }
 
-func TestAnalytics_PokemonUsageIncrements(t *testing.T) {
+func TestIntegracaoAnalytics_SetPokemonRepetido_IncrementaUso(t *testing.T) {
 	s := newTestServer(t)
 	sessionID := getSessionID(t, createTestSession(t, s.handler))
 
@@ -206,7 +206,7 @@ func TestAnalytics_PokemonUsageIncrements(t *testing.T) {
 	}
 }
 
-func TestAnalytics_DamageTotalsAccumulate(t *testing.T) {
+func TestIntegracaoAnalytics_DanoAcumulado_RetornaTotaisCorretos(t *testing.T) {
 	s := newTestServer(t)
 	sessionID := getSessionID(t, createTestSession(t, s.handler))
 
@@ -230,7 +230,7 @@ func TestAnalytics_DamageTotalsAccumulate(t *testing.T) {
 	}
 }
 
-func TestAnalytics_KnockoutCounter(t *testing.T) {
+func TestIntegracaoAnalytics_KnockoutRegistrado_IncrementaContador(t *testing.T) {
 	s := newTestServer(t)
 	sessionID := getSessionID(t, createTestSession(t, s.handler))
 
@@ -253,7 +253,7 @@ func TestAnalytics_KnockoutCounter(t *testing.T) {
 	}
 }
 
-func TestAnalytics_ConcurrentActions(t *testing.T) {
+func TestIntegracaoAnalytics_AcoesConcorrentes_MantemConsistencia(t *testing.T) {
 	s := newTestServer(t)
 	const goroutines = 20
 
@@ -270,39 +270,43 @@ func TestAnalytics_ConcurrentActions(t *testing.T) {
 	}
 	wg.Wait()
 
-	w := httptest.NewRecorder()
-	req := httptest.NewRequest(http.MethodGet, "/api/analytics/knockouts", nil)
-	s.handler.ServeHTTP(w, req)
-	if w.Code != http.StatusOK {
-		t.Fatalf("expected status %d, got %d", http.StatusOK, w.Code)
-	}
-	var knockouts map[string]any
-	if err := json.Unmarshal(w.Body.Bytes(), &knockouts); err != nil {
-		t.Fatalf("parse knockouts response: %v", err)
-	}
-	if int(knockouts["totalKnockouts"].(float64)) != goroutines {
-		t.Fatalf("expected %d knockouts, got %v", goroutines, knockouts["totalKnockouts"])
-	}
+	t.Run("Knockouts_DeveRefletirTotalDeGoroutines", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req := httptest.NewRequest(http.MethodGet, "/api/analytics/knockouts", nil)
+		s.handler.ServeHTTP(w, req)
+		if w.Code != http.StatusOK {
+			t.Fatalf("expected status %d, got %d", http.StatusOK, w.Code)
+		}
+		var knockouts map[string]any
+		if err := json.Unmarshal(w.Body.Bytes(), &knockouts); err != nil {
+			t.Fatalf("parse knockouts response: %v", err)
+		}
+		if int(knockouts["totalKnockouts"].(float64)) != goroutines {
+			t.Fatalf("expected %d knockouts, got %v", goroutines, knockouts["totalKnockouts"])
+		}
+	})
 
-	w = httptest.NewRecorder()
-	req = httptest.NewRequest(http.MethodGet, "/api/analytics/pokemon-usage?limit=1", nil)
-	s.handler.ServeHTTP(w, req)
-	if w.Code != http.StatusOK {
-		t.Fatalf("expected status %d, got %d", http.StatusOK, w.Code)
-	}
-	var usage map[string][]map[string]any
-	if err := json.Unmarshal(w.Body.Bytes(), &usage); err != nil {
-		t.Fatalf("parse usage response: %v", err)
-	}
-	if len(usage["pokemon"]) == 0 {
-		t.Fatal("expected usage response entries")
-	}
-	if int(usage["pokemon"][0]["useCount"].(float64)) != goroutines {
-		t.Fatalf("expected useCount=%d, got %v", goroutines, usage["pokemon"][0]["useCount"])
-	}
+	t.Run("Usage_DeveRefletirTotalDeGoroutines", func(t *testing.T) {
+		w := httptest.NewRecorder()
+		req := httptest.NewRequest(http.MethodGet, "/api/analytics/pokemon-usage?limit=1", nil)
+		s.handler.ServeHTTP(w, req)
+		if w.Code != http.StatusOK {
+			t.Fatalf("expected status %d, got %d", http.StatusOK, w.Code)
+		}
+		var usage map[string][]map[string]any
+		if err := json.Unmarshal(w.Body.Bytes(), &usage); err != nil {
+			t.Fatalf("parse usage response: %v", err)
+		}
+		if len(usage["pokemon"]) == 0 {
+			t.Fatal("expected usage response entries")
+		}
+		if int(usage["pokemon"][0]["useCount"].(float64)) != goroutines {
+			t.Fatalf("expected useCount=%d, got %v", goroutines, usage["pokemon"][0]["useCount"])
+		}
+	})
 }
 
-func TestBootstrapSmoke(t *testing.T) {
+func TestBootstrap_AplicacaoInicializada_HandlerDisponivel(t *testing.T) {
 	instance := app.New("0", t.TempDir())
 	defer instance.Analytics.Shutdown()
 
@@ -326,21 +330,17 @@ func TestBootstrapSmoke(t *testing.T) {
 	}
 }
 
-func TestSessionAndAnalyticsContractsNoAPIBreak(t *testing.T) {
+func TestIntegracaoContratos_APISessoesEAnalytics_SemQuebraContrato(t *testing.T) {
 	s := newTestServer(t)
 	session := createTestSession(t, s.handler)
 	sessionID := getSessionID(t, session)
 
-	if _, err := strconv.Atoi(sessionID[:1]); err == nil {
-		// No-op assertion path; keep test deterministic while checking string format indirectly.
-	}
+	t.Logf("session criada para validação de contrato: %s", sessionID)
 
 	w := applyActionRequest(t, s.handler, sessionID, `{"type":"set-pokemon","side":"me","zone":"active","pokemonId":1}`)
 	if w.Code != http.StatusOK {
 		t.Fatalf("expected set-pokemon to keep contract status %d, got %d", http.StatusOK, w.Code)
 	}
-
-	time.Sleep(10 * time.Millisecond)
 
 	w = httptest.NewRecorder()
 	req := httptest.NewRequest(http.MethodGet, "/api/sessions/"+sessionID+"/history", nil)
