@@ -22,6 +22,9 @@ const (
 	tagQueryTopPokemon
 	tagQueryDamageTotals
 	tagQueryKnockouts
+	tagRecordVisit
+	tagQueryVisitSummary
+	tagQueryVisitorStats
 )
 
 type cmd struct {
@@ -37,12 +40,20 @@ type cmd struct {
 
 	limit int
 	resp  chan result
+
+	visitorID string
+	visitedAt time.Time
+	source    string
+
+	referenceNow time.Time
 }
 
 type result struct {
 	topPokemon   []PokemonUsageEntry
 	damageTotals DamageTotalsResponse
 	knockouts    KnockoutTotalResponse
+	visitSummary VisitSummaryResponse
+	visitorStats VisitorStatsResponse
 	err          error
 }
 
@@ -96,6 +107,14 @@ func (s *Store) run(db *sql.DB) {
 		case tagQueryKnockouts:
 			r, err := sqlQueryKnockouts(db)
 			c.resp <- result{knockouts: r, err: err}
+		case tagRecordVisit:
+			sqlRecordVisit(db, c.visitorID, c.visitedAt, c.source)
+		case tagQueryVisitSummary:
+			r, err := sqlQueryVisitSummary(db, c.referenceNow)
+			c.resp <- result{visitSummary: r, err: err}
+		case tagQueryVisitorStats:
+			r, err := sqlQueryVisitorStats(db, c.visitorID)
+			c.resp <- result{visitorStats: r, err: err}
 		}
 	}
 }
@@ -139,6 +158,24 @@ func (s *Store) QueryKnockouts() (KnockoutTotalResponse, error) {
 	s.cmdCh <- cmd{tag: tagQueryKnockouts, resp: resp}
 	r := <-resp
 	return r.knockouts, r.err
+}
+
+func (s *Store) RecordVisit(visitorID string, visitedAt time.Time, source string) {
+	s.cmdCh <- cmd{tag: tagRecordVisit, visitorID: visitorID, visitedAt: visitedAt, source: source}
+}
+
+func (s *Store) QueryVisitSummary(referenceNow time.Time) (VisitSummaryResponse, error) {
+	resp := make(chan result, 1)
+	s.cmdCh <- cmd{tag: tagQueryVisitSummary, referenceNow: referenceNow, resp: resp}
+	r := <-resp
+	return r.visitSummary, r.err
+}
+
+func (s *Store) QueryVisitorStats(visitorID string) (VisitorStatsResponse, error) {
+	resp := make(chan result, 1)
+	s.cmdCh <- cmd{tag: tagQueryVisitorStats, visitorID: visitorID, resp: resp}
+	r := <-resp
+	return r.visitorStats, r.err
 }
 
 func slotBenchKey(req session.ActionRequest) int {
@@ -255,4 +292,72 @@ func sqlQueryKnockouts(db *sql.DB) (KnockoutTotalResponse, error) {
 		return r, fmt.Errorf("query knockouts: %w", err)
 	}
 	return r, nil
+}
+
+func sqlRecordVisit(db *sql.DB, visitorID string, visitedAt time.Time, source string) {
+	if _, err := db.Exec(`
+		INSERT INTO visit_events (visitor_id, visited_at, source)
+		VALUES (?, ?, ?)
+	`, visitorID, visitedAt.UTC().UnixMilli(), source); err != nil {
+		log.Printf("analytics: recordVisit visitor=%s: %v", visitorID, err)
+	}
+}
+
+func sqlQueryVisitSummary(db *sql.DB, referenceNow time.Time) (VisitSummaryResponse, error) {
+	var out VisitSummaryResponse
+
+	err := db.QueryRow(`SELECT COUNT(*) FROM visit_events`).Scan(&out.TotalVisits)
+	if err != nil {
+		return out, fmt.Errorf("query total visits: %w", err)
+	}
+
+	err = db.QueryRow(`SELECT COUNT(DISTINCT visitor_id) FROM visit_events`).Scan(&out.UniqueVisitors)
+	if err != nil {
+		return out, fmt.Errorf("query unique visitors: %w", err)
+	}
+
+	nowUTC := referenceNow.UTC()
+	dayStart := time.Date(nowUTC.Year(), nowUTC.Month(), nowUTC.Day(), 0, 0, 0, 0, time.UTC)
+	monthStart := nowUTC.AddDate(0, 0, -30)
+
+	err = db.QueryRow(`
+		SELECT COUNT(DISTINCT visitor_id)
+		FROM visit_events
+		WHERE visited_at >= ?
+	`, dayStart.UnixMilli()).Scan(&out.DAU)
+	if err != nil {
+		return out, fmt.Errorf("query dau: %w", err)
+	}
+
+	err = db.QueryRow(`
+		SELECT COUNT(DISTINCT visitor_id)
+		FROM visit_events
+		WHERE visited_at >= ?
+	`, monthStart.UnixMilli()).Scan(&out.MAU)
+	if err != nil {
+		return out, fmt.Errorf("query mau: %w", err)
+	}
+
+	return out, nil
+}
+
+func sqlQueryVisitorStats(db *sql.DB, visitorID string) (VisitorStatsResponse, error) {
+	var out VisitorStatsResponse
+	out.VisitorID = visitorID
+
+	var lastVisitMs int64
+	err := db.QueryRow(`
+		SELECT COUNT(*), COALESCE(MAX(visited_at), 0)
+		FROM visit_events
+		WHERE visitor_id = ?
+	`, visitorID).Scan(&out.VisitCount, &lastVisitMs)
+	if err != nil {
+		return out, fmt.Errorf("query visitor stats: %w", err)
+	}
+
+	if lastVisitMs > 0 {
+		out.LastVisit = time.UnixMilli(lastVisitMs).UTC().Format(time.RFC3339)
+	}
+
+	return out, nil
 }

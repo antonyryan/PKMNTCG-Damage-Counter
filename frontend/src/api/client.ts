@@ -36,6 +36,25 @@ export interface SessionSnapshotResponse {
   updatedAt: string;
 }
 
+export interface VisitTrackRequest {
+  visitorId: string;
+  visitedAt: string;
+  source?: string;
+}
+
+export interface VisitsSummaryResponse {
+  uniqueVisitors: number;
+  totalVisits: number;
+  dau: number;
+  mau: number;
+}
+
+export interface VisitorStatsResponse {
+  visitorId: string;
+  visitCount: number;
+  lastVisit: string;
+}
+
 export interface SessionActionRequest {
   type:
     | "set-pokemon"
@@ -137,4 +156,19 @@ export function applySessionAction(
 
 export function toActionPokemon(pokemon: PokemonRef): number {
   return pokemon.id;
+}
+
+export function trackVisit(payload: VisitTrackRequest): Promise<{ status: string }> {
+  return fetchJson<{ status: string }>("/api/analytics/visit", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export function getVisitsSummary(): Promise<VisitsSummaryResponse> {
+  return fetchJson<VisitsSummaryResponse>("/api/analytics/visits/summary");
+}
+
+export function getVisitorStats(visitorId: string): Promise<VisitorStatsResponse> {
+  return fetchJson<VisitorStatsResponse>(`/api/analytics/visits/${visitorId}`);
 }
