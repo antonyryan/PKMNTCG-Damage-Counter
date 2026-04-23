@@ -211,12 +211,53 @@ The backend test suite currently verifies:
 - evolution options cover full-chain evolve and de-evolve transitions
 - session actions validate evolution targets and persist history
 
-Run the backend checks with:
+### Official Commands
+
+Use these commands from [backend](backend):
 
 ```bash
+go test .
 go test ./...
+go test -v ./...
 go build ./...
 ```
+
+Command intent:
+
+- `go test .`: quick smoke test for the current package.
+- `go test ./...`: full backend coverage across all packages.
+- `go test -v ./...`: full suite with RUN/PASS/FAIL visibility (recommended in local debugging).
+
+Note: by Go toolchain design, plain `go test` runs only the current package. For total backend execution, use `go test ./...` (or `gotestsum ... ./...`).
+
+### Pretty Output with gotestsum
+
+To improve terminal readability, use gotestsum as the presentation layer while keeping `go test` semantics:
+
+```bash
+gotestsum --format testname -- -v ./...
+```
+
+If gotestsum is not installed, fallback remains:
+
+```bash
+go test -v ./...
+```
+
+From repository root, npm scripts are available:
+
+```bash
+npm run backend:test:smoke
+npm run backend:test:all
+npm run backend:test:verbose
+npm run backend:test:pretty
+```
+
+### Naming and Log Conventions
+
+- Test names use `Feature_Cenario_ResultadoEsperado`.
+- Use `t.Run` for sub-scenarios so verbose mode stays easy to scan.
+- Use `t.Logf` only when context helps diagnose failures.
 
 ## Extension Guidance
 
