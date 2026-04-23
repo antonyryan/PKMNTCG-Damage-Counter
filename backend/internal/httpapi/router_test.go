@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"pkmntcg/backend/internal/analytics"
@@ -27,6 +28,30 @@ func TestHTTPAPI_RotasContrato_ResultadoEsperado(t *testing.T) {
 		r.ServeHTTP(w, req)
 		if w.Code != http.StatusOK {
 			t.Fatalf("expected status 200, got %d", w.Code)
+		}
+	})
+
+	t.Run("Root_BackendDireto_DeveRetornarListaDeEndpoints", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+		if w.Code != http.StatusOK {
+			t.Fatalf("expected status 200, got %d", w.Code)
+		}
+		if !strings.Contains(w.Body.String(), "/api/analytics/visits/summary") {
+			t.Fatalf("expected endpoint list in body, got %s", w.Body.String())
+		}
+	})
+
+	t.Run("RotaInvalida_DeveRetornarJSONComSugestoes", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "/nao-existe", nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+		if w.Code != http.StatusNotFound {
+			t.Fatalf("expected status 404, got %d", w.Code)
+		}
+		if !strings.Contains(w.Body.String(), "You are probably looking for these endpoints") {
+			t.Fatalf("expected suggestion message in body, got %s", w.Body.String())
 		}
 	})
 

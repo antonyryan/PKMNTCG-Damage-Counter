@@ -1,10 +1,47 @@
 package httpapi
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+var publicEndpoints = []string{
+	"GET /",
+	"GET /health",
+	"GET /api/pokemon/search?q={query}&limit={n}",
+	"GET /api/pokemon/:id/evolution-options?q={query}",
+	"GET /api/sessions/:id",
+	"GET /api/sessions/:id/history",
+	"GET /api/analytics/pokemon-usage?limit={n}",
+	"GET /api/analytics/damage",
+	"GET /api/analytics/knockouts",
+	"GET /api/analytics/visits/summary",
+	"GET /api/analytics/visits/:visitorId",
+}
+
+func endpointIndexResponse() gin.H {
+	return gin.H{
+		"message":   "You are probably looking for these endpoints.",
+		"endpoints": publicEndpoints,
+	}
+}
 
 func SetupRouter(h *Handlers) *gin.Engine {
 	r := gin.Default()
 	r.Use(corsMiddleware())
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, endpointIndexResponse())
+	})
+	r.NoRoute(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error":      "route not found",
+			"path":       c.Request.URL.Path,
+			"method":     c.Request.Method,
+			"suggestion": "You are probably looking for these endpoints.",
+			"endpoints":  publicEndpoints,
+		})
+	})
 
 	r.GET("/health", h.Health)
 	r.GET("/api/pokemon/search", h.SearchPokemon)
