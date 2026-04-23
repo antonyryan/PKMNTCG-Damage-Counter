@@ -2,31 +2,25 @@ package main
 
 import (
 	"context"
+	"errors"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"pkmntcg/backend/internal/app"
 )
 
 // main wires the HTTP server to the configured Gin router and handles graceful shutdown.
 func main() {
-	r := setupRouter()
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: r,
-	}
+	application := app.NewFromEnv()
 
 	// Start server in a background goroutine so we can listen for shutdown signals.
 	go func() {
-		log.Printf("server listening on :%s", port)
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		log.Printf("server listening on %s", application.Server.Addr)
+		if err := application.Server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatalf("server: %v", err)
 		}
 	}()
@@ -39,11 +33,11 @@ func main() {
 	// Give in-flight HTTP requests up to 10 s to finish.
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	if err := srv.Shutdown(ctx); err != nil {
+	if err := application.Server.Shutdown(ctx); err != nil {
 		log.Printf("server shutdown: %v", err)
 	}
 
 	// Drain the analytics worker and close the SQLite connection.
-	analyticsStore.Shutdown()
+	application.Analytics.Shutdown()
 	log.Println("shutdown complete")
 }

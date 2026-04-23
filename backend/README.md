@@ -18,19 +18,35 @@ The following contracts are binding for all future development. Violating them c
 
 ### SQLite access rule
 
-Every new SQLite operation — read or write — must go through the worker/channel layer in `analytics.go`. Direct `db.Exec` / `db.Query` calls outside the worker goroutine are forbidden. This prevents concurrency bugs and keeps DB lifecycle management in one place.
+Every new SQLite operation — read or write — must go through the worker/channel layer in `internal/analytics`. Direct `db.Exec` / `db.Query` calls outside that worker goroutine are forbidden. This prevents concurrency bugs and keeps DB lifecycle management in one place.
+
+## Module Architecture (Feature-First)
+
+The backend now follows a feature-first internal package layout:
+
+- `internal/httpapi`: transport layer (Gin handlers, route registration, middleware)
+- `internal/session`: game domain + action rules + session persistence (RAM + JSON)
+- `internal/catalog`: catalog ingestion and search/evolution rules
+- `internal/analytics`: SQLite worker/channel, schema and query logic
+- `internal/app`: composition root wiring dependencies and lifecycle
+
+Dependency rule (must not be violated):
+
+1. HTTP (`internal/httpapi`) depends on application services.
+2. Application services depend on domain contracts/types.
+3. Domain depends only on its own rules/contracts.
+4. Infrastructure adapters (SQLite/filesystem) stay encapsulated inside feature packages.
 
 ## File Responsibilities
 
-- `main.go`: application entry point, HTTP server lifecycle, and graceful shutdown (drains analytics worker before exit).
-- `analytics.go`: SQLite analytics store with worker/channel pattern — the only file allowed to hold a `*sql.DB` reference.
-- `router.go`: central route registration. This is the place to add new endpoints.
-- `handlers.go`: request handlers for catalog lookup, session restore, and action application.
-- `middleware.go`: cross-cutting HTTP middleware. Right now it only contains CORS handling for local development.
-- `pokemon.go`: transport types returned by catalog and evolution endpoints.
-- `catalog.go`: JSON catalog loader plus search and evolution graph queries.
-- `domain.go`: backend-owned match state and validated rule application.
-- `session_store.go`: persisted session snapshots and history storage.
+- `main.go`: process entrypoint, signal handling, graceful server shutdown.
+- `internal/app/app.go`: composition root and dependency injection.
+- `internal/httpapi/router.go`: route contracts and registration.
+- `internal/httpapi/handlers.go`: feature handlers without global state.
+- `internal/httpapi/middleware.go`: shared HTTP middleware.
+- `internal/session/*`: session domain types, action rules, and JSON-backed store.
+- `internal/catalog/*`: Pokemon catalog models + loader + search/evolution logic.
+- `internal/analytics/*`: SQLite worker/channel store, schema, and analytics queries.
 - `main_test.go`: backend tests that validate the API behavior, including concurrency tests for the analytics worker.
 
 ## Current API

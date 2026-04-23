@@ -1,4 +1,4 @@
-package main
+package catalog
 
 import (
 	"encoding/json"
@@ -10,36 +10,37 @@ import (
 	"path/filepath"
 	"runtime"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
 
-const defaultSearchLimit = 20
+const DefaultSearchLimit = 20
 
-// PokemonCatalog owns the authoritative Pokemon dataset and evolution graph.
-type PokemonCatalog struct {
-	ordered []Pokemon
-	byID    map[int]PokemonCatalogEntry
-}
-
-type pokemonCatalogRawEntry struct {
+type rawEntry struct {
 	ID          string   `json:"id"`
 	Name        string   `json:"name"`
 	EvolvesTo   []string `json:"evolvesTo"`
 	EvolvesFrom *string  `json:"evolvesFrom"`
 }
 
-func mustLoadPokemonCatalog() *PokemonCatalog {
-	catalog, err := loadPokemonCatalog()
+// Service owns the authoritative Pokemon dataset and evolution graph.
+type Service struct {
+	ordered []Pokemon
+	byID    map[int]Entry
+}
+
+func MustLoad() *Service {
+	svc, err := Load()
 	if err != nil {
 		panic(err)
 	}
-	return catalog
+	return svc
 }
 
-func loadPokemonCatalog() (*PokemonCatalog, error) {
+func Load() (*Service, error) {
 	_, currentFile, _, _ := runtime.Caller(0)
-	backendDir := filepath.Dir(currentFile)
+	backendDir := filepath.Clean(filepath.Join(filepath.Dir(currentFile), "..", ".."))
 	paths := []string{
 		filepath.Join(backendDir, "..", "pokemon_data.json"),
 		filepath.Join(backendDir, "pokemon_data.json"),
@@ -79,72 +80,60 @@ func loadPokemonCatalog() (*PokemonCatalog, error) {
 		}
 	}
 
-	var parsed []pokemonCatalogRawEntry
+	var parsed []rawEntry
 	if err := json.Unmarshal(raw, &parsed); err != nil {
 		return nil, fmt.Errorf("parse pokemon catalog: %w", err)
 	}
 
-	catalog := &PokemonCatalog{
+	svc := &Service{
 		ordered: make([]Pokemon, 0, len(parsed)),
-		byID:    make(map[int]PokemonCatalogEntry, len(parsed)),
+		byID:    make(map[int]Entry, len(parsed)),
 	}
 
 	for _, entry := range parsed {
-		id, err := parsePokemonID(entry.ID)
+		id, err := strconv.Atoi(entry.ID)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("parse pokemon id %q: %w", entry.ID, err)
 		}
 
 		evolvesTo := make([]int, 0, len(entry.EvolvesTo))
 		for _, targetID := range entry.EvolvesTo {
-			parsedID, err := parsePokemonID(targetID)
+			parsedID, err := strconv.Atoi(targetID)
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("parse pokemon id %q: %w", targetID, err)
 			}
 			evolvesTo = append(evolvesTo, parsedID)
 		}
 
 		var evolvesFrom *int
 		if entry.EvolvesFrom != nil {
-			parsedID, err := parsePokemonID(*entry.EvolvesFrom)
+			parsedID, err := strconv.Atoi(*entry.EvolvesFrom)
 			if err != nil {
-				return nil, err
+				return nil, fmt.Errorf("parse pokemon id %q: %w", *entry.EvolvesFrom, err)
 			}
 			evolvesFrom = &parsedID
 		}
 
-		catalog.ordered = append(catalog.ordered, Pokemon{ID: id, Name: entry.Name})
-		catalog.byID[id] = PokemonCatalogEntry{
-			Pokemon:     Pokemon{ID: id, Name: entry.Name},
-			EvolvesTo:   evolvesTo,
-			EvolvesFrom: evolvesFrom,
-		}
+		p := Pokemon{ID: id, Name: entry.Name}
+		svc.ordered = append(svc.ordered, p)
+		svc.byID[id] = Entry{Pokemon: p, EvolvesTo: evolvesTo, EvolvesFrom: evolvesFrom}
 	}
 
-	sort.Slice(catalog.ordered, func(i, j int) bool {
-		return catalog.ordered[i].ID < catalog.ordered[j].ID
+	sort.Slice(svc.ordered, func(i, j int) bool {
+		return svc.ordered[i].ID < svc.ordered[j].ID
 	})
 
-	return catalog, nil
+	return svc, nil
 }
 
-func parsePokemonID(raw string) (int, error) {
-	var id int
-	_, err := fmt.Sscanf(raw, "%d", &id)
-	if err != nil {
-		return 0, fmt.Errorf("parse pokemon id %q: %w", raw, err)
-	}
-	return id, nil
-}
-
-func (catalog *PokemonCatalog) Search(query string, limit int) []Pokemon {
+func (svc *Service) Search(query string, limit int) []Pokemon {
 	if limit <= 0 {
-		limit = defaultSearchLimit
+		limit = DefaultSearchLimit
 	}
 
 	normalizedQuery := strings.TrimSpace(strings.ToLower(query))
 	results := make([]Pokemon, 0, limit)
-	for _, pokemon := range catalog.ordered {
+	for _, pokemon := range svc.ordered {
 		if normalizedQuery != "" && !strings.Contains(strings.ToLower(pokemon.Name), normalizedQuery) {
 			continue
 		}
@@ -156,20 +145,20 @@ func (catalog *PokemonCatalog) Search(query string, limit int) []Pokemon {
 	return results
 }
 
-func (catalog *PokemonCatalog) Get(id int) (PokemonCatalogEntry, bool) {
-	pokemon, ok := catalog.byID[id]
-	return pokemon, ok
+func (svc *Service) Get(id int) (Entry, bool) {
+	p, ok := svc.byID[id]
+	return p, ok
 }
 
-func (catalog *PokemonCatalog) EvolutionOptions(currentPokemonID int, query string) ([]EvolutionOption, error) {
-	current, ok := catalog.byID[currentPokemonID]
+func (svc *Service) EvolutionOptions(currentPokemonID int, query string) ([]EvolutionOption, error) {
+	current, ok := svc.byID[currentPokemonID]
 	if !ok {
 		return nil, errors.New("pokemon not found")
 	}
 
 	rootID := current.Pokemon.ID
 	for current.EvolvesFrom != nil {
-		previous, ok := catalog.byID[*current.EvolvesFrom]
+		previous, ok := svc.byID[*current.EvolvesFrom]
 		if !ok {
 			break
 		}
@@ -190,7 +179,7 @@ func (catalog *PokemonCatalog) EvolutionOptions(currentPokemonID int, query stri
 			continue
 		}
 		depthByID[next.id] = next.depth
-		pokemon, ok := catalog.byID[next.id]
+		pokemon, ok := svc.byID[next.id]
 		if !ok {
 			continue
 		}
@@ -214,7 +203,7 @@ func (catalog *PokemonCatalog) EvolutionOptions(currentPokemonID int, query stri
 		}
 		visited[nextID] = struct{}{}
 
-		pokemon, ok := catalog.byID[nextID]
+		pokemon, ok := svc.byID[nextID]
 		if !ok {
 			continue
 		}
@@ -234,7 +223,7 @@ func (catalog *PokemonCatalog) EvolutionOptions(currentPokemonID int, query stri
 	normalizedQuery := strings.TrimSpace(strings.ToLower(query))
 	results := make([]EvolutionOption, 0, len(candidateIDs))
 	for candidateID := range candidateIDs {
-		candidate, ok := catalog.byID[candidateID]
+		candidate, ok := svc.byID[candidateID]
 		if !ok {
 			continue
 		}
@@ -245,11 +234,7 @@ func (catalog *PokemonCatalog) EvolutionOptions(currentPokemonID int, query stri
 		if depthByID[candidateID] >= currentDepth {
 			action = "Evolve"
 		}
-		results = append(results, EvolutionOption{
-			ID:     candidate.Pokemon.ID,
-			Name:   candidate.Pokemon.Name,
-			Action: action,
-		})
+		results = append(results, EvolutionOption{ID: candidate.Pokemon.ID, Name: candidate.Pokemon.Name, Action: action})
 	}
 
 	sort.Slice(results, func(i, j int) bool {
@@ -259,8 +244,8 @@ func (catalog *PokemonCatalog) EvolutionOptions(currentPokemonID int, query stri
 	return results, nil
 }
 
-func (catalog *PokemonCatalog) IsValidEvolutionTarget(currentPokemonID, targetPokemonID int) bool {
-	options, err := catalog.EvolutionOptions(currentPokemonID, "")
+func (svc *Service) IsValidEvolutionTarget(currentPokemonID, targetPokemonID int) bool {
+	options, err := svc.EvolutionOptions(currentPokemonID, "")
 	if err != nil {
 		return false
 	}
@@ -270,4 +255,12 @@ func (catalog *PokemonCatalog) IsValidEvolutionTarget(currentPokemonID, targetPo
 		}
 	}
 	return false
+}
+
+func (svc *Service) NameByID(id int) (string, bool) {
+	entry, ok := svc.Get(id)
+	if !ok {
+		return "", false
+	}
+	return entry.Pokemon.Name, true
 }

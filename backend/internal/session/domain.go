@@ -1,112 +1,37 @@
-package main
+package session
 
-import "fmt"
-
-type SpecialStatus string
-
-type Side string
-
-type Zone string
-
-const (
-	StatusSleep      SpecialStatus = "sleep"
-	StatusConfusion  SpecialStatus = "confusion"
-	StatusParalysis  SpecialStatus = "paralysis"
-	StatusPoison     SpecialStatus = "poison"
-	StatusBurn       SpecialStatus = "burn"
-	SideMe           Side          = "me"
-	SideOpponent     Side          = "opponent"
-	ZoneActive       Zone          = "active"
-	ZoneBench        Zone          = "bench"
-	ActionSetPokemon string        = "set-pokemon"
-	ActionEvolve     string        = "evolve-pokemon"
-	ActionKnockout   string        = "knockout"
-	ActionAdjust     string        = "adjust-damage"
-	ActionStatus     string        = "toggle-status"
-	ActionPromote    string        = "promote-bench"
-	ActionToggleGX   string        = "toggle-gx"
-	ActionToggleVSTAR string       = "toggle-vstar"
-	ActionFlipCoin   string        = "flip-coin"
-	ActionRollDie    string        = "roll-die"
-	ActionReset      string        = "reset"
+import (
+	"crypto/rand"
+	"encoding/hex"
+	"fmt"
+	"math/big"
 )
 
-var exclusiveStatuses = map[SpecialStatus]struct{}{
-	StatusSleep: {},
-	StatusConfusion: {},
-	StatusParalysis: {},
+type CatalogLookup interface {
+	FindByID(id int) (PokemonInfo, bool)
+	IsValidEvolutionTarget(currentPokemonID, targetPokemonID int) bool
 }
 
-// PokemonRef is the data persisted in board slots.
-type PokemonRef struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+type PokemonInfo struct {
+	ID   int
+	Name string
 }
 
-// SlotState models one active or bench position.
-type SlotState struct {
-	Pokemon  *PokemonRef      `json:"pokemon"`
-	Damage   int              `json:"damage"`
-	Statuses []SpecialStatus  `json:"statuses"`
-}
-
-// PlayerState holds one player's board and once-per-game markers.
-type PlayerState struct {
-	Active    SlotState     `json:"active"`
-	Bench     [5]SlotState  `json:"bench"`
-	UsedGX    bool          `json:"usedGX"`
-	UsedVSTAR bool          `json:"usedVSTAR"`
-}
-
-// GameState is the full session snapshot returned to the frontend.
-type GameState struct {
-	Me          PlayerState `json:"me"`
-	Opponent    PlayerState `json:"opponent"`
-	CoinResult  *string     `json:"coinResult"`
-	DieResult   *int        `json:"dieResult"`
-	CoinFlipping bool       `json:"coinFlipping"`
-}
-
-// SessionActionRequest is the payload accepted by the backend state mutation API.
-type SessionActionRequest struct {
-	Type       string         `json:"type"`
-	Side       Side           `json:"side,omitempty"`
-	Zone       Zone           `json:"zone,omitempty"`
-	BenchIndex *int           `json:"benchIndex,omitempty"`
-	PokemonID  *int           `json:"pokemonId,omitempty"`
-	Amount     *int           `json:"amount,omitempty"`
-	Status     *SpecialStatus `json:"status,omitempty"`
-}
-
-func emptySlot() SlotState {
-	return SlotState{
-		Pokemon:  nil,
-		Damage:   0,
-		Statuses: []SpecialStatus{},
-	}
+func EmptySlot() SlotState {
+	return SlotState{Pokemon: nil, Damage: 0, Statuses: []SpecialStatus{}}
 }
 
 func emptyPlayer() PlayerState {
-	return PlayerState{
-		Active: emptySlot(),
-		Bench: [5]SlotState{
-			emptySlot(),
-			emptySlot(),
-			emptySlot(),
-			emptySlot(),
-			emptySlot(),
-		},
-	}
+	return PlayerState{Active: EmptySlot(), Bench: [5]SlotState{EmptySlot(), EmptySlot(), EmptySlot(), EmptySlot(), EmptySlot()}}
 }
 
-func initialState() GameState {
-	return GameState{
-		Me:           emptyPlayer(),
-		Opponent:     emptyPlayer(),
-		CoinResult:   nil,
-		DieResult:    nil,
-		CoinFlipping: false,
-	}
+func InitialState() GameState {
+	return GameState{Me: emptyPlayer(), Opponent: emptyPlayer(), CoinResult: nil, DieResult: nil, CoinFlipping: false}
+}
+
+func NormalizeGameState(state *GameState) {
+	normalizePlayerState(&state.Me)
+	normalizePlayerState(&state.Opponent)
 }
 
 func normalizeSlot(slot *SlotState) {
@@ -120,11 +45,6 @@ func normalizePlayerState(player *PlayerState) {
 	for i := range player.Bench {
 		normalizeSlot(&player.Bench[i])
 	}
-}
-
-func normalizeGameState(state *GameState) {
-	normalizePlayerState(&state.Me)
-	normalizePlayerState(&state.Opponent)
 }
 
 func computeDamage(currentDamage, amount int) int {
@@ -217,7 +137,7 @@ func getSlot(player *PlayerState, zone Zone, benchIndex *int) (*SlotState, error
 	}
 }
 
-func applyAction(state *GameState, req SessionActionRequest, catalog *PokemonCatalog) error {
+func ApplyAction(state *GameState, req ActionRequest, catalog CatalogLookup) error {
 	switch req.Type {
 	case ActionSetPokemon:
 		return applySetPokemon(state, req, catalog, false)
@@ -232,7 +152,7 @@ func applyAction(state *GameState, req SessionActionRequest, catalog *PokemonCat
 		if err != nil {
 			return err
 		}
-		*slot = emptySlot()
+		*slot = EmptySlot()
 		return nil
 	case ActionAdjust:
 		if req.Amount == nil {
@@ -295,19 +215,19 @@ func applyAction(state *GameState, req SessionActionRequest, catalog *PokemonCat
 		state.DieResult = &result
 		return nil
 	case ActionReset:
-		*state = initialState()
+		*state = InitialState()
 		return nil
 	default:
 		return fmt.Errorf("unsupported action %q", req.Type)
 	}
 }
 
-func applySetPokemon(state *GameState, req SessionActionRequest, catalog *PokemonCatalog, validateEvolution bool) error {
+func applySetPokemon(state *GameState, req ActionRequest, catalog CatalogLookup, validateEvolution bool) error {
 	if req.PokemonID == nil {
 		return fmt.Errorf("pokemonId is required")
 	}
 
-	catalogPokemon, ok := catalog.Get(*req.PokemonID)
+	catalogPokemon, ok := catalog.FindByID(*req.PokemonID)
 	if !ok {
 		return fmt.Errorf("pokemon %d not found", *req.PokemonID)
 	}
@@ -337,10 +257,7 @@ func applySetPokemon(state *GameState, req SessionActionRequest, catalog *Pokemo
 		return err
 	}
 	hadPokemon := slot.Pokemon != nil
-	next := SlotState{
-		Pokemon: &PokemonRef{ID: catalogPokemon.Pokemon.ID, Name: catalogPokemon.Pokemon.Name},
-		Damage:  0,
-	}
+	next := SlotState{Pokemon: &PokemonRef{ID: catalogPokemon.ID, Name: catalogPokemon.Name}, Damage: 0}
 	if hadPokemon {
 		next.Damage = slot.Damage
 	}
@@ -351,4 +268,28 @@ func applySetPokemon(state *GameState, req SessionActionRequest, catalog *Pokemo
 	}
 	*slot = next
 	return nil
+}
+
+func GenerateSessionID() (string, error) {
+	raw := make([]byte, 16)
+	if _, err := rand.Read(raw); err != nil {
+		return "", fmt.Errorf("generate session id: %w", err)
+	}
+	return hex.EncodeToString(raw), nil
+}
+
+func randomBool() bool {
+	n, err := rand.Int(rand.Reader, big.NewInt(2))
+	if err != nil {
+		return false
+	}
+	return n.Int64() == 1
+}
+
+func randomDieRoll() int {
+	n, err := rand.Int(rand.Reader, big.NewInt(6))
+	if err != nil {
+		return 1
+	}
+	return int(n.Int64()) + 1
 }
