@@ -184,6 +184,17 @@ curl http://localhost:8080/api/analytics/damage
 
 # Total knockouts
 curl http://localhost:8080/api/analytics/knockouts
+
+# Track one anonymous visit (open/refresh)
+curl -s -X POST http://localhost:8080/api/analytics/visit \
+  -H 'Content-Type: application/json' \
+  -d '{"visitorId":"11111111-2222-3333-4444-555555555555","visitedAt":"2026-04-23T17:00:00Z","source":"web"}'
+
+# Global visits summary (unique, total, DAU, MAU)
+curl http://localhost:8080/api/analytics/visits/summary
+
+# Recurrence and last visit for one anonymous visitor
+curl http://localhost:8080/api/analytics/visits/11111111-2222-3333-4444-555555555555
 ```
 
 ## Additional Documentation

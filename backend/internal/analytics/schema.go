@@ -25,4 +25,17 @@ CREATE TABLE IF NOT EXISTS slot_last_damage (
 
 INSERT OR IGNORE INTO damage_totals (id, total_dealt, total_healed, total_knockouts)
 VALUES (1, 0, 0, 0);
+
+CREATE TABLE IF NOT EXISTS visit_events (
+	id         INTEGER PRIMARY KEY AUTOINCREMENT,
+	visitor_id TEXT    NOT NULL,
+	visited_at INTEGER NOT NULL,
+	source     TEXT    NOT NULL DEFAULT ''
+);
+
+CREATE INDEX IF NOT EXISTS idx_visit_events_visitor_at
+	ON visit_events (visitor_id, visited_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_visit_events_visited_at
+	ON visit_events (visited_at DESC);
 `

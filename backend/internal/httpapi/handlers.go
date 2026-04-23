@@ -32,6 +32,15 @@ type AnalyticsStore interface {
 	QueryTopPokemon(limit int) ([]analytics.PokemonUsageEntry, error)
 	QueryDamageTotals() (analytics.DamageTotalsResponse, error)
 	QueryKnockouts() (analytics.KnockoutTotalResponse, error)
+	RecordVisit(visitorID string, visitedAt time.Time, source string)
+	QueryVisitSummary(referenceNow time.Time) (analytics.VisitSummaryResponse, error)
+	QueryVisitorStats(visitorID string) (analytics.VisitorStatsResponse, error)
+}
+
+type trackVisitRequest struct {
+	VisitorID string `json:"visitorId"`
+	VisitedAt string `json:"visitedAt"`
+	Source    string `json:"source"`
 }
 
 type Handlers struct {
@@ -161,6 +170,61 @@ func (h *Handlers) AnalyticsKnockouts(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, totals)
+}
+
+func (h *Handlers) AnalyticsTrackVisit(c *gin.Context) {
+	var req trackVisitRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request body"})
+		return
+	}
+
+	if len(req.VisitorID) < 8 || len(req.VisitorID) > 128 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid visitorId"})
+		return
+	}
+
+	if len(req.Source) > 64 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid source"})
+		return
+	}
+
+	visitedAt := time.Now().UTC()
+	if req.VisitedAt != "" {
+		parsed, err := time.Parse(time.RFC3339, req.VisitedAt)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid visitedAt"})
+			return
+		}
+		visitedAt = parsed.UTC()
+	}
+
+	h.analytics.RecordVisit(req.VisitorID, visitedAt, req.Source)
+	c.JSON(http.StatusAccepted, gin.H{"status": "accepted"})
+}
+
+func (h *Handlers) AnalyticsVisitsSummary(c *gin.Context) {
+	summary, err := h.analytics.QueryVisitSummary(time.Now().UTC())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to query visits summary"})
+		return
+	}
+	c.JSON(http.StatusOK, summary)
+}
+
+func (h *Handlers) AnalyticsVisitorStats(c *gin.Context) {
+	visitorID := c.Param("visitorId")
+	if len(visitorID) < 8 || len(visitorID) > 128 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid visitorId"})
+		return
+	}
+
+	stats, err := h.analytics.QueryVisitorStats(visitorID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to query visitor stats"})
+		return
+	}
+	c.JSON(http.StatusOK, stats)
 }
 
 type catalogLookupAdapter struct {

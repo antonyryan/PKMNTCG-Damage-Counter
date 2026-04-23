@@ -1,7 +1,5 @@
 package analytics
 
-import "time"
-
 type PokemonUsageEntry struct {
 	PokemonID int    `json:"pokemonId"`
 	Name      string `json:"name"`
@@ -17,21 +15,19 @@ type KnockoutTotalResponse struct {
 	TotalKnockouts int64 `json:"totalKnockouts"`
 }
 
+type VisitSummaryResponse struct {
+	UniqueVisitors int64 `json:"uniqueVisitors"`
+	TotalVisits    int64 `json:"totalVisits"`
+	DAU            int64 `json:"dau"`
+	MAU            int64 `json:"mau"`
+}
+
+type VisitorStatsResponse struct {
+	VisitorID  string `json:"visitorId"`
+	VisitCount int64  `json:"visitCount"`
+	LastVisit  string `json:"lastVisit"`
+}
+
 type NameResolver interface {
 	NameByID(id int) (string, bool)
-}
-
-type ActionLike interface {
-	GetType() string
-	GetPokemonID() *int
-	GetAmount() *int
-	GetSide() string
-	GetZone() string
-	GetBenchIndex() *int
-}
-
-type RecordEvent struct {
-	SessionID string
-	Action    ActionLike
-	Now       time.Time
 }

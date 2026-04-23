@@ -188,6 +188,61 @@ Example response:
 { "totalKnockouts": 37 }
 ```
 
+### `POST /api/analytics/visit`
+
+Registers one anonymous app entry event (open/refresh).
+
+Payload:
+
+```json
+{
+  "visitorId": "11111111-2222-3333-4444-555555555555",
+  "visitedAt": "2026-04-23T17:00:00Z",
+  "source": "web"
+}
+```
+
+Response:
+
+```json
+{ "status": "accepted" }
+```
+
+### `GET /api/analytics/visits/summary`
+
+Returns global anonymous access metrics.
+
+Example response:
+
+```json
+{
+  "uniqueVisitors": 123,
+  "totalVisits": 356,
+  "dau": 45,
+  "mau": 98
+}
+```
+
+### `GET /api/analytics/visits/:visitorId`
+
+Returns recurrence and last visit for one anonymous visitor.
+
+Example response:
+
+```json
+{
+  "visitorId": "11111111-2222-3333-4444-555555555555",
+  "visitCount": 7,
+  "lastVisit": "2026-04-23T17:00:00Z"
+}
+```
+
+### Privacy contract for anonymous visits
+
+- Stored identifier: random anonymous `visitorId` generated in frontend localStorage.
+- Stored event fields: `visitorId`, `visitedAt`, and optional `source`.
+- Explicitly not stored: IP, e-mail, fingerprint, detailed user-agent.
+
 ## Design Notes
 
 ### Catalog source of truth

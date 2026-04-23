@@ -17,6 +17,9 @@ func SetupRouter(h *Handlers) *gin.Engine {
 	r.GET("/api/analytics/pokemon-usage", h.AnalyticsTopPokemon)
 	r.GET("/api/analytics/damage", h.AnalyticsDamage)
 	r.GET("/api/analytics/knockouts", h.AnalyticsKnockouts)
+	r.POST("/api/analytics/visit", h.AnalyticsTrackVisit)
+	r.GET("/api/analytics/visits/summary", h.AnalyticsVisitsSummary)
+	r.GET("/api/analytics/visits/:visitorId", h.AnalyticsVisitorStats)
 
 	return r
 }
