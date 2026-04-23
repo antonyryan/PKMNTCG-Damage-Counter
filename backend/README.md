@@ -4,9 +4,26 @@
 
 The backend is a Go + Gin application that acts as the source of truth for the companion app. It owns the Pokemon catalog, evolution validation, match-state mutations, persisted sessions, and action history exposed to the frontend.
 
+## Persistence Architecture
+
+The following contracts are binding for all future development. Violating them constitutes an architectural regression.
+
+| Data | Storage | Rationale |
+|------|---------|-----------|
+| **Analytics** (pokemon usage, damage, knockouts) | SQLite (`analytics.db`) via worker/channel queue | Durable metrics; worker pattern ensures serialised access without SQLITE_BUSY errors |
+| **Sessions** (match state + action history) | RAM cache + JSON files on disk — no SQLite | Low-latency reads; JSON snapshots provide crash recovery |
+| **Pokemon catalog** | In-memory only — loaded from bundled JSON at startup | Immutable reference data; no persistence needed |
+| **Per-request game state** | Transient in-memory within each HTTP handler | Discarded after response |
+| **Frontend state** | React context in memory; `sessionId` in `localStorage` | Restored from backend on page load |
+
+### SQLite access rule
+
+Every new SQLite operation — read or write — must go through the worker/channel layer in `analytics.go`. Direct `db.Exec` / `db.Query` calls outside the worker goroutine are forbidden. This prevents concurrency bugs and keeps DB lifecycle management in one place.
+
 ## File Responsibilities
 
-- `main.go`: application entry point. It only starts the HTTP server.
+- `main.go`: application entry point, HTTP server lifecycle, and graceful shutdown (drains analytics worker before exit).
+- `analytics.go`: SQLite analytics store with worker/channel pattern — the only file allowed to hold a `*sql.DB` reference.
 - `router.go`: central route registration. This is the place to add new endpoints.
 - `handlers.go`: request handlers for catalog lookup, session restore, and action application.
 - `middleware.go`: cross-cutting HTTP middleware. Right now it only contains CORS handling for local development.
@@ -14,7 +31,7 @@ The backend is a Go + Gin application that acts as the source of truth for the c
 - `catalog.go`: JSON catalog loader plus search and evolution graph queries.
 - `domain.go`: backend-owned match state and validated rule application.
 - `session_store.go`: persisted session snapshots and history storage.
-- `main_test.go`: backend tests that validate the API behavior.
+- `main_test.go`: backend tests that validate the API behavior, including concurrency tests for the analytics worker.
 
 ## Current API
 

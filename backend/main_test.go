@@ -5,8 +5,19 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"path/filepath"
+	"sync"
 	"testing"
 )
+
+// resetStores replaces the package-level session and analytics stores with fresh
+// temporary instances and registers t.Cleanup to shut down the analytics worker.
+func resetStores(t *testing.T) {
+	t.Helper()
+	sessionStore = newSessionStore(t.TempDir())
+	analyticsStore = mustNewAnalyticsStore(filepath.Join(t.TempDir(), "analytics.db"))
+	t.Cleanup(func() { analyticsStore.Shutdown() })
+}
 
 func createTestSession(t *testing.T, router http.Handler) GameSession {
 	t.Helper()
@@ -37,7 +48,7 @@ func applyActionRequest(t *testing.T, router http.Handler, sessionID string, pay
 }
 
 func TestSearchPokemon_EmptyQueryReturnsCatalogInIDOrder(t *testing.T) {
-	sessionStore = newSessionStore(t.TempDir())
+	resetStores(t)
 	r := setupRouter()
 	req := httptest.NewRequest(http.MethodGet, "/api/pokemon/search?limit=3", nil)
 	w := httptest.NewRecorder()
@@ -63,7 +74,7 @@ func TestSearchPokemon_EmptyQueryReturnsCatalogInIDOrder(t *testing.T) {
 }
 
 func TestSearchPokemon_FilterBySubstring(t *testing.T) {
-	sessionStore = newSessionStore(t.TempDir())
+	resetStores(t)
 	r := setupRouter()
 	req := httptest.NewRequest(http.MethodGet, "/api/pokemon/search?q=saur&limit=5", nil)
 	w := httptest.NewRecorder()
@@ -91,7 +102,7 @@ func TestSearchPokemon_FilterBySubstring(t *testing.T) {
 }
 
 func TestEvolutionOptions_ReturnsFullChainAndActions(t *testing.T) {
-	sessionStore = newSessionStore(t.TempDir())
+	resetStores(t)
 	r := setupRouter()
 	req := httptest.NewRequest(http.MethodGet, "/api/pokemon/1/evolution-options", nil)
 	w := httptest.NewRecorder()
@@ -142,7 +153,7 @@ func TestEvolutionOptions_ReturnsFullChainAndActions(t *testing.T) {
 }
 
 func TestSessionActions_ValidateEvolutionTransitionAndPersistHistory(t *testing.T) {
-	sessionStore = newSessionStore(t.TempDir())
+	resetStores(t)
 	r := setupRouter()
 	session := createTestSession(t, r)
 
@@ -171,5 +182,105 @@ func TestSessionActions_ValidateEvolutionTransitionAndPersistHistory(t *testing.
 	w = applyActionRequest(t, r, session.SessionID, `{"type":"evolve-pokemon","side":"me","zone":"active","pokemonId":25}`)
 	if w.Code != http.StatusBadRequest {
 		t.Fatalf("expected status %d, got %d", http.StatusBadRequest, w.Code)
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Analytics tests
+// ---------------------------------------------------------------------------
+
+func TestAnalytics_PokemonUsageIncrements(t *testing.T) {
+	resetStores(t)
+	r := setupRouter()
+	session := createTestSession(t, r)
+
+	applyActionRequest(t, r, session.SessionID, `{"type":"set-pokemon","side":"me","zone":"active","pokemonId":1}`)
+	applyActionRequest(t, r, session.SessionID, `{"type":"set-pokemon","side":"me","zone":"active","pokemonId":1}`)
+
+	// A synchronous query after async writes drains all preceding channel writes.
+	entries, err := analyticsStore.QueryTopPokemon(10)
+	if err != nil {
+		t.Fatalf("QueryTopPokemon: %v", err)
+	}
+	if len(entries) == 0 {
+		t.Fatal("expected at least one usage entry")
+	}
+	if entries[0].PokemonID != 1 || entries[0].UseCount != 2 {
+		t.Fatalf("expected pokemonId=1 useCount=2, got %+v", entries[0])
+	}
+}
+
+func TestAnalytics_DamageTotalsAccumulate(t *testing.T) {
+	resetStores(t)
+	r := setupRouter()
+	session := createTestSession(t, r)
+
+	// Place a pokemon so the adjust action is valid.
+	applyActionRequest(t, r, session.SessionID, `{"type":"set-pokemon","side":"me","zone":"active","pokemonId":1}`)
+	applyActionRequest(t, r, session.SessionID, `{"type":"adjust-damage","side":"me","zone":"active","amount":50}`)
+	applyActionRequest(t, r, session.SessionID, `{"type":"adjust-damage","side":"me","zone":"active","amount":30}`)
+
+	totals, err := analyticsStore.QueryDamageTotals()
+	if err != nil {
+		t.Fatalf("QueryDamageTotals: %v", err)
+	}
+	if totals.TotalDealt != 80 {
+		t.Fatalf("expected totalDealt=80, got %d", totals.TotalDealt)
+	}
+}
+
+func TestAnalytics_KnockoutCounter(t *testing.T) {
+	resetStores(t)
+	r := setupRouter()
+	session := createTestSession(t, r)
+
+	applyActionRequest(t, r, session.SessionID, `{"type":"set-pokemon","side":"me","zone":"active","pokemonId":1}`)
+	applyActionRequest(t, r, session.SessionID, `{"type":"knockout","side":"me","zone":"active"}`)
+
+	totals, err := analyticsStore.QueryKnockouts()
+	if err != nil {
+		t.Fatalf("QueryKnockouts: %v", err)
+	}
+	if totals.TotalKnockouts != 1 {
+		t.Fatalf("expected totalKnockouts=1, got %d", totals.TotalKnockouts)
+	}
+}
+
+// TestAnalytics_ConcurrentActions verifies that concurrent action requests do
+// not cause data races, panics, or deadlocks in the worker/channel layer.
+func TestAnalytics_ConcurrentActions(t *testing.T) {
+	resetStores(t)
+	r := setupRouter()
+
+	const goroutines = 20
+	var wg sync.WaitGroup
+	wg.Add(goroutines)
+
+	for i := 0; i < goroutines; i++ {
+		go func() {
+			defer wg.Done()
+			session := createTestSession(t, r)
+			applyActionRequest(t, r, session.SessionID, `{"type":"set-pokemon","side":"me","zone":"active","pokemonId":4}`)
+			applyActionRequest(t, r, session.SessionID, `{"type":"adjust-damage","side":"me","zone":"active","amount":10}`)
+			applyActionRequest(t, r, session.SessionID, `{"type":"knockout","side":"me","zone":"active"}`)
+		}()
+	}
+	wg.Wait()
+
+	// Drain the worker by issuing a synchronous query before assertions.
+	totals, err := analyticsStore.QueryKnockouts()
+	if err != nil {
+		t.Fatalf("QueryKnockouts after concurrent load: %v", err)
+	}
+	if totals.TotalKnockouts != goroutines {
+		t.Fatalf("expected %d knockouts, got %d", goroutines, totals.TotalKnockouts)
+	}
+
+	usage, err := analyticsStore.QueryTopPokemon(1)
+	if err != nil {
+		t.Fatalf("QueryTopPokemon after concurrent load: %v", err)
+	}
+	if len(usage) == 0 || usage[0].UseCount != goroutines {
+		t.Fatalf("expected pokemonId=4 useCount=%d, got %+v", goroutines, usage)
 	}
 }

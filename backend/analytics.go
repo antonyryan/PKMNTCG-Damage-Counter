@@ -14,9 +14,58 @@ import (
 // Removals within this window are treated as corrections and ignored.
 const healGracePeriod = 2 * time.Second
 
-// AnalyticsStore persists gameplay metrics in SQLite.
+// ---------------------------------------------------------------------------
+// Worker / channel layer
+// ---------------------------------------------------------------------------
+
+// cmdTag identifies which analytics operation a command represents.
+type cmdTag uint8
+
+const (
+	tagRecordPokemonUsed cmdTag = iota
+	tagRecordDamage
+	tagRecordKnockout
+	tagQueryTopPokemon
+	tagQueryDamageTotals
+	tagQueryKnockouts
+)
+
+// analyticsCmd is the single message type sent through the worker channel.
+// Write commands leave resp nil; the worker logs errors internally.
+// Read commands set resp to a buffered channel so the caller can block on it.
+type analyticsCmd struct {
+	tag cmdTag
+
+	// tagRecordPokemonUsed
+	pokemonID int
+	name      string
+
+	// tagRecordDamage
+	sessionID string
+	req       SessionActionRequest
+	amount    int
+	now       time.Time
+
+	// tagQueryTopPokemon
+	limit int
+
+	// non-nil only for read commands
+	resp chan analyticsResult
+}
+
+// analyticsResult carries the response for a read command.
+type analyticsResult struct {
+	topPokemon   []PokemonUsageEntry
+	damageTotals DamageTotalsResponse
+	knockouts    KnockoutTotalResponse
+	err          error
+}
+
+// AnalyticsStore serialises all SQLite access through a single worker goroutine,
+// eliminating SQLITE_BUSY races without relying on SetMaxOpenConns(1) alone.
 type AnalyticsStore struct {
-	db *sql.DB
+	cmdCh chan analyticsCmd
+	done  chan struct{}
 }
 
 // PokemonUsageEntry is one row returned by the top-pokemon endpoint.
@@ -64,21 +113,75 @@ INSERT OR IGNORE INTO damage_totals (id, total_dealt, total_healed, total_knocko
 VALUES (1, 0, 0, 0);
 `
 
+// mustNewAnalyticsStore opens (or creates) the SQLite database, initialises the
+// schema, and starts the background worker goroutine.  It terminates the process
+// on any unrecoverable error.
 func mustNewAnalyticsStore(dbPath string) *AnalyticsStore {
 	db, err := sql.Open("sqlite", dbPath)
 	if err != nil {
 		log.Fatalf("analytics: open db %q: %v", dbPath, err)
 	}
-	// A single writer avoids SQLITE_BUSY on concurrent action requests.
+	// The worker is the only goroutine that touches the DB, so one connection
+	// is both sufficient and correct.
 	db.SetMaxOpenConns(1)
 	if _, err := db.Exec(analyticsSchema); err != nil {
 		log.Fatalf("analytics: init schema: %v", err)
 	}
-	return &AnalyticsStore{db: db}
+
+	s := &AnalyticsStore{
+		// Buffer of 256 lets Record() callers return immediately under normal load.
+		cmdCh: make(chan analyticsCmd, 256),
+		done:  make(chan struct{}),
+	}
+	go s.run(db)
+	return s
 }
 
-// Record inspects an already-validated-and-applied action and updates analytics counters.
-// now is the wall-clock time the action was received, used for the heal-grace-period check.
+// Shutdown drains the command queue, stops the worker, and closes the database.
+// It must be called exactly once during application shutdown.
+func (s *AnalyticsStore) Shutdown() {
+	close(s.cmdCh)
+	<-s.done
+}
+
+// run is the worker goroutine.  It is the only place where db is accessed.
+func (s *AnalyticsStore) run(db *sql.DB) {
+	defer func() {
+		if err := db.Close(); err != nil {
+			log.Printf("analytics: db close: %v", err)
+		}
+		close(s.done)
+	}()
+
+	for cmd := range s.cmdCh {
+		switch cmd.tag {
+		case tagRecordPokemonUsed:
+			workerRecordPokemonUsed(db, cmd.pokemonID, cmd.name)
+		case tagRecordDamage:
+			workerRecordDamage(db, cmd.sessionID, cmd.req, cmd.amount, cmd.now)
+		case tagRecordKnockout:
+			workerRecordKnockout(db)
+		case tagQueryTopPokemon:
+			entries, err := workerQueryTopPokemon(db, cmd.limit)
+			cmd.resp <- analyticsResult{topPokemon: entries, err: err}
+		case tagQueryDamageTotals:
+			r, err := workerQueryDamageTotals(db)
+			cmd.resp <- analyticsResult{damageTotals: r, err: err}
+		case tagQueryKnockouts:
+			r, err := workerQueryKnockouts(db)
+			cmd.resp <- analyticsResult{knockouts: r, err: err}
+		}
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Public interface – safe to call from any goroutine
+// ---------------------------------------------------------------------------
+
+// Record inspects an already-validated-and-applied action and enqueues the
+// appropriate analytics write command(s).  It returns immediately; the worker
+// goroutine executes the SQL and logs any errors.
+// now is the wall-clock time the action was received (heal-grace-period check).
 func (s *AnalyticsStore) Record(sessionID string, req SessionActionRequest, catalog *PokemonCatalog, now time.Time) {
 	switch req.Type {
 	case ActionSetPokemon, ActionEvolve:
@@ -89,20 +192,54 @@ func (s *AnalyticsStore) Record(sessionID string, req SessionActionRequest, cata
 		if entry, ok := catalog.Get(*req.PokemonID); ok {
 			name = entry.Pokemon.Name
 		}
-		s.recordPokemonUsed(*req.PokemonID, name)
+		s.cmdCh <- analyticsCmd{tag: tagRecordPokemonUsed, pokemonID: *req.PokemonID, name: name}
 
 	case ActionAdjust:
 		if req.Amount != nil {
-			s.recordDamage(sessionID, req, *req.Amount, now)
+			s.cmdCh <- analyticsCmd{
+				tag:       tagRecordDamage,
+				sessionID: sessionID,
+				req:       req,
+				amount:    *req.Amount,
+				now:       now,
+			}
 		}
 
 	case ActionKnockout:
-		s.recordKnockout()
+		s.cmdCh <- analyticsCmd{tag: tagRecordKnockout}
 	}
 }
 
-func (s *AnalyticsStore) recordPokemonUsed(pokemonID int, name string) {
-	_, err := s.db.Exec(`
+// QueryTopPokemon returns the top-n most-used Pokemon ordered by use count descending.
+func (s *AnalyticsStore) QueryTopPokemon(limit int) ([]PokemonUsageEntry, error) {
+	resp := make(chan analyticsResult, 1)
+	s.cmdCh <- analyticsCmd{tag: tagQueryTopPokemon, limit: limit, resp: resp}
+	r := <-resp
+	return r.topPokemon, r.err
+}
+
+// QueryDamageTotals returns aggregated dealt and healed damage.
+func (s *AnalyticsStore) QueryDamageTotals() (DamageTotalsResponse, error) {
+	resp := make(chan analyticsResult, 1)
+	s.cmdCh <- analyticsCmd{tag: tagQueryDamageTotals, resp: resp}
+	r := <-resp
+	return r.damageTotals, r.err
+}
+
+// QueryKnockouts returns the total knockout count.
+func (s *AnalyticsStore) QueryKnockouts() (KnockoutTotalResponse, error) {
+	resp := make(chan analyticsResult, 1)
+	s.cmdCh <- analyticsCmd{tag: tagQueryKnockouts, resp: resp}
+	r := <-resp
+	return r.knockouts, r.err
+}
+
+// ---------------------------------------------------------------------------
+// Worker-side SQL helpers – called only from run(), never from other goroutines
+// ---------------------------------------------------------------------------
+
+func workerRecordPokemonUsed(db *sql.DB, pokemonID int, name string) {
+	_, err := db.Exec(`
 		INSERT INTO pokemon_usage (pokemon_id, name, use_count) VALUES (?, ?, 1)
 		ON CONFLICT(pokemon_id) DO UPDATE SET
 			use_count = use_count + 1,
@@ -121,20 +258,19 @@ func slotBenchKey(req SessionActionRequest) int {
 	return *req.BenchIndex
 }
 
-func (s *AnalyticsStore) recordDamage(sessionID string, req SessionActionRequest, amount int, now time.Time) {
+func workerRecordDamage(db *sql.DB, sessionID string, req SessionActionRequest, amount int, now time.Time) {
 	bk := slotBenchKey(req)
 	side := string(req.Side)
 	zone := string(req.Zone)
 
 	if amount > 0 {
-		// Damage dealt: increment total and refresh the slot timestamp.
-		if _, err := s.db.Exec(`
+		if _, err := db.Exec(`
 			UPDATE damage_totals SET total_dealt = total_dealt + ? WHERE id = 1
 		`, amount); err != nil {
 			log.Printf("analytics: total_dealt += %d: %v", amount, err)
 			return
 		}
-		if _, err := s.db.Exec(`
+		if _, err := db.Exec(`
 			INSERT INTO slot_last_damage (session_id, side, zone, bench_index, last_positive_at)
 			VALUES (?, ?, ?, ?, ?)
 			ON CONFLICT(session_id, side, zone, bench_index) DO UPDATE SET
@@ -146,15 +282,12 @@ func (s *AnalyticsStore) recordDamage(sessionID string, req SessionActionRequest
 	}
 
 	if amount < 0 {
-		// Potential heal: only count when more than healGracePeriod has elapsed since the last
-		// positive damage on this exact slot (avoids counting accidental overwrites).
 		var lastMs int64
-		err := s.db.QueryRow(`
+		err := db.QueryRow(`
 			SELECT last_positive_at FROM slot_last_damage
 			WHERE session_id = ? AND side = ? AND zone = ? AND bench_index = ?
 		`, sessionID, side, zone, bk).Scan(&lastMs)
 		if err == sql.ErrNoRows {
-			// Slot never received tracked damage; removal is not a heal.
 			return
 		}
 		if err != nil {
@@ -162,11 +295,10 @@ func (s *AnalyticsStore) recordDamage(sessionID string, req SessionActionRequest
 			return
 		}
 		if now.Sub(time.UnixMilli(lastMs)) <= healGracePeriod {
-			// Within the grace period — likely a user correction, not intentional healing.
 			return
 		}
 		healed := -amount
-		if _, err := s.db.Exec(`
+		if _, err := db.Exec(`
 			UPDATE damage_totals SET total_healed = total_healed + ? WHERE id = 1
 		`, healed); err != nil {
 			log.Printf("analytics: total_healed += %d: %v", healed, err)
@@ -174,17 +306,16 @@ func (s *AnalyticsStore) recordDamage(sessionID string, req SessionActionRequest
 	}
 }
 
-func (s *AnalyticsStore) recordKnockout() {
-	if _, err := s.db.Exec(`
+func workerRecordKnockout(db *sql.DB) {
+	if _, err := db.Exec(`
 		UPDATE damage_totals SET total_knockouts = total_knockouts + 1 WHERE id = 1
 	`); err != nil {
 		log.Printf("analytics: recordKnockout: %v", err)
 	}
 }
 
-// QueryTopPokemon returns the top-n most-used Pokemon ordered by use count descending.
-func (s *AnalyticsStore) QueryTopPokemon(limit int) ([]PokemonUsageEntry, error) {
-	rows, err := s.db.Query(`
+func workerQueryTopPokemon(db *sql.DB, limit int) ([]PokemonUsageEntry, error) {
+	rows, err := db.Query(`
 		SELECT pokemon_id, name, use_count
 		FROM pokemon_usage
 		ORDER BY use_count DESC, pokemon_id ASC
@@ -206,10 +337,9 @@ func (s *AnalyticsStore) QueryTopPokemon(limit int) ([]PokemonUsageEntry, error)
 	return result, rows.Err()
 }
 
-// QueryDamageTotals returns aggregated dealt and healed damage.
-func (s *AnalyticsStore) QueryDamageTotals() (DamageTotalsResponse, error) {
+func workerQueryDamageTotals(db *sql.DB) (DamageTotalsResponse, error) {
 	var r DamageTotalsResponse
-	err := s.db.QueryRow(`
+	err := db.QueryRow(`
 		SELECT total_dealt, total_healed FROM damage_totals WHERE id = 1
 	`).Scan(&r.TotalDealt, &r.TotalHealed)
 	if err != nil {
@@ -218,10 +348,9 @@ func (s *AnalyticsStore) QueryDamageTotals() (DamageTotalsResponse, error) {
 	return r, nil
 }
 
-// QueryKnockouts returns the total knockout count.
-func (s *AnalyticsStore) QueryKnockouts() (KnockoutTotalResponse, error) {
+func workerQueryKnockouts(db *sql.DB) (KnockoutTotalResponse, error) {
 	var r KnockoutTotalResponse
-	err := s.db.QueryRow(`
+	err := db.QueryRow(`
 		SELECT total_knockouts FROM damage_totals WHERE id = 1
 	`).Scan(&r.TotalKnockouts)
 	if err != nil {
